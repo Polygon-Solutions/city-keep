@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Tooltip, ClickAwayListener, Box } from '@mui/material';
+import { Tooltip, ClickAwayListener } from '@mui/material';
 
 const WorkInProgress = ({
   message,
@@ -8,7 +8,7 @@ const WorkInProgress = ({
   sx,
   children,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleTooltipClose = () => {
     setOpen(false);
@@ -28,14 +28,14 @@ const WorkInProgress = ({
           disablePortal: true,
         }}
         onClose={handleTooltipClose}
+        onClick={handleTooltipOpen}
         open={open}
         disableFocusListener
         disableHoverListener
         disableTouchListener
+        sx={sx}
       >
-        <Box onClick={handleTooltipOpen} sx={sx}>
-          {children}
-        </Box>
+        {children}
       </Tooltip>
     </ClickAwayListener>
   );

@@ -49,14 +49,17 @@ const SignIn = () => {
           control={<Checkbox value="remember" color="primary" />}
           label="Remember me"
         />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Sign In
-        </Button>
+        <WorkInProgress>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+        </WorkInProgress>
+
         <Link href="/forgotpassword" variant="body2">
           Forgot Password?
         </Link>

@@ -1,14 +1,29 @@
 import React from 'react';
 
-import { Tooltip } from '@mui/material';
-import { ClickAwayListener } from '@mui/material';
+import { Tooltip, ClickAwayListener, Box } from '@mui/material';
 
-const WorkInProgress = (props) => {
-  const handleTooltipClose = () => {};
+const WorkInProgress = ({
+  message,
+  placement,
+  sx,
+  children,
+}) => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
       <Tooltip
+        title={message || 'Work in progress...'}
+        placement={placement}
+        arrow
         PopperProps={{
           disablePortal: true,
         }}
@@ -17,9 +32,10 @@ const WorkInProgress = (props) => {
         disableFocusListener
         disableHoverListener
         disableTouchListener
-        title="Work in progress..."
       >
-        {props.children}
+        <Box onClick={handleTooltipOpen} sx={sx}>
+          {children}
+        </Box>
       </Tooltip>
     </ClickAwayListener>
   );

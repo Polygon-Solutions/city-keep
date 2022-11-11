@@ -1,5 +1,7 @@
 import React from 'react';
 
+import WorkInProgress from '../dev/WorkInProgress';
+
 import {
   Link,
   Button,
@@ -49,7 +51,7 @@ const SignIn = () => {
           control={<Checkbox value="remember" color="primary" />}
           label="Remember me"
         />
-        <WorkInProgress>
+        <WorkInProgress placement="bottom-end">
           <Button
             type="submit"
             fullWidth

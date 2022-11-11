@@ -1,5 +1,7 @@
 import React from 'react';
 
+import WorkInProgress from '../dev/WorkInProgress';
+
 import { styled } from '@mui/material/styles';
 import {
   AppBar,
@@ -17,11 +19,21 @@ import {
 const StyledFab = styled(Fab)({
   position: 'absolute',
   zIndex: 1,
-  top: -30,
+  bottom: 28,
   left: 0,
   right: 0,
   margin: '0 auto',
 });
+
+const WipPosition = {
+  height: '84px',
+  width: '56px',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  margin: '0 auto',
+};
 
 const Navbar = () => {
   return (
@@ -31,16 +43,22 @@ const Navbar = () => {
       sx={{ top: 'auto', bottom: 0 }}
     >
       <Toolbar>
-        <IconButton href="/reports" color="inherit">
-          <MenuIcon />
-        </IconButton>
-        <StyledFab color="secondary">
-          <AddIcon />
-        </StyledFab>
+        <WorkInProgress placement="top">
+          <IconButton href="/reports" color="inherit">
+            <MenuIcon />
+          </IconButton>
+        </WorkInProgress>
+        <WorkInProgress sx={WipPosition}>
+          <StyledFab color="secondary">
+            <AddIcon />
+          </StyledFab>
+        </WorkInProgress>
         <Box sx={{ flexGrow: 1 }} />
-        <IconButton href="/settings" color="inherit">
-          <SettingsIcon />
-        </IconButton>
+        <WorkInProgress placement="top">
+          <IconButton href="/settings" color="inherit">
+            <SettingsIcon />
+          </IconButton>
+        </WorkInProgress>
       </Toolbar>
     </AppBar>
   );

@@ -19,21 +19,11 @@ import {
 const StyledFab = styled(Fab)({
   position: 'absolute',
   zIndex: 1,
-  bottom: 28,
+  top: -28,
   left: 0,
   right: 0,
   margin: '0 auto',
 });
-
-const WipPosition = {
-  height: '84px',
-  width: '56px',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  right: 0,
-  margin: '0 auto',
-};
 
 const Navbar = () => {
   return (
@@ -48,7 +38,7 @@ const Navbar = () => {
             <MenuIcon />
           </IconButton>
         </WorkInProgress>
-        <WorkInProgress sx={WipPosition}>
+        <WorkInProgress placement="top">
           <StyledFab color="secondary">
             <AddIcon />
           </StyledFab>

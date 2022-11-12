@@ -5,7 +5,7 @@ import { Tooltip, ClickAwayListener } from '@mui/material';
 const WorkInProgress = ({
   message,
   placement,
-  sx,
+  offset,
   children,
 }) => {
   const [open, setOpen] = useState(false);
@@ -26,6 +26,14 @@ const WorkInProgress = ({
         arrow
         PopperProps={{
           disablePortal: true,
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset,
+              },
+            },
+          ],
         }}
         onClose={handleTooltipClose}
         onClick={handleTooltipOpen}
@@ -33,7 +41,6 @@ const WorkInProgress = ({
         disableFocusListener
         disableHoverListener
         disableTouchListener
-        sx={sx}
       >
         {children}
       </Tooltip>

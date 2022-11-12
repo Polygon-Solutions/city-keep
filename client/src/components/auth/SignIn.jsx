@@ -47,10 +47,14 @@ const SignIn = () => {
           id="password"
           autoComplete="current-password"
         />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
+        <WorkInProgress placement="right">
+          <FormControlLabel
+            control={
+              <Checkbox value="remember" color="primary" />
+            }
+            label="Remember me"
+          />
+        </WorkInProgress>
         <WorkInProgress placement="bottom-end">
           <Button
             type="submit"

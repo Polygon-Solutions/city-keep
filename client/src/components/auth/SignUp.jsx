@@ -1,5 +1,7 @@
 import React from 'react';
 
+import WorkInProgress from '../dev/WorkInProgress';
+
 import {
   Button,
   TextField,
@@ -67,14 +69,16 @@ const SignUp = () => {
             />
           </Grid>
         </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Sign Up
-        </Button>
+        <WorkInProgress placement="bottom">
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign Up
+          </Button>
+        </WorkInProgress>
       </Box>
     </Container>
   );

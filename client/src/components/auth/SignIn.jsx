@@ -1,5 +1,7 @@
 import React from 'react';
 
+import WorkInProgress from '../dev/WorkInProgress';
+
 import {
   Link,
   Button,
@@ -45,18 +47,25 @@ const SignIn = () => {
           id="password"
           autoComplete="current-password"
         />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Sign In
-        </Button>
+        <WorkInProgress placement="right">
+          <FormControlLabel
+            control={
+              <Checkbox value="remember" color="primary" />
+            }
+            label="Remember me"
+          />
+        </WorkInProgress>
+        <WorkInProgress placement="bottom-end">
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+        </WorkInProgress>
+
         <Link href="/forgotpassword" variant="body2">
           Forgot Password?
         </Link>

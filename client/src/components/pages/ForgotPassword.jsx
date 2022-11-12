@@ -1,5 +1,7 @@
 import React from 'react';
 
+import WorkInProgress from '../dev/WorkInProgress';
+
 import {
   TextField,
   Box,
@@ -36,14 +38,16 @@ const ForgotPassword = () => {
           autoComplete="email"
           autoFocus
         />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Send Recovery Email
-        </Button>
+        <WorkInProgress placement="bottom">
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Send Recovery Email
+          </Button>
+        </WorkInProgress>
       </Box>
     </Container>
   );

@@ -1,4 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import {
+  CognitoUser,
+  AuthenticationDetails,
+} from 'amazon-cognito-identity-js';
+import UserPool from '../../auth/UserPool';
 
 import WorkInProgress from '../dev/WorkInProgress';
 
@@ -13,10 +19,33 @@ import {
 } from '@mui/material';
 
 const SignIn = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // AWS Cognito Sign In
+    const user = new CognitoUser({
+      Username: email,
+      Pool: UserPool,
+    });
+
+    const authDetails = new AuthenticationDetails({
+      Username: email,
+      Password: password,
+    });
+
+    user.authenticateUser(authDetails, {
+      onSuccess: (data) => {
+        console.log('onSuccess: ', data);
+      },
+      onFailure: (err) => {
+        console.error('onFailure ', err);
+      },
+      newPasswordRequired: (data) => {
+        console.log('newPasswordRequired: ', data);
+      },
+    });
   };
 
   return (
@@ -24,28 +53,30 @@ const SignIn = () => {
       <Box
         component="form"
         onSubmit={handleSubmit}
-        noValidate
         sx={{ mt: 1 }}
       >
         <TextField
           margin="normal"
-          required
           fullWidth
+          autoFocus
+          required
           id="email"
           label="Email Address"
           name="email"
-          autoComplete="email"
-          autoFocus
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           margin="normal"
-          required
           fullWidth
-          name="password"
-          label="Password"
-          type="password"
+          required
           id="password"
-          autoComplete="current-password"
+          label="Password"
+          name="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <WorkInProgress placement="right">
           <FormControlLabel
@@ -57,10 +88,10 @@ const SignIn = () => {
         </WorkInProgress>
         <WorkInProgress placement="bottom-end">
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            type="submit"
           >
             Sign In
           </Button>

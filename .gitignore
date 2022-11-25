@@ -18,6 +18,9 @@ git-and-console.code-workspace
 # testing
 /client/coverage
 
+#dev
+/client/.env
+
 # production
 /client/build
 

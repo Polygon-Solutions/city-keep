@@ -49,14 +49,21 @@ const SettingsPage = () => {
             id="new-password"
             label="New Password"
             name="new-password"
-            type="new-password"
+            type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
           <Button
-            fullWidth
-            variant="contained"
+            variant="outlined"
             color="secondary"
+            size="small"
+            sx={{
+              width: 0.5,
+              borderWidth: 3,
+              '&:hover': {
+                borderWidth: 3,
+              },
+            }}
             type="submit"
           >
             Change Password
@@ -66,7 +73,15 @@ const SettingsPage = () => {
         <Button
           fullWidth
           color="danger"
-          variant="contained"
+          variant="outlined"
+          size="small"
+          sx={{
+            width: 0.5,
+            borderWidth: 3,
+            '&:hover': {
+              borderWidth: 3,
+            },
+          }}
           type="button"
           onClick={handleLogout}
         >

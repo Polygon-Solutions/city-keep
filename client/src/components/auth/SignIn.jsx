@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
-import {
-  CognitoUser,
-  AuthenticationDetails,
-} from 'amazon-cognito-identity-js';
-import UserPool from '../../auth/UserPool';
+import { AccountContext } from '../../auth/Account';
 
 import WorkInProgress from '../dev/WorkInProgress';
 
@@ -22,30 +18,18 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { authenticate } = useContext(AccountContext);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const user = new CognitoUser({
-      Username: email,
-      Pool: UserPool,
-    });
-
-    const authDetails = new AuthenticationDetails({
-      Username: email,
-      Password: password,
-    });
-
-    user.authenticateUser(authDetails, {
-      onSuccess: (data) => {
-        console.log('onSuccess: ', data);
-      },
-      onFailure: (err) => {
-        console.error('onFailure ', err);
-      },
-      newPasswordRequired: (data) => {
-        console.log('newPasswordRequired: ', data);
-      },
-    });
+    authenticate(email, password)
+      .then((data) => {
+        console.log('Signed in!', data);
+      })
+      .catch((err) => {
+        console.log('Failed to sign in.', err);
+      });
   };
 
   return (

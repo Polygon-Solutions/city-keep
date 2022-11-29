@@ -12,7 +12,7 @@ import {
   Container,
 } from '@mui/material';
 
-const SignUp = () => {
+const SignUp = ({ setAuth }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -24,8 +24,10 @@ const SignUp = () => {
     UserPool.signUp(email, password, [], null, (err, data) => {
       if (err) {
         console.error(err);
+      } else {
+        console.log(data);
+        setAuth(true);
       }
-      console.log(data);
     });
   };
 

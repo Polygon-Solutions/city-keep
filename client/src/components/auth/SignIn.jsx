@@ -14,7 +14,7 @@ import {
   Container,
 } from '@mui/material';
 
-const SignIn = () => {
+const SignIn = ({ setAuth }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,6 +26,7 @@ const SignIn = () => {
     authenticate(email, password)
       .then((data) => {
         console.log('Signed in!', data);
+        setAuth(true);
       })
       .catch((err) => {
         console.log('Failed to sign in.', err);

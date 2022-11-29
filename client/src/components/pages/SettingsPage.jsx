@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+
+import { AccountContext } from '../../auth/Account';
 
 import {
   Typography,
@@ -8,8 +10,10 @@ import {
   Divider,
 } from '@mui/material';
 
-const SettingsPage = () => {
+const SettingsPage = ({ setAuth }) => {
   const [newPassword, setNewPassword] = useState('');
+
+  const { logout } = useContext(AccountContext);
 
   const handleChangePassword = (event) => {
     event.preventDefault();
@@ -18,8 +22,9 @@ const SettingsPage = () => {
   };
 
   const handleLogout = () => {
-    console.log('Logout!');
-    //AWS Cognito
+    console.log('Logged out.');
+    logout();
+    setAuth(false);
   };
 
   return (

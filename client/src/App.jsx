@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from 'react-router-dom';
 
-import { Account } from './auth/Account';
-import Status from './auth/Status';
+import { AccountContext } from './auth/Account';
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.jsx';
@@ -20,45 +19,53 @@ import ReportsPage from './components/pages/ReportsPage';
 import SettingsPage from './components/pages/SettingsPage';
 import LandingPage from './components/pages/LandingPage';
 import ForgotPassword from './components/pages/ForgotPassword';
-import AuthSwitch from './components/dev/AuthSwitch.jsx';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
-  const handleAuth = (event) => {
-    setAuth(event.target.checked);
-  };
+
+  const { getSession } = useContext(AccountContext);
+
+  useEffect(() => {
+    getSession()
+      .then((session) => {
+        console.log('Session: ', session);
+        setAuth(true);
+      })
+      .catch((err) => {
+        console.log('No session.');
+        setAuth(false);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <Account>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Status />
-          {!auth && <Heading />}
-          <AuthSwitch checked={auth} onChange={handleAuth} />
-          <Routes>
+    <ThemeProvider theme={theme}>
+      <Router>
+        {!auth && <Heading />}
+        <Routes>
+          <Route
+            element={<NoAuthOutlet isAuthenticated={auth} />}
+          >
             <Route
-              element={<NoAuthOutlet isAuthenticated={auth} />}
-            >
-              <Route path="/" element={<LandingPage />} />
-              <Route
-                path="/forgotpassword"
-                element={<ForgotPassword />}
-              />
-            </Route>
+              path="/"
+              element={<LandingPage setAuth={setAuth} />}
+            />
             <Route
-              element={<AuthOutlet isAuthenticated={auth} />}
-            >
-              <Route path="reports" element={<ReportsPage />} />
-              <Route
-                path="settings"
-                element={<SettingsPage />}
-              />
-            </Route>
-          </Routes>
-          {auth && <Navbar />}
-        </Router>
-      </ThemeProvider>
-    </Account>
+              path="/forgotpassword"
+              element={<ForgotPassword />}
+            />
+          </Route>
+          <Route element={<AuthOutlet isAuthenticated={auth} />}>
+            <Route path="reports" element={<ReportsPage />} />
+            <Route
+              path="settings"
+              element={<SettingsPage setAuth={setAuth} />}
+            />
+          </Route>
+        </Routes>
+        {auth && <Navbar />}
+      </Router>
+    </ThemeProvider>
   );
 };
 

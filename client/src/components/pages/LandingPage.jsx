@@ -21,7 +21,7 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const LandingPage = () => {
+const LandingPage = ({ setAuth }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -40,8 +40,8 @@ const LandingPage = () => {
           <Tab label="Sign Up"></Tab>
         </Tabs>
         <TabPanel value={value}>
-          <SignIn />
-          <SignUp />
+          <SignIn setAuth={setAuth} />
+          <SignUp setAuth={setAuth} />
         </TabPanel>
       </Grid>
     </Grid>

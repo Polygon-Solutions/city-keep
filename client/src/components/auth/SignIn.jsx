@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+
+import { AccountContext } from '../../auth/Account';
 
 import WorkInProgress from '../dev/WorkInProgress';
 
@@ -12,11 +14,23 @@ import {
   Container,
 } from '@mui/material';
 
-const SignIn = () => {
+const SignIn = ({ setAuth }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { authenticate } = useContext(AccountContext);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // AWS Cognito Sign In
+    authenticate(email, password)
+      .then((data) => {
+        console.log('Signed in!', data);
+        setAuth(true);
+      })
+      .catch((err) => {
+        console.log('Failed to sign in.', err);
+      });
   };
 
   return (
@@ -24,28 +38,30 @@ const SignIn = () => {
       <Box
         component="form"
         onSubmit={handleSubmit}
-        noValidate
         sx={{ mt: 1 }}
       >
         <TextField
           margin="normal"
-          required
           fullWidth
+          autoFocus
+          required
           id="email"
           label="Email Address"
           name="email"
-          autoComplete="email"
-          autoFocus
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           margin="normal"
-          required
           fullWidth
-          name="password"
-          label="Password"
-          type="password"
+          required
           id="password"
-          autoComplete="current-password"
+          label="Password"
+          name="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <WorkInProgress placement="right">
           <FormControlLabel
@@ -57,10 +73,10 @@ const SignIn = () => {
         </WorkInProgress>
         <WorkInProgress placement="bottom-end">
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            type="submit"
           >
             Sign In
           </Button>

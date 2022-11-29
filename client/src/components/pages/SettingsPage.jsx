@@ -11,14 +11,31 @@ import {
 } from '@mui/material';
 
 const SettingsPage = ({ setAuth }) => {
+  const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  const { logout } = useContext(AccountContext);
+  const { getSession, logout } = useContext(AccountContext);
 
   const handleChangePassword = (event) => {
     event.preventDefault();
     console.log('Change Password!');
-    //AWS Cognito
+
+    getSession().then(({ user }) => {
+      user.changePassword(
+        currentPassword,
+        newPassword,
+        (err, result) => {
+          if (err) {
+            console.error(err);
+          } else {
+            console.log(result);
+          }
+        }
+      );
+    });
+
+    setCurrentPassword('');
+    setNewPassword('');
   };
 
   const handleLogout = () => {
@@ -51,6 +68,19 @@ const SettingsPage = ({ setAuth }) => {
             margin="dense"
             color="secondary"
             required
+            id="current-password"
+            label="Current Password"
+            name="current-password"
+            type="password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+          />
+          <TextField
+            fullWidth
+            size="small"
+            margin="dense"
+            color="secondary"
+            required
             id="new-password"
             label="New Password"
             name="new-password"
@@ -64,6 +94,7 @@ const SettingsPage = ({ setAuth }) => {
             size="small"
             sx={{
               width: 0.5,
+              mt: 1,
               borderWidth: 3,
               '&:hover': {
                 borderWidth: 3,
@@ -76,7 +107,6 @@ const SettingsPage = ({ setAuth }) => {
         </Box>
         <Typography sx={{ mb: 1 }}>Logout</Typography>
         <Button
-          fullWidth
           color="danger"
           variant="outlined"
           size="small"

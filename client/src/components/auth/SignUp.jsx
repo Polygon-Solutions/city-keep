@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import UserPool from '../../auth/UserPool';
+import { AccountContext } from '../../auth/Account';
 
 import WorkInProgress from '../dev/WorkInProgress';
 
@@ -10,6 +11,7 @@ import {
   Grid,
   Box,
   Container,
+  Typography,
 } from '@mui/material';
 
 const SignUp = ({ setAuth }) => {
@@ -17,6 +19,8 @@ const SignUp = ({ setAuth }) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { authenticate } = useContext(AccountContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -29,6 +33,20 @@ const SignUp = ({ setAuth }) => {
         setAuth(true);
       }
     });
+  };
+
+  const handleDemo = () => {
+    authenticate(
+      process.env.REACT_APP_DEMO_USERNAME,
+      process.env.REACT_APP_DEMO_PASSWORD
+    )
+      .then((data) => {
+        console.log('Signed in!', data);
+        setAuth(true);
+      })
+      .catch((err) => {
+        console.log('Failed to sign in.', err);
+      });
   };
 
   return (
@@ -91,13 +109,24 @@ const SignUp = ({ setAuth }) => {
           <Button
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ my: 3 }}
             type="submit"
           >
             Sign Up
           </Button>
         </WorkInProgress>
       </Box>
+      <Typography align="center">OR</Typography>
+      <Button
+        fullWidth
+        variant="contained"
+        color="secondary"
+        sx={{ my: 3 }}
+        type="button"
+        onClick={handleDemo}
+      >
+        Try a demo
+      </Button>
     </Container>
   );
 };

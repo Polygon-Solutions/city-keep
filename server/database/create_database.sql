@@ -1,12 +1,8 @@
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY NOT NULL,
+  id VARCHAR(128) PRIMARY KEY NOT NULL,
   last_name VARCHAR(50) NOT NULL,
   first_name VARCHAR(50) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
-  password CHAR(64) NOT NULL,
-  city VARCHAR(50) NOT NULL,
-  state_province VARCHAR(50) NOT NULL,
-  country VARCHAR(50) NOT NULL,
   deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
 
@@ -17,7 +13,7 @@ CREATE TABLE categories (
 
 CREATE TABLE reports (
   id SERIAL PRIMARY KEY NOT NULL,
-  user_id INT REFERENCES users (id) NOT NULL,
+  user_id VARCHAR(128) REFERENCES users (id) NOT NULL,
   category_id INT REFERENCES categories (id) NOT NULL,
   description TEXT NOT NULL,
   report_time TIMESTAMP(0) WITH TIME ZONE NOT NULL,

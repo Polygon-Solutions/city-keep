@@ -7,7 +7,7 @@ module.exports = router;
 
 // @route   POST /api/reports
 // @desc    Create a new report
-// @access  Public
+// @access  Private
 router.post('/', async (req, res) => {
   try {
     const { body } = req;
@@ -26,7 +26,35 @@ router.post('/', async (req, res) => {
     res.status(201).json({
       status: 'Success',
       data: {
-        user: rows[0],
+        report: rows[0],
+      },
+    });
+  } catch (err) {
+    console.error(
+      '\n',
+      'Error: ',
+      err.message,
+      '\n',
+      'Detail:',
+      err.detail,
+      '\n',
+      'Table: ',
+      err.table
+    );
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   GET /api/reports
+// @desc    Get all reports
+// @access  Private
+router.get('/', async (req, res) => {
+  try {
+    const { rows } = await db.query('SELECT * FROM reports');
+    res.status(201).json({
+      status: 'Success',
+      data: {
+        reports: rows,
       },
     });
   } catch (err) {

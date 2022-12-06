@@ -18,8 +18,8 @@ CREATE TABLE reports (
   description TEXT NOT NULL,
   report_time TIMESTAMP(0) WITH TIME ZONE NOT NULL,
   address VARCHAR(255) NOT NULL,
-  longitude DECIMAL(9,6) NOT NULL,
-  latitude DECIMAL(8,6) NOT NULL,
+  longitude DECIMAL(9,6),
+  latitude DECIMAL(8,6),
   UNIQUE (user_id, report_time)
 );
 

@@ -2,6 +2,6 @@ const users = require('./users');
 const reports = require('./reports');
 
 module.exports = (app) => {
-  app.use('/users', users);
-  app.use('/reports', reports);
+  app.use('/api/users', users);
+  app.use('/api/reports', reports);
 };

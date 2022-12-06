@@ -1,4 +1,4 @@
-INSERT INTO users (last_name, first_name, email, password, city, state_province, country) VALUES ('Last', 'First', 'test@test.com', 'test', 'Vancouver', 'BC', 'Canada');
+INSERT INTO users (id, last_name, first_name, email) VALUES ('1', 'Last', 'First', 'test@test.com');
 
 INSERT INTO categories (id, label) VALUES (1, 'Drainage/Flooding');
 INSERT INTO categories (id, label) VALUES (2, 'Graffiti/Vandalism');

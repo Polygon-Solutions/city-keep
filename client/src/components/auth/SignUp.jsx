@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 
-import UserPool from '../../auth/UserPool';
-import { AccountContext } from '../../auth/Account';
+import UserPool from '../../utils/UserPool';
+import AccountContext from '../../context/user/AccountContext';
 
 import WorkInProgress from '../dev/WorkInProgress';
 

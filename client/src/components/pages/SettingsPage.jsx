@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import { AccountContext } from '../../auth/Account';
+import AccountContext from '../../context/user/AccountContext';
 
 import {
   Typography,

@@ -5,7 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 
-import { AccountContext } from './auth/Account';
+import AccountContext from './context/user/AccountContext';
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.jsx';

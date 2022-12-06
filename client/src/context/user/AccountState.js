@@ -1,14 +1,25 @@
-import React, { createContext } from 'react';
+import React, { useReducer } from 'react';
+
+import AccountContext from './AccountContext';
+import AccountReducer from './AccountReducer';
 
 import {
   CognitoUser,
   AuthenticationDetails,
 } from 'amazon-cognito-identity-js';
-import Pool from './UserPool';
+import Pool from '../../utils/UserPool';
 
-const AccountContext = createContext();
+const AccountState = ({ children }) => {
+  const initialState = {
+    isAuthenticated: false,
+    user: null,
+  };
 
-const Account = ({ children }) => {
+  const [state, dispatch] = useReducer(
+    AccountReducer,
+    initialState
+  );
+
   const getSession = async () => {
     return await new Promise((resolve, reject) => {
       const user = Pool.getCurrentUser();
@@ -83,11 +94,17 @@ const Account = ({ children }) => {
 
   return (
     <AccountContext.Provider
-      value={{ authenticate, getSession, logout }}
+      value={{
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
+        getSession,
+        authenticate,
+        logout,
+      }}
     >
       {children}
     </AccountContext.Provider>
   );
 };
 
-export { Account, AccountContext };
+export default AccountState;

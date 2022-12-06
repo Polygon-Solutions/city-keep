@@ -50,8 +50,41 @@ router.post('/', async (req, res) => {
 // @access  Private
 router.get('/', async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM reports');
-    res.status(201).json({
+    const { rows } = await db.query(
+      'SELECT * FROM reports ORDER BY report_time DESC LIMIT 50'
+    );
+    res.status(200).json({
+      status: 'Success',
+      data: {
+        reports: rows,
+      },
+    });
+  } catch (err) {
+    console.error(
+      '\n',
+      'Error: ',
+      err.message,
+      '\n',
+      'Detail:',
+      err.detail,
+      '\n',
+      'Table: ',
+      err.table
+    );
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   GET /api/reports/user
+// @desc    Get user's reports
+// @access  Private
+router.get('/user', async (req, res) => {
+  try {
+    const { rows } = await db.query(
+      'SELECT * FROM reports WHERE user_id = $1 ORDER BY report_time DESC',
+      [req.body.user_id]
+    );
+    res.status(200).json({
       status: 'Success',
       data: {
         reports: rows,

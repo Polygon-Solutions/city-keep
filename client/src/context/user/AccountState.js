@@ -21,39 +21,66 @@ const AccountState = ({ children }) => {
   );
 
   const getSession = async () => {
-    return await new Promise((resolve, reject) => {
+    try {
       const user = Pool.getCurrentUser();
       if (user) {
-        user.getSession(async (err, sessionData) => {
-          if (err) {
-            reject();
-          } else {
-            const attributes = await new Promise(
-              (resolve, reject) => {
-                user.getUserAttributes((err, attributes) => {
-                  if (err) {
-                    reject(err);
-                  } else {
-                    const results = {};
+        const cognitoPromise = new Promise((resolve, reject) => {
+          user.getSession((err, sessionData) => {
+            if (!err) {
+              user.getUserAttributes((err, attributes) => {
+                if (!err) {
+                  const results = {};
 
-                    for (let attribute of attributes) {
-                      const { Name, Value } = attribute;
-                      results[Name] = Value;
-                    }
-
-                    resolve(results);
+                  for (let attribute of attributes) {
+                    const { Name, Value } = attribute;
+                    results[Name] = Value;
                   }
-                });
-              }
-            );
 
-            resolve({ user, ...sessionData, ...attributes });
-          }
+                  resolve({
+                    sessionData,
+                    attributes: results,
+                  });
+                } else {
+                  reject(err);
+                }
+              });
+            } else {
+              reject(err);
+            }
+          });
         });
+
+        const databasePromise = fetch('/api/users', {
+          method: 'GET',
+          headers: {
+            // 'User-Id': user.username,
+            'User-Id': 2,
+          },
+        });
+
+        const cognitoUserData = await cognitoPromise;
+        const res = await databasePromise;
+        const databaseUserData = await res.json();
+
+        console.log(cognitoUserData);
+        console.log(databaseUserData);
+        if (
+          cognitoUserData.attributes.email ===
+          databaseUserData.user.email
+        ) {
+          //setauth
+          //load user action from database data
+        } else {
+          throw new Error(
+            'Inconsistent data between Cognito and database'
+          );
+        }
       } else {
-        reject();
+        throw new Error('No user in storage.');
       }
-    });
+    } catch (err) {
+      // Auth error
+    }
   };
 
   const authenticate = async (Username, Password) => {

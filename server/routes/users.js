@@ -44,13 +44,10 @@ router.get('/', async (req, res) => {
   try {
     const { rows } = await db.query(
       'SELECT * FROM users WHERE id = $1',
-      [req.body.id]
+      [req.header('User-Id')]
     );
     res.status(200).json({
-      status: 'Success',
-      data: {
-        user: rows[0],
-      },
+      user: rows[0],
     });
   } catch (err) {
     console.error(

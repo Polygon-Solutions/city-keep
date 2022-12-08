@@ -26,15 +26,7 @@ const App = () => {
   const { getSession } = useContext(AccountContext);
 
   useEffect(() => {
-    getSession()
-      .then((session) => {
-        console.log('Session: ', session);
-        setAuth(true);
-      })
-      .catch((err) => {
-        console.log('No session.');
-        setAuth(false);
-      });
+    getSession();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

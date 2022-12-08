@@ -21,41 +21,40 @@ import LandingPage from './components/pages/LandingPage';
 import ForgotPassword from './components/pages/ForgotPassword';
 
 const App = () => {
-  const [auth, setAuth] = useState(false);
-
-  const { getSession } = useContext(AccountContext);
+  const { isAuthenticated, loadUser } =
+    useContext(AccountContext);
 
   useEffect(() => {
-    getSession();
+    loadUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        {!auth && <Heading />}
+        {!isAuthenticated && <Heading />}
         <Routes>
           <Route
-            element={<NoAuthOutlet isAuthenticated={auth} />}
+            element={
+              <NoAuthOutlet isAuthenticated={isAuthenticated} />
+            }
           >
-            <Route
-              path="/"
-              element={<LandingPage setAuth={setAuth} />}
-            />
+            <Route path="/" element={<LandingPage />} />
             <Route
               path="/forgotpassword"
               element={<ForgotPassword />}
             />
           </Route>
-          <Route element={<AuthOutlet isAuthenticated={auth} />}>
+          <Route
+            element={
+              <AuthOutlet isAuthenticated={isAuthenticated} />
+            }
+          >
             <Route path="reports" element={<ReportsPage />} />
-            <Route
-              path="settings"
-              element={<SettingsPage setAuth={setAuth} />}
-            />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
         </Routes>
-        {auth && <Navbar />}
+        {isAuthenticated && <Navbar />}
       </Router>
     </ThemeProvider>
   );

@@ -14,23 +14,16 @@ import {
   Container,
 } from '@mui/material';
 
-const SignIn = ({ setAuth }) => {
+const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { authenticate } = useContext(AccountContext);
+  const { signIn } = useContext(AccountContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    authenticate(email, password)
-      .then((data) => {
-        console.log('Signed in!', data);
-        setAuth(true);
-      })
-      .catch((err) => {
-        console.log('Failed to sign in.', err);
-      });
+    signIn(email, password);
   };
 
   return (

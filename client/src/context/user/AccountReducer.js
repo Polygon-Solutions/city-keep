@@ -1,16 +1,13 @@
 import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  USER_LOADED,
+  LOAD_USER,
+  UNLOAD_USER,
   AUTH_ERROR,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT,
+  CLEAR_ERRORS,
 } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
-    case USER_LOADED:
+    case LOAD_USER:
       return {
         ...state,
         isAuthenticated: true,

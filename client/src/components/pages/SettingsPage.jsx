@@ -39,9 +39,7 @@ const SettingsPage = ({ setAuth }) => {
   };
 
   const handleLogout = () => {
-    console.log('Logged out.');
     logout();
-    setAuth(false);
   };
 
   return (

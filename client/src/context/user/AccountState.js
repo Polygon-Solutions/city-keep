@@ -4,6 +4,13 @@ import AccountContext from './AccountContext';
 import AccountReducer from './AccountReducer';
 
 import {
+  LOAD_USER,
+  UNLOAD_USER,
+  AUTH_ERROR,
+  CLEAR_ERRORS,
+} from '../types';
+
+import {
   CognitoUser,
   AuthenticationDetails,
 } from 'amazon-cognito-identity-js';
@@ -20,7 +27,7 @@ const AccountState = ({ children }) => {
     initialState
   );
 
-  const getSession = async () => {
+  const loadUser = async () => {
     try {
       const user = Pool.getCurrentUser();
       if (user) {
@@ -41,12 +48,10 @@ const AccountState = ({ children }) => {
                     attributes: results,
                   });
                 } else {
-                  //getUserAttributes error
                   reject(err);
                 }
               });
             } else {
-              //getSession error
               reject(err);
             }
           });
@@ -60,15 +65,14 @@ const AccountState = ({ children }) => {
           },
         });
 
-        const cognitoUserData = await cognitoPromise;
+        const cogUserData = await cognitoPromise;
         const res = await databasePromise;
-        const databaseUserData = await res.json();
+        const dbUserData = await res.json();
 
-        console.log(cognitoUserData);
-        console.log(databaseUserData);
+        console.log(cogUserData);
+        console.log(dbUserData);
         if (
-          cognitoUserData.attributes.email ===
-          databaseUserData.user.email
+          cogUserData.attributes.email === dbUserData.user.email
         ) {
           //setauth
           //load user action from database data
@@ -85,39 +89,84 @@ const AccountState = ({ children }) => {
     }
   };
 
-  const authenticate = async (Username, Password) => {
-    return await new Promise((resolve, reject) => {
-      const user = new CognitoUser({
-        Username,
-        Pool,
-      });
+  const signUp = (firstName, lastName, email, password) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const cogUserData = await new Promise(
+          (resolve, reject) => {
+            Pool.signUp(
+              email,
+              password,
+              [],
+              null,
+              (err, data) => {
+                if (!err) {
+                  resolve(data);
+                } else {
+                  reject(err);
+                }
+              }
+            );
+          }
+        );
 
-      const authDetails = new AuthenticationDetails({
-        Username,
-        Password,
-      });
+        const res = await fetch('/api/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: cogUserData.userSub,
+            firstName,
+            lastName,
+            email,
+          }),
+        });
+        const dbUserData = await res.json();
 
-      user.authenticateUser(authDetails, {
-        onSuccess: (data) => {
-          console.log('onSuccess: ', data);
-          resolve(data);
-        },
-        onFailure: (err) => {
-          console.error('onFailure ', err);
-          reject(err);
-        },
-        newPasswordRequired: (data) => {
-          console.log('newPasswordRequired: ', data);
-          resolve(data);
-        },
-      });
+        console.log(cogUserData);
+        console.log(dbUserData);
+
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
     });
+  };
+
+  const signIn = async (username, password) => {
+    try {
+      await new Promise((resolve, reject) => {
+        const user = new CognitoUser({
+          Username: username,
+          Pool,
+        });
+
+        const authDetails = new AuthenticationDetails({
+          Username: username,
+          Password: password,
+        });
+
+        user.authenticateUser(authDetails, {
+          onSuccess: () => {
+            resolve();
+          },
+          onFailure: (err) => {
+            reject(err);
+          },
+        });
+      });
+      loadUser();
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   const logout = () => {
     const user = Pool.getCurrentUser();
     if (user) {
       user.signOut();
+      //set auth false
     }
   };
 
@@ -126,8 +175,9 @@ const AccountState = ({ children }) => {
       value={{
         isAuthenticated: state.isAuthenticated,
         user: state.user,
-        getSession,
-        authenticate,
+        loadUser,
+        signUp,
+        signIn,
         logout,
       }}
     >

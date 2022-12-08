@@ -41,10 +41,12 @@ const AccountState = ({ children }) => {
                     attributes: results,
                   });
                 } else {
+                  //getUserAttributes error
                   reject(err);
                 }
               });
             } else {
+              //getSession error
               reject(err);
             }
           });
@@ -79,7 +81,7 @@ const AccountState = ({ children }) => {
         throw new Error('No user in storage.');
       }
     } catch (err) {
-      // Auth error
+      console.log(err.message);
     }
   };
 

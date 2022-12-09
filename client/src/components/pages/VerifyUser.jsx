@@ -10,7 +10,6 @@ import {
   Container,
   Typography,
 } from '@mui/material';
-import { UserAgent } from 'amazon-cognito-identity-js';
 
 const VerifyUser = () => {
   const [verificationCode, setVerificationCode] = useState('');
@@ -20,7 +19,7 @@ const VerifyUser = () => {
   const handleChange = (event) => {
     const regex = /^[0-9\b]+$/;
     if (
-      event.target.value == '' ||
+      event.target.value === '' ||
       regex.test(event.target.value)
     ) {
       setVerificationCode(event.target.value);

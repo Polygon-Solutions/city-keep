@@ -7,8 +7,6 @@ import {
   LOAD_USER,
   LOAD_COGNITO_USER,
   UNLOAD_USER,
-  AUTH_ERROR,
-  CLEAR_ERRORS,
 } from '../types';
 
 import {
@@ -31,28 +29,30 @@ const AccountState = ({ children }) => {
 
   const loadUser = async () => {
     try {
-      const user = Pool.getCurrentUser();
-      if (user) {
+      const cognitoUser = Pool.getCurrentUser();
+      if (cognitoUser) {
         const cognitoPromise = new Promise((resolve, reject) => {
-          user.getSession((err, sessionData) => {
+          cognitoUser.getSession((err, sessionData) => {
             if (!err) {
-              user.getUserAttributes((err, attributes) => {
-                if (!err) {
-                  const results = {};
+              cognitoUser.getUserAttributes(
+                (err, attributes) => {
+                  if (!err) {
+                    const results = {};
 
-                  for (let attribute of attributes) {
-                    const { Name, Value } = attribute;
-                    results[Name] = Value;
+                    for (let attribute of attributes) {
+                      const { Name, Value } = attribute;
+                      results[Name] = Value;
+                    }
+
+                    resolve({
+                      sessionData,
+                      attributes: results,
+                    });
+                  } else {
+                    reject(err);
                   }
-
-                  resolve({
-                    sessionData,
-                    attributes: results,
-                  });
-                } else {
-                  reject(err);
                 }
-              });
+              );
             } else {
               reject(err);
             }
@@ -62,7 +62,7 @@ const AccountState = ({ children }) => {
         const databasePromise = fetch('/api/users', {
           method: 'GET',
           headers: {
-            'User-Id': user.username,
+            'User-Id': cognitoUser.username,
           },
         });
 
@@ -73,13 +73,21 @@ const AccountState = ({ children }) => {
         console.log(cogUserData);
         console.log(dbUserData);
 
-        console.log(cogUserData.attributes.email);
-        console.log(dbUserData.user.email);
-        if (
-          cogUserData.attributes.email === dbUserData.user.email
-        ) {
-          //setauth
-          //load user action from database data
+        const { user } = dbUserData;
+
+        if (cogUserData.attributes.email === user.email) {
+          dispatch({
+            type: LOAD_USER,
+            payload: {
+              user: {
+                id: user.id,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                email: user.email,
+              },
+              cognitoUser,
+            },
+          });
         } else {
           throw new Error(
             'Inconsistent data between Cognito and database'
@@ -191,7 +199,9 @@ const AccountState = ({ children }) => {
     const user = Pool.getCurrentUser();
     if (user) {
       user.signOut();
-      //set auth false
+      dispatch({
+        type: UNLOAD_USER,
+      });
     }
   };
 

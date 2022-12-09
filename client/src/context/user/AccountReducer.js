@@ -4,7 +4,7 @@ import {
   UNLOAD_USER,
 } from '../types';
 
-export default (state, action) => {
+const AccountReducer = (state, action) => {
   switch (action.type) {
     case LOAD_USER:
       return {
@@ -29,3 +29,5 @@ export default (state, action) => {
       return state;
   }
 };
+
+export default AccountReducer;

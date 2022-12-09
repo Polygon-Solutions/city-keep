@@ -2,8 +2,6 @@ import React, { useState, useContext } from 'react';
 
 import AccountContext from '../../context/user/AccountContext';
 
-import WorkInProgress from '../dev/WorkInProgress';
-
 import {
   Link,
   Button,
@@ -56,24 +54,18 @@ const SignIn = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <WorkInProgress placement="right">
-          <FormControlLabel
-            control={
-              <Checkbox value="remember" color="primary" />
-            }
-            label="Remember me"
-          />
-        </WorkInProgress>
-        <WorkInProgress placement="bottom-end">
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            type="submit"
-          >
-            Sign In
-          </Button>
-        </WorkInProgress>
+        <FormControlLabel
+          control={<Checkbox value="remember" color="primary" />}
+          label="Remember me"
+        />
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          type="submit"
+        >
+          Sign In
+        </Button>
 
         <Link href="/forgotpassword" variant="body2">
           Forgot Password?

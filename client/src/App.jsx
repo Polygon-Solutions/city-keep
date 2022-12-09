@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -25,12 +25,15 @@ const App = () => {
   const { isAuthenticated, loadUser } =
     useContext(AccountContext);
 
-  useEffect(async () => {
-    try {
-      await loadUser();
-    } catch (err) {
-      console.log(err.message);
-    }
+  useEffect(() => {
+    const load = async () => {
+      try {
+        await loadUser();
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

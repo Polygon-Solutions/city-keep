@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import AccountContext from '../../context/user/AccountContext';
 
-import WorkInProgress from '../dev/WorkInProgress';
-
 import {
   Button,
   TextField,
@@ -97,16 +95,14 @@ const SignUp = () => {
             />
           </Grid>
         </Grid>
-        <WorkInProgress placement="bottom">
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ my: 3 }}
-            type="submit"
-          >
-            Sign Up
-          </Button>
-        </WorkInProgress>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ my: 3 }}
+          type="submit"
+        >
+          Sign Up
+        </Button>
       </Box>
       <Typography align="center">OR</Typography>
       <Button

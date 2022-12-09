@@ -69,16 +69,16 @@ const AccountState = ({ children }) => {
             },
           });
 
-          const cogUserData = await cognitoPromise;
+          const cognitoData = await cognitoPromise;
           const res = await databasePromise;
-          const dbUserData = await res.json();
+          const databaseData = await res.json();
 
-          console.log(cogUserData);
-          console.log(dbUserData);
+          console.log(cognitoData);
+          console.log(databaseData);
 
-          const { user } = dbUserData;
+          const { user } = databaseData;
 
-          if (cogUserData.attributes.email === user.email) {
+          if (cognitoData.attributes.email === user.email) {
             dispatch({
               type: LOAD_USER,
               payload: {
@@ -109,7 +109,7 @@ const AccountState = ({ children }) => {
   const signUp = (firstName, lastName, email, password) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const cogUserData = await new Promise(
+        const cognitoData = await new Promise(
           (resolve, reject) => {
             Pool.signUp(
               email,
@@ -133,20 +133,20 @@ const AccountState = ({ children }) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            userId: cogUserData.userSub,
+            userId: cognitoData.userSub,
             firstName,
             lastName,
             email,
           }),
         });
-        const dbUserData = await res.json();
+        const databaseData = await res.json();
 
-        console.log(cogUserData);
-        console.log(dbUserData);
+        console.log(cognitoData);
+        console.log(databaseData);
 
         dispatch({
           type: LOAD_COGNITO_USER,
-          payload: { cognitoUser: cogUserData.user },
+          payload: { cognitoUser: cognitoData.user },
         });
 
         resolve();

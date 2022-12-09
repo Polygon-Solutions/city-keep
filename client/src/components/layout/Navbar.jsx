@@ -44,11 +44,9 @@ const Navbar = () => {
           </StyledFab>
         </WorkInProgress>
         <Box sx={{ flexGrow: 1 }} />
-        <WorkInProgress placement="top" offset={[-24, 12]}>
-          <IconButton href="/settings" color="inherit">
-            <SettingsIcon />
-          </IconButton>
-        </WorkInProgress>
+        <IconButton href="/settings" color="inherit">
+          <SettingsIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

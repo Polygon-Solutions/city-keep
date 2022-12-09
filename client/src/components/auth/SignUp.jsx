@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import AccountContext from '../../context/user/AccountContext';
 
@@ -21,11 +22,13 @@ const SignUp = () => {
 
   const { signUp, signIn } = useContext(AccountContext);
 
+  const navigate = useNavigate();
+
   const handleRegister = async (event) => {
     event.preventDefault();
     try {
-      signUp(firstName, lastName, email, password);
-      //Redirect to verification page
+      await signUp(firstName, lastName, email, password);
+      navigate('/verify');
     } catch (err) {
       console.log(err);
     }

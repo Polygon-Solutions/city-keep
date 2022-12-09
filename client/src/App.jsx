@@ -19,6 +19,7 @@ import ReportsPage from './components/pages/ReportsPage';
 import SettingsPage from './components/pages/SettingsPage';
 import LandingPage from './components/pages/LandingPage';
 import ForgotPassword from './components/pages/ForgotPassword';
+import VerifyUser from './components/pages/VerifyUser';
 
 const App = () => {
   const { isAuthenticated, loadUser } =
@@ -44,6 +45,7 @@ const App = () => {
               path="/forgotpassword"
               element={<ForgotPassword />}
             />
+            <Route path="/verify" element={<VerifyUser />} />
           </Route>
           <Route
             element={

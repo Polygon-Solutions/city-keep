@@ -5,6 +5,7 @@ import AccountReducer from './AccountReducer';
 
 import {
   LOAD_USER,
+  LOAD_COGNITO_USER,
   UNLOAD_USER,
   AUTH_ERROR,
   CLEAR_ERRORS,
@@ -20,6 +21,7 @@ const AccountState = ({ children }) => {
   const initialState = {
     isAuthenticated: false,
     user: null,
+    cognitoUser: null,
   };
 
   const [state, dispatch] = useReducer(
@@ -60,8 +62,7 @@ const AccountState = ({ children }) => {
         const databasePromise = fetch('/api/users', {
           method: 'GET',
           headers: {
-            // 'User-Id': user.username,
-            'User-Id': 2,
+            'User-Id': user.username,
           },
         });
 
@@ -71,6 +72,9 @@ const AccountState = ({ children }) => {
 
         console.log(cogUserData);
         console.log(dbUserData);
+
+        console.log(cogUserData.attributes.email);
+        console.log(dbUserData.user.email);
         if (
           cogUserData.attributes.email === dbUserData.user.email
         ) {
@@ -127,10 +131,31 @@ const AccountState = ({ children }) => {
         console.log(cogUserData);
         console.log(dbUserData);
 
+        dispatch({
+          type: LOAD_COGNITO_USER,
+          payload: { cognitoUser: cogUserData.user },
+        });
+
         resolve();
       } catch (err) {
         reject(err);
       }
+    });
+  };
+
+  const verifyUser = async (verificationCode) => {
+    return new Promise((resolve, reject) => {
+      state.cognitoUser.confirmRegistration(
+        verificationCode,
+        true,
+        (err, result) => {
+          if (!err) {
+            resolve(result);
+          } else {
+            reject(err);
+          }
+        }
+      );
     });
   };
 
@@ -175,8 +200,10 @@ const AccountState = ({ children }) => {
       value={{
         isAuthenticated: state.isAuthenticated,
         user: state.user,
+        cognitoUser: state.cognitoUser,
         loadUser,
         signUp,
+        verifyUser,
         signIn,
         logout,
       }}

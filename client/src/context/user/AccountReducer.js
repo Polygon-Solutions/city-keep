@@ -1,5 +1,6 @@
 import {
   LOAD_USER,
+  LOAD_COGNITO_USER,
   UNLOAD_USER,
   AUTH_ERROR,
   CLEAR_ERRORS,
@@ -7,12 +8,10 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
-    case LOAD_USER:
+    case LOAD_COGNITO_USER:
       return {
         ...state,
-        isAuthenticated: true,
-        loading: false,
-        user: action.payload,
+        cognitoUser: action.payload.cognitoUser,
       };
     default:
       return state;

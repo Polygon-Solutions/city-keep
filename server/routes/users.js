@@ -13,13 +13,10 @@ router.post('/', async (req, res) => {
     const { body } = req;
     const { rows } = await db.query(
       'INSERT INTO users (id, last_name, first_name, email) VALUES ($1, $2, $3, $4) RETURNING *',
-      [body.id, body.last_name, body.first_name, body.email]
+      [body.userId, body.lastName, body.firstName, body.email]
     );
     res.status(201).json({
-      status: 'Success',
-      data: {
-        user: rows[0],
-      },
+      user: rows[0],
     });
   } catch (err) {
     console.error(
@@ -44,13 +41,10 @@ router.get('/', async (req, res) => {
   try {
     const { rows } = await db.query(
       'SELECT * FROM users WHERE id = $1',
-      [req.body.id]
+      [req.header('User-Id')]
     );
     res.status(200).json({
-      status: 'Success',
-      data: {
-        user: rows[0],
-      },
+      user: rows[0],
     });
   } catch (err) {
     console.error(

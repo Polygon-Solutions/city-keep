@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import { AccountContext } from '../../auth/Account';
-
-import WorkInProgress from '../dev/WorkInProgress';
+import AccountContext from '../../context/user/AccountContext';
 
 import {
   Link,
@@ -13,24 +11,18 @@ import {
   Box,
   Container,
 } from '@mui/material';
+import WorkInProgress from '../dev/WorkInProgress';
 
-const SignIn = ({ setAuth }) => {
+const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { authenticate } = useContext(AccountContext);
+  const { signIn } = useContext(AccountContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    authenticate(email, password)
-      .then((data) => {
-        console.log('Signed in!', data);
-        setAuth(true);
-      })
-      .catch((err) => {
-        console.log('Failed to sign in.', err);
-      });
+    signIn(email, password);
   };
 
   return (
@@ -71,16 +63,14 @@ const SignIn = ({ setAuth }) => {
             label="Remember me"
           />
         </WorkInProgress>
-        <WorkInProgress placement="bottom-end">
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            type="submit"
-          >
-            Sign In
-          </Button>
-        </WorkInProgress>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          type="submit"
+        >
+          Sign In
+        </Button>
 
         <Link href="/forgotpassword" variant="body2">
           Forgot Password?

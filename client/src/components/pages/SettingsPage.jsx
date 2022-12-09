@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import { AccountContext } from '../../auth/Account';
+import AccountContext from '../../context/user/AccountContext';
 
 import {
   Typography,
@@ -10,38 +10,25 @@ import {
   Divider,
 } from '@mui/material';
 
-const SettingsPage = ({ setAuth }) => {
+const SettingsPage = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  const { getSession, logout } = useContext(AccountContext);
+  const { changePassword, logout } = useContext(AccountContext);
 
-  const handleChangePassword = (event) => {
+  const handleChangePassword = async (event) => {
     event.preventDefault();
-    console.log('Change Password!');
-
-    getSession().then(({ user }) => {
-      user.changePassword(
-        currentPassword,
-        newPassword,
-        (err, result) => {
-          if (err) {
-            console.error(err);
-          } else {
-            console.log(result);
-          }
-        }
-      );
-    });
-
-    setCurrentPassword('');
-    setNewPassword('');
+    try {
+      await changePassword(currentPassword, newPassword);
+      setCurrentPassword('');
+      setNewPassword('');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleLogout = () => {
-    console.log('Logged out.');
     logout();
-    setAuth(false);
   };
 
   return (

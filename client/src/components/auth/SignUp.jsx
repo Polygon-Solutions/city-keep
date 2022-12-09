@@ -1,9 +1,7 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import UserPool from '../../auth/UserPool';
-import { AccountContext } from '../../auth/Account';
-
-import WorkInProgress from '../dev/WorkInProgress';
+import AccountContext from '../../context/user/AccountContext';
 
 import {
   Button,
@@ -14,46 +12,38 @@ import {
   Typography,
 } from '@mui/material';
 
-const SignUp = ({ setAuth }) => {
+const SignUp = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { authenticate } = useContext(AccountContext);
+  const { signUp, signIn } = useContext(AccountContext);
 
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  const handleRegister = async (event) => {
     event.preventDefault();
-
-    UserPool.signUp(email, password, [], null, (err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log(data);
-        setAuth(true);
-      }
-    });
+    try {
+      await signUp(firstName, lastName, email, password);
+      navigate('/verify');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleDemo = () => {
-    authenticate(
+    signIn(
       process.env.REACT_APP_DEMO_USERNAME,
       process.env.REACT_APP_DEMO_PASSWORD
-    )
-      .then((data) => {
-        console.log('Signed in!', data);
-        setAuth(true);
-      })
-      .catch((err) => {
-        console.log('Failed to sign in.', err);
-      });
+    );
   };
 
   return (
     <Container component="main" maxWidth="xs">
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={handleRegister}
         sx={{ mt: 3 }}
       >
         <Grid container spacing={2}>
@@ -105,16 +95,14 @@ const SignUp = ({ setAuth }) => {
             />
           </Grid>
         </Grid>
-        <WorkInProgress placement="bottom">
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ my: 3 }}
-            type="submit"
-          >
-            Sign Up
-          </Button>
-        </WorkInProgress>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ my: 3 }}
+          type="submit"
+        >
+          Sign Up
+        </Button>
       </Box>
       <Typography align="center">OR</Typography>
       <Button

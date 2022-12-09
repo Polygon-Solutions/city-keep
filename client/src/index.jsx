@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-import { Account } from './auth/Account';
+import AccountState from './context/user/AccountState';
 
 ReactDOM.render(
-  <Account>
-    <App />
-  </Account>,
+  <React.StrictMode>
+    <AccountState>
+      <App />
+    </AccountState>
+  </React.StrictMode>,
   document.getElementById('root')
 );

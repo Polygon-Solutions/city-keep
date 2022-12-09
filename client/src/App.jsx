@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from 'react-router-dom';
 
-import { AccountContext } from './auth/Account';
+import AccountContext from './context/user/AccountContext';
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.jsx';
@@ -19,51 +19,51 @@ import ReportsPage from './components/pages/ReportsPage';
 import SettingsPage from './components/pages/SettingsPage';
 import LandingPage from './components/pages/LandingPage';
 import ForgotPassword from './components/pages/ForgotPassword';
+import VerifyUser from './components/pages/VerifyUser';
 
 const App = () => {
-  const [auth, setAuth] = useState(false);
-
-  const { getSession } = useContext(AccountContext);
+  const { isAuthenticated, loadUser } =
+    useContext(AccountContext);
 
   useEffect(() => {
-    getSession()
-      .then((session) => {
-        console.log('Session: ', session);
-        setAuth(true);
-      })
-      .catch((err) => {
-        console.log('No session.');
-        setAuth(false);
-      });
+    const load = async () => {
+      try {
+        await loadUser();
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        {!auth && <Heading />}
+        {!isAuthenticated && <Heading />}
         <Routes>
           <Route
-            element={<NoAuthOutlet isAuthenticated={auth} />}
+            element={
+              <NoAuthOutlet isAuthenticated={isAuthenticated} />
+            }
           >
-            <Route
-              path="/"
-              element={<LandingPage setAuth={setAuth} />}
-            />
+            <Route path="/" element={<LandingPage />} />
             <Route
               path="/forgotpassword"
               element={<ForgotPassword />}
             />
+            <Route path="/verify" element={<VerifyUser />} />
           </Route>
-          <Route element={<AuthOutlet isAuthenticated={auth} />}>
+          <Route
+            element={
+              <AuthOutlet isAuthenticated={isAuthenticated} />
+            }
+          >
             <Route path="reports" element={<ReportsPage />} />
-            <Route
-              path="settings"
-              element={<SettingsPage setAuth={setAuth} />}
-            />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
         </Routes>
-        {auth && <Navbar />}
+        {isAuthenticated && <Navbar />}
       </Router>
     </ThemeProvider>
   );

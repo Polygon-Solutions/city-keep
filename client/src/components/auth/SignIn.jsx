@@ -11,6 +11,7 @@ import {
   Box,
   Container,
 } from '@mui/material';
+import WorkInProgress from '../dev/WorkInProgress';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -54,10 +55,14 @@ const SignIn = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
+        <WorkInProgress placement="right">
+          <FormControlLabel
+            control={
+              <Checkbox value="remember" color="primary" />
+            }
+            label="Remember me"
+          />
+        </WorkInProgress>
         <Button
           fullWidth
           variant="contained"

@@ -25,8 +25,12 @@ const App = () => {
   const { isAuthenticated, loadUser } =
     useContext(AccountContext);
 
-  useEffect(() => {
-    loadUser();
+  useEffect(async () => {
+    try {
+      await loadUser();
+    } catch (err) {
+      console.log(err.message);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

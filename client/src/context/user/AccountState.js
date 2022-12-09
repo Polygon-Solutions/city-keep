@@ -27,78 +27,83 @@ const AccountState = ({ children }) => {
     initialState
   );
 
-  const loadUser = async () => {
-    try {
-      const cognitoUser = Pool.getCurrentUser();
-      if (cognitoUser) {
-        const cognitoPromise = new Promise((resolve, reject) => {
-          cognitoUser.getSession((err, sessionData) => {
-            if (!err) {
-              cognitoUser.getUserAttributes(
-                (err, attributes) => {
-                  if (!err) {
-                    const results = {};
+  const loadUser = () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const cognitoUser = Pool.getCurrentUser();
+        if (cognitoUser) {
+          const cognitoPromise = new Promise(
+            (resolve, reject) => {
+              cognitoUser.getSession((err, sessionData) => {
+                if (!err) {
+                  cognitoUser.getUserAttributes(
+                    (err, attributes) => {
+                      if (!err) {
+                        const results = {};
 
-                    for (let attribute of attributes) {
-                      const { Name, Value } = attribute;
-                      results[Name] = Value;
+                        for (let attribute of attributes) {
+                          const { Name, Value } = attribute;
+                          results[Name] = Value;
+                        }
+
+                        resolve({
+                          sessionData,
+                          attributes: results,
+                        });
+                      } else {
+                        reject(err);
+                      }
                     }
-
-                    resolve({
-                      sessionData,
-                      attributes: results,
-                    });
-                  } else {
-                    reject(err);
-                  }
+                  );
+                } else {
+                  reject(err);
                 }
-              );
-            } else {
-              reject(err);
+              });
             }
-          });
-        });
+          );
 
-        const databasePromise = fetch('/api/users', {
-          method: 'GET',
-          headers: {
-            'User-Id': cognitoUser.username,
-          },
-        });
-
-        const cogUserData = await cognitoPromise;
-        const res = await databasePromise;
-        const dbUserData = await res.json();
-
-        console.log(cogUserData);
-        console.log(dbUserData);
-
-        const { user } = dbUserData;
-
-        if (cogUserData.attributes.email === user.email) {
-          dispatch({
-            type: LOAD_USER,
-            payload: {
-              user: {
-                id: user.id,
-                firstName: user.first_name,
-                lastName: user.last_name,
-                email: user.email,
-              },
-              cognitoUser,
+          const databasePromise = fetch('/api/users', {
+            method: 'GET',
+            headers: {
+              'User-Id': cognitoUser.username,
             },
           });
+
+          const cogUserData = await cognitoPromise;
+          const res = await databasePromise;
+          const dbUserData = await res.json();
+
+          console.log(cogUserData);
+          console.log(dbUserData);
+
+          const { user } = dbUserData;
+
+          if (cogUserData.attributes.email === user.email) {
+            dispatch({
+              type: LOAD_USER,
+              payload: {
+                user: {
+                  id: user.id,
+                  firstName: user.first_name,
+                  lastName: user.last_name,
+                  email: user.email,
+                },
+                cognitoUser,
+              },
+            });
+            resolve();
+          } else {
+            throw new Error(
+              'Inconsistent data between Cognito and database'
+            );
+          }
         } else {
-          throw new Error(
-            'Inconsistent data between Cognito and database'
-          );
+          throw new Error('No user in storage.');
         }
-      } else {
-        throw new Error('No user in storage.');
+      } catch (err) {
+        reject(err);
       }
-    } catch (err) {
-      console.log(err.message);
-    }
+    });
   };
 
   const signUp = (firstName, lastName, email, password) => {
@@ -189,10 +194,31 @@ const AccountState = ({ children }) => {
           },
         });
       });
-      loadUser();
+      await loadUser();
     } catch (err) {
       console.log(err.message);
     }
+  };
+
+  const changePassword = (currentPassword, newPassword) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await loadUser();
+        state.cognitoUser.changePassword(
+          currentPassword,
+          newPassword,
+          (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve();
+            }
+          }
+        );
+      } catch (err) {
+        reject(err);
+      }
+    });
   };
 
   const logout = () => {
@@ -215,6 +241,7 @@ const AccountState = ({ children }) => {
         signUp,
         verifyUser,
         signIn,
+        changePassword,
         logout,
       }}
     >

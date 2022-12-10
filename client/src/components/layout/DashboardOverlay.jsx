@@ -40,7 +40,7 @@ const DashboardOverlay = () => {
         color="primary"
         sx={{ top: 'auto', bottom: 0 }}
       >
-        <Toolbar>
+        <Toolbar variant="dense" sx={{ minHeight: '56px' }}>
           <WorkInProgress placement="top" offset={[24, 12]}>
             <IconButton href="/reports" color="inherit">
               <MenuIcon />

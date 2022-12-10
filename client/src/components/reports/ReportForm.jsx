@@ -1,4 +1,5 @@
 import React from 'react';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 import {
   Box,
@@ -7,8 +8,14 @@ import {
   Typography,
   Zoom,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 const ReportForm = ({ anchorEl, setAnchorEl }) => {
+  const { height, width } = useWindowDimensions();
+  const distanceFromButton = 16;
+
+  const theme = useTheme();
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -21,17 +28,25 @@ const ReportForm = ({ anchorEl, setAnchorEl }) => {
 
   return (
     <Popover
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
+      anchorReference="anchorPosition"
+      anchorPosition={{
+        left: width / 2,
+        top: height - (56 + 28 + distanceFromButton),
       }}
       transformOrigin={{
         vertical: 'bottom',
         horizontal: 'center',
       }}
       TransitionComponent={Zoom}
-      PaperProps={{ sx: { width: 1 } }}
+      PaperProps={{
+        sx: {
+          width: 1,
+          height: height - (56 + 28 + distanceFromButton + 16),
+          borderRadius: '6px',
+          border: `3px solid ${theme.palette.primary.main}`,
+          boxSizing: 'border-box',
+        },
+      }}
       open={open}
       onClose={handleClose}
     >

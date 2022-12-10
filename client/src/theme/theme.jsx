@@ -28,6 +28,11 @@ const preTheme = createTheme({
       color: '#37474f',
       padding: '15px',
     },
+    h2: {
+      fontSize: '30px',
+      color: '#37474f',
+      padding: '15px',
+    },
   },
 });
 

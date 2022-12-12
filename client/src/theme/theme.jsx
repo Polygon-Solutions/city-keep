@@ -11,7 +11,7 @@ const preTheme = createTheme({
       main: '#ff9800',
       contrastText: '#fff',
     },
-    danger: {
+    error: {
       main: '#ef5350',
       contrastText: '#fff',
     },

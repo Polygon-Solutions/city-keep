@@ -15,7 +15,7 @@ import {
   Add as AddIcon,
   Settings as SettingsIcon,
 } from '@mui/icons-material';
-import ReportForm from '../reports/ReportForm';
+import ReportForm from './ReportFormPopover';
 
 const StyledFab = styled(Fab)({
   position: 'absolute',
@@ -27,11 +27,7 @@ const StyledFab = styled(Fab)({
 });
 
 const DashboardOverlay = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleFormOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const [formOpen, setFormOpen] = useState(false);
 
   return (
     <>
@@ -49,7 +45,7 @@ const DashboardOverlay = () => {
           <WorkInProgress placement="top">
             <StyledFab
               color="secondary"
-              onClick={(event) => handleFormOpen(event)}
+              onClick={() => setFormOpen(true)}
             >
               <AddIcon />
             </StyledFab>
@@ -60,10 +56,7 @@ const DashboardOverlay = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <ReportForm
-        anchorEl={anchorEl}
-        setAnchorEl={setAnchorEl}
-      />
+      <ReportForm open={formOpen} setOpen={setFormOpen} />
     </>
   );
 };

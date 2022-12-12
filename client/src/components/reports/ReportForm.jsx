@@ -1,66 +1,168 @@
-import React from 'react';
-import useWindowDimensions from '../hooks/useWindowDimensions';
+import React, { useState } from 'react';
+
+import ImageUpload from './ImageUpload';
 
 import {
-  Box,
-  Popover,
+  Grid,
   TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
   Typography,
-  Zoom,
+  Button,
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 
-const ReportForm = ({ anchorEl, setAnchorEl }) => {
-  const { height, width } = useWindowDimensions();
-  const distanceFromButton = 16;
+const ReportForm = () => {
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const [address, setAddress] = useState('');
 
-  const theme = useTheme();
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleCategory = (event) => {
+    setCategory(event.target.value);
   };
 
-  const open = Boolean(anchorEl);
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  const handleSubmit = () => {
     console.log('Submit!');
   };
 
+  const handleReset = () => {
+    setTitle('');
+    setCategory('');
+    setDescription('');
+    setAddress('');
+  };
+
   return (
-    <Popover
-      anchorReference="anchorPosition"
-      anchorPosition={{
-        left: width / 2,
-        top: height - (56 + 28 + distanceFromButton),
-      }}
-      transformOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
-      }}
-      TransitionComponent={Zoom}
-      PaperProps={{
-        sx: {
-          width: 1,
-          height: height - (56 + 28 + distanceFromButton + 16),
-          borderRadius: '6px',
-          border: `3px solid ${theme.palette.primary.main}`,
-          boxSizing: 'border-box',
-        },
-      }}
-      open={open}
-      onClose={handleClose}
+    <Grid
+      container
+      direction="column"
+      wrap="nowrap"
+      component="form"
+      sx={{ p: 3 }}
+      onSubmit={handleSubmit}
     >
-      <Box
-        component="form"
-        sx={{ p: 3 }}
-        onSubmit={handleSubmit}
-      >
+      <Grid item>
         <Typography variant="h2" sx={{ p: 0, mb: 2 }}>
           Submit a Report
         </Typography>
-        <TextField />
-      </Box>
-    </Popover>
+        <TextField
+          required
+          fullWidth
+          size="small"
+          margin="dense"
+          sx={{ my: 1 }}
+          label="Title"
+          id="report-title"
+          name="report-title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <FormControl
+          required
+          size="small"
+          sx={{ my: 1, width: '100%' }}
+        >
+          <InputLabel id="demo-select-small">
+            Category
+          </InputLabel>
+          <Select
+            labelId="category"
+            id="category"
+            value={category}
+            label="Category"
+            MenuProps={{ sx: { maxHeight: '200px' } }}
+            onChange={handleCategory}
+          >
+            <MenuItem value={''}>
+              <em>None</em>
+            </MenuItem>
+            {[
+              { id: 1, label: 'Drainage/Flooding' },
+              { id: 2, label: 'Graffiti/Vandalism' },
+              { id: 3, label: 'Litter Pickup' },
+              { id: 4, label: 'Parks - General' },
+              { id: 5, label: 'Potholes' },
+              { id: 6, label: 'Sidewalks' },
+              { id: 7, label: 'Signs' },
+              { id: 8, label: 'Snow/Ice' },
+              { id: 9, label: 'Streetlights' },
+              { id: 10, label: 'Streets - General' },
+              { id: 11, label: 'Trails/Walkways' },
+              { id: 12, label: 'Trees' },
+              { id: 13, label: 'Utilities/Infrastructure' },
+              { id: 14, label: 'Other' },
+            ].map((category) => (
+              <MenuItem key={category.id} value={category.id}>
+                {category.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <TextField
+          fullWidth
+          required
+          multiline
+          rows={4}
+          size="small"
+          margin="dense"
+          sx={{ my: 1 }}
+          label="Description"
+          id="report-description"
+          name="report-description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <TextField
+          fullWidth
+          required
+          size="small"
+          margin="dense"
+          sx={{ my: 1 }}
+          label="Address"
+          id="report-address"
+          name="report-address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+        <ImageUpload />
+      </Grid>
+      <Grid
+        item
+        flexGrow={1}
+        container
+        flexDirection="column"
+        justifyContent="flex-end"
+      >
+        <Grid
+          item
+          container
+          justifyContent="space-between"
+          columnGap={4}
+        >
+          <Button
+            variant="contained"
+            color="secondary"
+            type="submit"
+            sx={{ display: 'flex', flexGrow: 1 }}
+          >
+            Submit
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            type="reset"
+            sx={{ display: 'flex', flexGrow: 1 }}
+            onClick={handleReset}
+          >
+            Clear
+          </Button>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 

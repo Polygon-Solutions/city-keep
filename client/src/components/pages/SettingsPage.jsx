@@ -94,7 +94,7 @@ const SettingsPage = () => {
         </Box>
         <Typography sx={{ mb: 1 }}>Logout</Typography>
         <Button
-          color="danger"
+          color="error"
           variant="outlined"
           size="small"
           sx={{

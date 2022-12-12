@@ -147,7 +147,7 @@ const ReportForm = () => {
             variant="contained"
             color="secondary"
             type="submit"
-            sx={{ display: 'flex', flexGrow: 1 }}
+            sx={{ width: '45%' }}
           >
             Submit
           </Button>
@@ -155,7 +155,7 @@ const ReportForm = () => {
             variant="contained"
             color="error"
             type="reset"
-            sx={{ display: 'flex', flexGrow: 1 }}
+            sx={{ width: '45%' }}
             onClick={handleReset}
           >
             Clear

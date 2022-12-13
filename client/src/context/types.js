@@ -4,3 +4,4 @@ export const LOAD_COGNITO_USER = 'LOAD_COGNITO_USER';
 export const UNLOAD_USER = 'UNLOAD_USER';
 
 // Report Types
+export const LOAD_REPORTS = 'LOAD_REPORTS';

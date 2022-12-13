@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import AccountContext from '../../context/user/AccountContext';
+import AccountContext from '../../context/account/AccountContext';
 
 import {
   TextField,

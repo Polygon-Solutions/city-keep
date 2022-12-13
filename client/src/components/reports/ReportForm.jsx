@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+
+import ReportsContext from '../../context/reports/ReportsContext';
+import AccountContext from '../../context/account/AccountContext';
 
 import ImageUpload from './ImageUpload';
 
@@ -19,14 +22,18 @@ const ReportForm = () => {
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
 
-  const handleCategory = (event) => {
-    setCategory(event.target.value);
-  };
+  const { submitReport } = useContext(ReportsContext);
+  const { user } = useContext(AccountContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log('Submit!');
+    submitReport(user.id, title, category, description, address);
+
+    setTitle('');
+    setCategory('');
+    setDescription('');
+    setAddress('');
   };
 
   const handleReset = () => {
@@ -75,7 +82,7 @@ const ReportForm = () => {
             value={category}
             label="Category"
             MenuProps={{ sx: { maxHeight: '200px' } }}
-            onChange={handleCategory}
+            onChange={(event) => setCategory(event.target.value)}
           >
             <MenuItem value={''}>
               <em>None</em>

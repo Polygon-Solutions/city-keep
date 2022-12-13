@@ -14,6 +14,7 @@ CREATE TABLE categories (
 CREATE TABLE reports (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id VARCHAR(128) REFERENCES users (id) NOT NULL,
+  title VARCHAR(255) NOT NULL,
   category_id INT REFERENCES categories (id) NOT NULL,
   description TEXT NOT NULL,
   report_time TIMESTAMP(0) WITH TIME ZONE NOT NULL,

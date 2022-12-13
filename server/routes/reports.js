@@ -12,22 +12,18 @@ router.post('/', async (req, res) => {
   try {
     const { body } = req;
     const { rows } = await db.query(
-      'INSERT INTO reports (user_id, category_id, description, report_time, address, longitude, latitude) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      'INSERT INTO reports (user_id, title, category_id, description, report_time, address) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
       [
         body.user_id,
+        body.title,
         body.category_id,
         body.description,
         body.report_time,
         body.address,
-        body.longitude,
-        body.latitude,
       ]
     );
     res.status(201).json({
-      status: 'Success',
-      data: {
-        report: rows[0],
-      },
+      report: rows[0],
     });
   } catch (err) {
     console.error(

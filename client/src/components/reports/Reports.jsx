@@ -94,7 +94,7 @@ const Reports = () => {
             </Typography>
           </Grid>
         </AccordionSummary>
-        <AccordionDetails sx={{ backgroundColor: '#ececec' }}>
+        <AccordionDetails sx={{ backgroundColor: '#ededed' }}>
           <ReportDetail
             label={'Category'}
             detail={report.category}

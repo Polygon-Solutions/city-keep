@@ -37,19 +37,15 @@ const DashboardOverlay = () => {
         sx={{ top: 'auto', bottom: 0 }}
       >
         <Toolbar variant="dense" sx={{ minHeight: '56px' }}>
-          <WorkInProgress placement="top" offset={[24, 12]}>
-            <IconButton href="/reports" color="inherit">
-              <MenuIcon />
-            </IconButton>
-          </WorkInProgress>
-          <WorkInProgress placement="top">
-            <StyledFab
-              color="secondary"
-              onClick={() => setFormOpen(true)}
-            >
-              <AddIcon />
-            </StyledFab>
-          </WorkInProgress>
+          <IconButton href="/reports" color="inherit">
+            <MenuIcon />
+          </IconButton>
+          <StyledFab
+            color="secondary"
+            onClick={() => setFormOpen(true)}
+          >
+            <AddIcon />
+          </StyledFab>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton href="/settings" color="inherit">
             <SettingsIcon />

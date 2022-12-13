@@ -10,6 +10,7 @@ import {
   Divider,
 } from '@mui/material';
 import Page from '../layout/Page';
+import PageHeading from '../layout/PageHeading';
 
 const SettingsPage = () => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -33,8 +34,10 @@ const SettingsPage = () => {
   };
 
   return (
-    <Page>
-      <Typography variant="h1">Settings</Typography>
+    <Page mt={2}>
+      <PageHeading>
+        <Typography variant="h1">Settings</Typography>
+      </PageHeading>
       <Box sx={{ width: 0.85, mx: 'auto', mt: 2 }}>
         <Typography variant="h5" sx={{ mb: 1 }}>
           User Details

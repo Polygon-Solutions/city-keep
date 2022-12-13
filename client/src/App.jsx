@@ -11,7 +11,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.jsx';
 
 //Components
-import DashboardOverlay from './components/layout/DashboardOverlay';
+import DashboardOverlay from './components/layout/Navbar';
 import Heading from './components/layout/Heading';
 import AuthOutlet from './components/routing/AuthOutlet';
 import NoAuthOutlet from './components/routing/NoAuthOutlet';

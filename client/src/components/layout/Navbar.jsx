@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import WorkInProgress from '../dev/WorkInProgress';
-
 import { styled } from '@mui/material/styles';
 import {
   AppBar,

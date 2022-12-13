@@ -46,7 +46,7 @@ const ReportsPage = () => {
               onChange={handleFilterUser}
             />
           }
-          label="Show my reports"
+          label="My Reports"
           sx={{ ml: 0 }}
           slotProps={{
             typography: {

@@ -9,11 +9,16 @@ const preTheme = createTheme({
     },
     secondary: {
       main: '#ff9800',
+      light: '#ffc947',
+      dark: '#c66900',
       contrastText: '#fff',
     },
-    danger: {
+    error: {
       main: '#ef5350',
       contrastText: '#fff',
+    },
+    neutral: {
+      main: '#e2ffe2',
     },
     construction: {
       main: '#00838f',
@@ -25,8 +30,21 @@ const preTheme = createTheme({
   typography: {
     h1: {
       fontSize: '40px',
+      color: '#3b3b3b',
+    },
+    h2: {
+      fontSize: '30px',
       color: '#37474f',
       padding: '15px',
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 450,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
     },
   },
 });

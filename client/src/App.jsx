@@ -11,7 +11,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.jsx';
 
 //Components
-import Navbar from './components/layout/Navbar';
+import DashboardOverlay from './components/layout/Navbar';
 import Heading from './components/layout/Heading';
 import AuthOutlet from './components/routing/AuthOutlet';
 import NoAuthOutlet from './components/routing/NoAuthOutlet';
@@ -30,7 +30,7 @@ const App = () => {
       try {
         await loadUser();
       } catch (err) {
-        console.log(err.message);
+        console.log(err);
       }
     };
     load();
@@ -63,7 +63,7 @@ const App = () => {
             <Route path="settings" element={<SettingsPage />} />
           </Route>
         </Routes>
-        {isAuthenticated && <Navbar />}
+        {isAuthenticated && <DashboardOverlay />}
       </Router>
     </ThemeProvider>
   );

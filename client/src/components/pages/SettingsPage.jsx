@@ -9,6 +9,8 @@ import {
   Button,
   Divider,
 } from '@mui/material';
+import Page from '../layout/Page';
+import PageHeading from '../layout/PageHeading';
 
 const SettingsPage = () => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -32,8 +34,10 @@ const SettingsPage = () => {
   };
 
   return (
-    <div>
-      <Typography variant="h1">Settings</Typography>
+    <Page mt={2}>
+      <PageHeading>
+        <Typography variant="h1">Settings</Typography>
+      </PageHeading>
       <Box sx={{ width: 0.85, mx: 'auto', mt: 2 }}>
         <Typography variant="h5" sx={{ mb: 1 }}>
           User Details
@@ -94,7 +98,7 @@ const SettingsPage = () => {
         </Box>
         <Typography sx={{ mb: 1 }}>Logout</Typography>
         <Button
-          color="danger"
+          color="error"
           variant="outlined"
           size="small"
           sx={{
@@ -110,7 +114,7 @@ const SettingsPage = () => {
           Logout
         </Button>
       </Box>
-    </div>
+    </Page>
   );
 };
 

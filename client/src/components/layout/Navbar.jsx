@@ -1,6 +1,4 @@
-import React from 'react';
-
-import WorkInProgress from '../dev/WorkInProgress';
+import React, { useState } from 'react';
 
 import { styled } from '@mui/material/styles';
 import {
@@ -15,6 +13,7 @@ import {
   Add as AddIcon,
   Settings as SettingsIcon,
 } from '@mui/icons-material';
+import ReportForm from './ReportFormPopover';
 
 const StyledFab = styled(Fab)({
   position: 'absolute',
@@ -25,31 +24,35 @@ const StyledFab = styled(Fab)({
   margin: '0 auto',
 });
 
-const Navbar = () => {
+const DashboardOverlay = () => {
+  const [formOpen, setFormOpen] = useState(false);
+
   return (
-    <AppBar
-      position="fixed"
-      color="primary"
-      sx={{ top: 'auto', bottom: 0 }}
-    >
-      <Toolbar>
-        <WorkInProgress placement="top" offset={[24, 12]}>
+    <>
+      <AppBar
+        position="fixed"
+        color="primary"
+        sx={{ top: 'auto', bottom: 0 }}
+      >
+        <Toolbar variant="dense" sx={{ minHeight: '56px' }}>
           <IconButton href="/reports" color="inherit">
             <MenuIcon />
           </IconButton>
-        </WorkInProgress>
-        <WorkInProgress placement="top">
-          <StyledFab color="secondary">
+          <StyledFab
+            color="secondary"
+            onClick={() => setFormOpen(true)}
+          >
             <AddIcon />
           </StyledFab>
-        </WorkInProgress>
-        <Box sx={{ flexGrow: 1 }} />
-        <IconButton href="/settings" color="inherit">
-          <SettingsIcon />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+          <Box sx={{ flexGrow: 1 }} />
+          <IconButton href="/settings" color="inherit">
+            <SettingsIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <ReportForm open={formOpen} setOpen={setFormOpen} />
+    </>
   );
 };
 
-export default Navbar;
+export default DashboardOverlay;

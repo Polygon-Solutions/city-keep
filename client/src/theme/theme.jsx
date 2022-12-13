@@ -34,6 +34,15 @@ const preTheme = createTheme({
       padding: '15px',
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 450,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
 });
 
 const theme = createTheme(preTheme, {

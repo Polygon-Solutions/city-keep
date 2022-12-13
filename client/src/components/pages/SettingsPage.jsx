@@ -9,6 +9,7 @@ import {
   Button,
   Divider,
 } from '@mui/material';
+import Page from '../layout/Page';
 
 const SettingsPage = () => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -32,7 +33,7 @@ const SettingsPage = () => {
   };
 
   return (
-    <div>
+    <Page>
       <Typography variant="h1">Settings</Typography>
       <Box sx={{ width: 0.85, mx: 'auto', mt: 2 }}>
         <Typography variant="h5" sx={{ mb: 1 }}>
@@ -110,7 +111,7 @@ const SettingsPage = () => {
           Logout
         </Button>
       </Box>
-    </div>
+    </Page>
   );
 };
 

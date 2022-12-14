@@ -30,7 +30,7 @@ const App = () => {
       try {
         await loadUser();
       } catch (err) {
-        console.log(err);
+        console.log(err.message);
       }
     };
     load();

@@ -48,8 +48,6 @@ const ReportsState = ({ children }) => {
         method: 'GET',
       });
       const { reports } = await res.json();
-
-      console.log(reports);
       dispatch({
         type: LOAD_REPORTS,
         payload: { reports },
@@ -65,7 +63,6 @@ const ReportsState = ({ children }) => {
         method: 'GET',
       });
       const { reports } = await res.json();
-      console.log(reports);
       dispatch({
         type: LOAD_REPORTS,
         payload: { reports },

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import AccountContext from '../../context/user/AccountContext';
+import AccountContext from '../../context/account/AccountContext';
 
 import {
   Link,

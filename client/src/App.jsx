@@ -5,7 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 
-import AccountContext from './context/user/AccountContext';
+import AccountContext from './context/account/AccountContext';
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.jsx';
@@ -30,7 +30,7 @@ const App = () => {
       try {
         await loadUser();
       } catch (err) {
-        console.log(err);
+        console.log(err.message);
       }
     };
     load();

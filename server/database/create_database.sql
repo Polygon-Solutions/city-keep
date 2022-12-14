@@ -14,6 +14,7 @@ CREATE TABLE categories (
 CREATE TABLE reports (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id VARCHAR(128) REFERENCES users (id) NOT NULL,
+  title VARCHAR(255) NOT NULL,
   category_id INT REFERENCES categories (id) NOT NULL,
   description TEXT NOT NULL,
   report_time TIMESTAMP(0) WITH TIME ZONE NOT NULL,
@@ -21,10 +22,4 @@ CREATE TABLE reports (
   longitude DECIMAL(9,6),
   latitude DECIMAL(8,6),
   UNIQUE (user_id, report_time)
-);
-
-CREATE TABLE images (
-  report_id INT REFERENCES reports (id) NOT NULL,
-  image_url text NOT NULL,
-  UNIQUE (report_id, image_url)
 );

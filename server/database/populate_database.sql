@@ -1,4 +1,4 @@
-INSERT INTO users (id, last_name, first_name, email) VALUES ('1', 'Last', 'First', 'test@test.com');
+INSERT INTO users (id, last_name, first_name, email) VALUES ('58f4ea2a-d62f-4d2b-9126-e6fed97323b9', 'Anonymous', 'Demo', 'demo@anonymous.com');
 
 INSERT INTO categories (id, label) VALUES (1, 'Drainage/Flooding');
 INSERT INTO categories (id, label) VALUES (2, 'Graffiti/Vandalism');
@@ -15,10 +15,6 @@ INSERT INTO categories (id, label) VALUES (12, 'Trees');
 INSERT INTO categories (id, label) VALUES (13, 'Utilities/Infrastructure');
 INSERT INTO categories (id, label) VALUES (14, 'Other');
 
-INSERT INTO reports (user_id, category_id, description, report_time, address, longitude, latitude) VALUES (1, 7, 'Test report 1. Category selected as "Signs".', '2003-04-12 04:05:06 PST', '0000 W Georgia St., Vancouver, BC, V0V 0V0', 100.100000, 30.300000);
-INSERT INTO reports (user_id, category_id, description, report_time, address, longitude, latitude) VALUES (1, 12, 'Test report 2. Category selected as "Trees".', '2003-04-12 04:05:07 PST', '0000 W Georgia St., Vancouver, BC, V0V 0V0', 100.100000, 30.300000);
-INSERT INTO reports (user_id, category_id, description, report_time, address, longitude, latitude) VALUES (1, 14, 'Test report 3. Category selected as "Other".', '2003-04-12 04:05:08 PST', '0000 W Georgia St., Vancouver, BC, V0V 0V0', 100.100000, 30.300000);
-
-INSERT INTO images (report_id, image_url) VALUES (1, 'https://media-exp1.licdn.com/dms/image/C4D1BAQFFA6qBq7hHzg/company-background_10000/0/1622840496876?e=2159024400&v=beta&t=SDuw0kCp0yklzQhJkbARi0BkV8IcOxVVBwxGKOM3lD4');
-INSERT INTO images (report_id, image_url) VALUES (2, 'https://lp-cms-production.imgix.net/2021-04/GettyRF_612004360.jpg');
-INSERT INTO images (report_id, image_url) VALUES (3, 'https://tricycle.org/wp-content/uploads/2019/04/buddhism-in-vancouver.jpg');
+INSERT INTO reports (user_id, title, category_id, description, report_time, address) VALUES ('58f4ea2a-d62f-4d2b-9126-e6fed97323b9', 'Garbage Bags on Street', 3, 'There are some garbage bags on the street outside the W Georgia St. entrance of my building. I''m worried that they will cause an accident.', '2022-12-10 10:23:54-07', '1450 W Georgia St, Vancouver, BC V6G 2T8, Canada');
+INSERT INTO reports (user_id, title, category_id, description, report_time, address) VALUES ('58f4ea2a-d62f-4d2b-9126-e6fed97323b9', 'Large Potholes on Todd Rd.', 5, 'There are some large potholes on Todd Rd. between Dallas and Barnhartvale. There are so many that it has become dangerous to avoid them.', '2022-12-11 10:23:54-07', '1408 Todd Rd., Kamloops, BC V2C 5B5, Canada');
+INSERT INTO reports (user_id, title, category_id, description, report_time, address) VALUES ('58f4ea2a-d62f-4d2b-9126-e6fed97323b9', 'Streetlight is Flickering', 9, 'The streetlight is flickering on rue Simons. It makes the street feel like a techno club.', '2022-12-12 23:46:43+01', '14 Rue Simon, Reims, Grand Est 51100, France');

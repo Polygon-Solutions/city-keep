@@ -23,9 +23,3 @@ CREATE TABLE reports (
   latitude DECIMAL(8,6),
   UNIQUE (user_id, report_time)
 );
-
-CREATE TABLE images (
-  report_id INT REFERENCES reports (id) NOT NULL,
-  image_url text NOT NULL,
-  UNIQUE (report_id, image_url)
-);

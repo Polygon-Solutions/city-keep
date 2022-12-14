@@ -42,9 +42,38 @@ const ReportsState = ({ children }) => {
     console.log(newReportData.report);
   };
 
-  const loadReports = () => {};
+  const loadReports = async () => {
+    try {
+      const res = await fetch('/api/reports', {
+        method: 'GET',
+      });
+      const { reports } = await res.json();
 
-  const loadUserReports = () => {};
+      console.log(reports);
+      dispatch({
+        type: LOAD_REPORTS,
+        payload: { reports },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const loadUserReports = async (userId) => {
+    try {
+      const res = await fetch(`/api/reports/${userId}`, {
+        method: 'GET',
+      });
+      const { reports } = await res.json();
+      console.log(reports);
+      dispatch({
+        type: LOAD_REPORTS,
+        payload: { reports },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <ReportsContext.Provider

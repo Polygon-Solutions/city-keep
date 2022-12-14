@@ -47,13 +47,10 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const { rows } = await db.query(
-      'SELECT * FROM reports ORDER BY report_time DESC LIMIT 50'
+      'SELECT u.first_name "firstName", u.last_name "lastName", r.id, r.title, c.label category, r.description, r.report_time "reportTime", r.address FROM reports r INNER JOIN users u ON u.id = r.user_id INNER JOIN categories c ON c.id = r.category_id ORDER BY report_time DESC'
     );
     res.status(200).json({
-      status: 'Success',
-      data: {
-        reports: rows,
-      },
+      reports: rows,
     });
   } catch (err) {
     console.error(
@@ -71,20 +68,17 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route   GET /api/reports/user
+// @route   GET /api/reports/:id
 // @desc    Get user's reports
 // @access  Private
-router.get('/user', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const { rows } = await db.query(
-      'SELECT * FROM reports WHERE user_id = $1 ORDER BY report_time DESC',
-      [req.body.user_id]
+      'SELECT u.first_name "firstName", u.last_name "lastName", r.id, r.title, c.label category, r.description, r.report_time "reportTime", r.address FROM reports r INNER JOIN users u ON u.id = r.user_id INNER JOIN categories c ON c.id = r.category_id WHERE user_id = $1 ORDER BY report_time DESC',
+      [req.params.id]
     );
     res.status(200).json({
-      status: 'Success',
-      data: {
-        reports: rows,
-      },
+      reports: rows,
     });
   } catch (err) {
     console.error(

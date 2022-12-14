@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import ReportsContext from '../../context/reports/ReportsContext';
+import AccountContext from '../../context/account/AccountContext';
 
 import Reports from '../reports/Reports';
 import Page from '../layout/Page';
@@ -16,12 +18,25 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 const ReportsPage = () => {
   const [filterUser, setFilterUser] = useState(false);
 
-  const handleFilterUser = (event) => {
-    setFilterUser(event.target.checked);
+  const { loadReports, loadUserReports } =
+    useContext(ReportsContext);
+  const { user } = useContext(AccountContext);
+
+  const handleReports = () => {
+    if (!filterUser) {
+      loadReports();
+    } else {
+      loadUserReports(user.id);
+    }
   };
 
+  useEffect(() => {
+    handleReports();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterUser]);
+
   const handleRefresh = () => {
-    console.log('Refresh!');
+    handleReports();
   };
 
   return (
@@ -43,10 +58,14 @@ const ReportsPage = () => {
           control={
             <Checkbox
               checked={filterUser}
-              onChange={handleFilterUser}
+              onChange={(event) =>
+                setFilterUser(event.target.checked)
+              }
+              value="filter-reports"
             />
           }
           label="My Reports"
+          value="filter-reports"
           sx={{ ml: 0 }}
           slotProps={{
             typography: {

@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import DisplayContext from './DisplayContext';
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {
-    width,
     height,
+    width,
   };
 }
 
-export default function useWindowDimensions() {
+const DisplayState = ({ children }) => {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
@@ -23,5 +25,16 @@ export default function useWindowDimensions() {
       window.removeEventListener('resize', handleResize);
   }, []);
 
-  return windowDimensions;
-}
+  return (
+    <DisplayContext.Provider
+      value={{
+        windowWidth: windowDimensions.width,
+        windowHeight: windowDimensions.height,
+      }}
+    >
+      {children}
+    </DisplayContext.Provider>
+  );
+};
+
+export default DisplayState;

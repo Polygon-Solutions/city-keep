@@ -34,7 +34,7 @@ const SettingsPage = () => {
   };
 
   return (
-    <Page mt={2}>
+    <Page pt={2}>
       <PageHeading>
         <Typography variant="h1">Settings</Typography>
       </PageHeading>

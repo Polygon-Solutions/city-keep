@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+
+import DisplayContext from '../../context/display/DisplayContext';
+
+import ReportFormPopover from './ReportFormPopover';
 
 import { styled } from '@mui/material/styles';
 import {
@@ -13,7 +17,6 @@ import {
   Add as AddIcon,
   Settings as SettingsIcon,
 } from '@mui/icons-material';
-import ReportForm from './ReportFormPopover';
 
 const StyledFab = styled(Fab)({
   position: 'absolute',
@@ -27,12 +30,18 @@ const StyledFab = styled(Fab)({
 const DashboardOverlay = () => {
   const [formOpen, setFormOpen] = useState(false);
 
+  const { windowHeight } = useContext(DisplayContext);
+
   return (
     <>
       <AppBar
-        position="fixed"
-        color="primary"
-        sx={{ top: 'auto', bottom: 0 }}
+        sx={{
+          top: 'auto',
+          bottom: 0,
+          maxWidth: windowHeight * 0.75,
+          left: 'auto',
+          right: 'auto',
+        }}
       >
         <Toolbar variant="dense" sx={{ minHeight: '56px' }}>
           <IconButton href="/reports" color="inherit">
@@ -50,7 +59,7 @@ const DashboardOverlay = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <ReportForm open={formOpen} setOpen={setFormOpen} />
+      <ReportFormPopover open={formOpen} setOpen={setFormOpen} />
     </>
   );
 };

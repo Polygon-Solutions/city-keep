@@ -6,12 +6,10 @@ import {
 } from 'react-router-dom';
 
 import AccountContext from './context/account/AccountContext';
-
-import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme/theme.jsx';
+import DisplayContext from './context/display/DisplayContext';
 
 //Components
-import DashboardOverlay from './components/layout/Navbar';
+import Navbar from './components/layout/Navbar';
 import Heading from './components/layout/Heading';
 import AuthOutlet from './components/routing/AuthOutlet';
 import NoAuthOutlet from './components/routing/NoAuthOutlet';
@@ -21,9 +19,15 @@ import LandingPage from './components/pages/LandingPage';
 import ForgotPassword from './components/pages/ForgotPassword';
 import VerifyUser from './components/pages/VerifyUser';
 
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme/theme.jsx';
+import { Paper } from '@mui/material';
+
 const App = () => {
   const { isAuthenticated, loadUser } =
     useContext(AccountContext);
+
+  const { windowHeight } = useContext(DisplayContext);
 
   useEffect(() => {
     const load = async () => {
@@ -39,32 +43,47 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        {!isAuthenticated && <Heading />}
-        <Routes>
-          <Route
-            element={
-              <NoAuthOutlet isAuthenticated={isAuthenticated} />
-            }
-          >
-            <Route path="/" element={<LandingPage />} />
+      <Paper
+        sx={{
+          maxWidth: windowHeight * 0.75,
+          height: windowHeight,
+          position: 'relative',
+          margin: '0 auto',
+        }}
+        elevation={20}
+      >
+        <Router>
+          {!isAuthenticated && <Heading />}
+          <Routes>
             <Route
-              path="/forgotpassword"
-              element={<ForgotPassword />}
-            />
-            <Route path="/verify" element={<VerifyUser />} />
-          </Route>
-          <Route
-            element={
-              <AuthOutlet isAuthenticated={isAuthenticated} />
-            }
-          >
-            <Route path="reports" element={<ReportsPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-          </Route>
-        </Routes>
-        {isAuthenticated && <DashboardOverlay />}
-      </Router>
+              element={
+                <NoAuthOutlet
+                  isAuthenticated={isAuthenticated}
+                />
+              }
+            >
+              <Route path="/" element={<LandingPage />} />
+              <Route
+                path="/forgotpassword"
+                element={<ForgotPassword />}
+              />
+              <Route path="/verify" element={<VerifyUser />} />
+            </Route>
+            <Route
+              element={
+                <AuthOutlet isAuthenticated={isAuthenticated} />
+              }
+            >
+              <Route path="reports" element={<ReportsPage />} />
+              <Route
+                path="settings"
+                element={<SettingsPage />}
+              />
+            </Route>
+          </Routes>
+          {isAuthenticated && <Navbar />}
+        </Router>
+      </Paper>
     </ThemeProvider>
   );
 };

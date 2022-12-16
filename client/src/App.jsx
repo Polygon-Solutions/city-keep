@@ -46,7 +46,7 @@ const App = () => {
       <Paper
         sx={{
           maxWidth: windowHeight * 0.75,
-          height: windowHeight,
+          minHeight: windowHeight,
           position: 'relative',
           margin: '0 auto',
         }}

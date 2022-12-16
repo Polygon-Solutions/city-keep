@@ -72,7 +72,7 @@ const SignIn = () => {
           Sign In
         </Button>
 
-        <Link href="/forgotpassword" variant="body2">
+        <Link href="/forgotpassword" variant="body1">
           Forgot Password?
         </Link>
       </Box>

@@ -2,6 +2,9 @@ import React, { useState, useContext } from 'react';
 
 import AccountContext from '../../context/account/AccountContext';
 
+import Page from '../layout/Page';
+import PageHeading from '../layout/PageHeading';
+
 import {
   Typography,
   Box,
@@ -9,14 +12,15 @@ import {
   Button,
   Divider,
 } from '@mui/material';
-import Page from '../layout/Page';
-import PageHeading from '../layout/PageHeading';
+import { useTheme } from '@mui/material/styles';
 
 const SettingsPage = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
   const { changePassword, logout } = useContext(AccountContext);
+
+  const theme = useTheme();
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
@@ -34,34 +38,34 @@ const SettingsPage = () => {
   };
 
   return (
-    <Page mt={2}>
+    <Page pt={2}>
       <PageHeading>
         <Typography variant="h1">Settings</Typography>
       </PageHeading>
       <Box sx={{ width: 0.85, mx: 'auto', mt: 2 }}>
-        <Typography variant="h5" sx={{ mb: 1 }}>
-          User Details
+        <Typography variant="h3">User Details</Typography>
+        <Typography variant="dev" sx={{ ml: 2 }}>
+          Work in Progress...
         </Typography>
-        <Typography>Work in Progress...</Typography>
-        <Divider sx={{ my: 2 }} />
-        <Typography variant="h5" sx={{ mb: 1 }}>
-          Account Management
-        </Typography>
-        <Typography>Change Password</Typography>
-        <Box
-          component="form"
-          sx={{ mb: 3 }}
-          onSubmit={handleChangePassword}
-        >
+        <Divider sx={{ my: 3 }} />
+        <Typography variant="h3">Account Management</Typography>
+        <Typography variant="h4">Change Password</Typography>
+        <Box component="form" onSubmit={handleChangePassword}>
           <TextField
-            fullWidth
             size="small"
-            margin="dense"
+            variant="standard"
             color="secondary"
+            sx={{ display: 'block', width: 0.8, ml: 2 }}
+            InputProps={{
+              sx: {
+                width: 1,
+                '&:hover:not(.Mui-disabled)::before': {
+                  borderColor: theme.palette.secondary.main,
+                },
+              },
+            }}
             required
-            id="current-password"
             label="Current Password"
-            name="current-password"
             type="password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
@@ -69,12 +73,19 @@ const SettingsPage = () => {
           <TextField
             fullWidth
             size="small"
-            margin="dense"
+            variant="standard"
             color="secondary"
+            sx={{ display: 'block', width: 0.8, ml: 2, my: 2 }}
+            InputProps={{
+              sx: {
+                width: 1,
+                '&:hover:not(.Mui-disabled)::before': {
+                  borderColor: theme.palette.secondary.main,
+                },
+              },
+            }}
             required
-            id="new-password"
             label="New Password"
-            name="new-password"
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
@@ -84,9 +95,12 @@ const SettingsPage = () => {
             color="secondary"
             size="small"
             sx={{
+              display: 'block',
               width: 0.5,
-              mt: 1,
               borderWidth: 3,
+              ml: 2,
+              mt: 2,
+              mb: 4,
               '&:hover': {
                 borderWidth: 3,
               },
@@ -96,14 +110,18 @@ const SettingsPage = () => {
             Change Password
           </Button>
         </Box>
-        <Typography sx={{ mb: 1 }}>Logout</Typography>
+        <Typography variant="h4">Logout</Typography>
         <Button
           color="error"
           variant="outlined"
           size="small"
           sx={{
+            display: 'block',
             width: 0.5,
             borderWidth: 3,
+            ml: 2,
+            mt: 2,
+            mb: 4,
             '&:hover': {
               borderWidth: 3,
             },

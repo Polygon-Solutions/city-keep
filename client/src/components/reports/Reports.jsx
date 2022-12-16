@@ -48,15 +48,14 @@ const Reports = () => {
             <Accordion key={report.id} sx={{ my: 1 }}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+                sx={{ px: 3 }}
               >
                 <Grid
                   container
                   alignItems="center"
                   justifyContent="space-between"
                 >
-                  <Typography sx={{ fontWeight: 'bold' }}>
+                  <Typography sx={{ fontWeight: 600 }}>
                     {report.title}
                   </Typography>
                   <Typography
@@ -71,7 +70,7 @@ const Reports = () => {
                 </Grid>
               </AccordionSummary>
               <AccordionDetails
-                sx={{ backgroundColor: '#ededed' }}
+                sx={{ backgroundColor: '#ededed', px: 3 }}
               >
                 <ReportDetail
                   label={'Category'}

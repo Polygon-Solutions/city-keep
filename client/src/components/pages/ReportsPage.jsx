@@ -40,7 +40,7 @@ const ReportsPage = () => {
   };
 
   return (
-    <Page mt={1}>
+    <Page pt={1}>
       <PageHeading>
         <Grid container justifyContent="space-between">
           <Grid item xs={6}>

@@ -29,13 +29,53 @@ const preTheme = createTheme({
   },
   typography: {
     h1: {
+      fontFamily: 'Clarity City',
       fontSize: '40px',
-      color: '#3b3b3b',
+      fontWeight: 400,
+      color: '#474d5a',
     },
     h2: {
+      fontFamily: 'Clarity City',
       fontSize: '30px',
+      fontWeight: 300,
       color: '#37474f',
       padding: '15px',
+    },
+    h3: {
+      fontFamily: 'Clarity City',
+      fontSize: '24px',
+      fontWeight: 400,
+      color: '#3a3a3a',
+      marginBottom: '15px',
+    },
+    h4: {
+      fontFamily: 'Clarity City',
+      fontSize: '18px',
+      fontWeight: 500,
+      color: '#3a3a3a',
+      marginTop: '16px',
+      marginBottom: '8px',
+    },
+    body1: {
+      fontFamily: 'Clarity City',
+    },
+    button: {
+      fontFamily: 'Clarity City',
+    },
+    title: {
+      fontFamily: 'Clarity City',
+      fontSize: '20px',
+      fontWeight: 500,
+      color: '#ffffff',
+      lineHeight: 1.6,
+      margin: 0,
+    },
+    dev: {
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+      fontSize: '16px',
+      fontWeight: 400,
+      color: '#858f97',
+      fontStyle: 'italic',
     },
   },
   breakpoints: {
@@ -59,6 +99,16 @@ const theme = createTheme(preTheme, {
     MuiButtonBase: {
       defaultProps: {
         LinkComponent: LinkBehavior,
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        contained: {
+          paddingBottom: '4px',
+        },
+        outlined: {
+          paddingBottom: '2px',
+        },
       },
     },
     MuiSwitch: {

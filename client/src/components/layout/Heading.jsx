@@ -14,15 +14,7 @@ const ButtonAppBar = () => {
       <AppBar position="static">
         <Toolbar>
           <Link href="/">
-            <Typography
-              variant="h6"
-              sx={{
-                color: 'white',
-                textTransform: 'none',
-              }}
-            >
-              CityKeep
-            </Typography>
+            <Typography variant="title">CityKeep</Typography>
           </Link>
         </Toolbar>
       </AppBar>

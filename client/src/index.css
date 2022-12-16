@@ -1,3 +1,5 @@
+@import '../node_modules/@clr/city/css/index.css';
+
 body {
   margin: 0;
   background-color: #8b8b8b;

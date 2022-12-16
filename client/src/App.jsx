@@ -50,7 +50,7 @@ const App = () => {
           position: 'relative',
           margin: '0 auto',
         }}
-        elevation={20}
+        elevation={24}
       >
         <Router>
           {!isAuthenticated && <Heading />}

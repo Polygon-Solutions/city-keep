@@ -2,11 +2,11 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'citykeep',
+  user: process.env.POSTGRES_USER,
+  host: process.env.POSTGRES_HOST,
   password: process.env.POSTGRES_PASSWORD,
-  port: 5432,
+  database: process.env.POSTGRES_DATABASE,
+  port: process.env.POSTGRES_PORT,
 });
 module.exports = {
   query: (text, params) => pool.query(text, params),

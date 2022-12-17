@@ -37,9 +37,7 @@ const SignIn = () => {
           fullWidth
           autoFocus
           required
-          id="email"
           label="Email Address"
-          name="email"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -48,9 +46,7 @@ const SignIn = () => {
           margin="normal"
           fullWidth
           required
-          id="password"
           label="Password"
-          name="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}

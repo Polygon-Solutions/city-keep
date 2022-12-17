@@ -63,8 +63,6 @@ const ReportForm = () => {
           margin="dense"
           sx={{ my: 1 }}
           label="Title"
-          id="report-title"
-          name="report-title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -73,12 +71,8 @@ const ReportForm = () => {
           size="small"
           sx={{ my: 1, width: '100%' }}
         >
-          <InputLabel id="demo-select-small">
-            Category
-          </InputLabel>
+          <InputLabel>Category</InputLabel>
           <Select
-            labelId="category"
-            id="category"
             value={category}
             label="Category"
             MenuProps={{ sx: { maxHeight: '200px' } }}
@@ -118,8 +112,6 @@ const ReportForm = () => {
           margin="dense"
           sx={{ my: 1 }}
           label="Description"
-          id="report-description"
-          name="report-description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -130,8 +122,6 @@ const ReportForm = () => {
           margin="dense"
           sx={{ my: 1 }}
           label="Address"
-          id="report-address"
-          name="report-address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />

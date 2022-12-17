@@ -65,7 +65,6 @@ const ReportsPage = () => {
             />
           }
           label="My Reports"
-          value="filter-reports"
           sx={{ ml: 0 }}
           slotProps={{
             typography: {

@@ -5,22 +5,15 @@ import AccountContext from '../../context/account/AccountContext';
 import Page from '../layout/Page';
 import PageHeading from '../layout/PageHeading';
 import SettingsButton from '../layout/SettingsButton';
+import SettingsTextField from '../layout/SettingsTextField';
 
-import {
-  Typography,
-  Box,
-  TextField,
-  Divider,
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Typography, Box, Divider } from '@mui/material';
 
 const SettingsPage = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
   const { changePassword, logout } = useContext(AccountContext);
-
-  const theme = useTheme();
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
@@ -51,44 +44,20 @@ const SettingsPage = () => {
         <Typography variant="h3">Account Management</Typography>
         <Typography variant="h4">Change Password</Typography>
         <Box component="form" onSubmit={handleChangePassword}>
-          <TextField
-            size="small"
-            variant="standard"
-            color="secondary"
-            sx={{ display: 'block', width: 0.8, ml: 2 }}
-            InputProps={{
-              sx: {
-                width: 1,
-                '&:hover:not(.Mui-disabled)::before': {
-                  borderColor: theme.palette.secondary.main,
-                },
-              },
-            }}
-            required
+          <SettingsTextField
             label="Current Password"
+            color="secondary"
+            mt={1}
             type="password"
             value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
+            setValue={setCurrentPassword}
           />
-          <TextField
-            fullWidth
-            size="small"
-            variant="standard"
-            color="secondary"
-            sx={{ display: 'block', width: 0.8, ml: 2, my: 2 }}
-            InputProps={{
-              sx: {
-                width: 1,
-                '&:hover:not(.Mui-disabled)::before': {
-                  borderColor: theme.palette.secondary.main,
-                },
-              },
-            }}
-            required
+          <SettingsTextField
             label="New Password"
+            color="secondary"
             type="password"
             value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            setValue={setNewPassword}
           />
           <SettingsButton
             color="secondary"

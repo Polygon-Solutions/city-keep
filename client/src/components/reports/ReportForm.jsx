@@ -48,14 +48,14 @@ const ReportForm = () => {
       container
       direction="column"
       wrap="nowrap"
+      justifyContent="space-between"
+      rowSpacing={3}
+      sx={{ px: 3, pt: 3 }}
       component="form"
-      sx={{ p: 3 }}
       onSubmit={handleSubmit}
     >
       <Grid item>
-        <Typography variant="h2" sx={{ p: 0, mb: 2 }}>
-          Submit a Report
-        </Typography>
+        <Typography variant="h2">Submit a Report</Typography>
         <TextField
           required
           fullWidth
@@ -139,38 +139,31 @@ const ReportForm = () => {
       </Grid>
       <Grid
         item
-        flexGrow={1}
         container
-        flexDirection="column"
-        justifyContent="flex-end"
+        justifyContent="space-between"
+        columnSpacing={4}
+        sx={{ pb: 3 }}
       >
-        <Grid
-          item
-          container
-          justifyContent="space-between"
-          columnSpacing={4}
-        >
-          <Grid item xs={6}>
-            <Button
-              variant="contained"
-              color="secondary"
-              type="submit"
-              sx={{ width: 1 }}
-            >
-              Submit
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              variant="contained"
-              color="error"
-              type="reset"
-              sx={{ width: 1 }}
-              onClick={handleReset}
-            >
-              Clear
-            </Button>
-          </Grid>
+        <Grid item xs={6}>
+          <Button
+            variant="contained"
+            color="secondary"
+            type="submit"
+            sx={{ width: 1 }}
+          >
+            Submit
+          </Button>
+        </Grid>
+        <Grid item xs={6}>
+          <Button
+            variant="contained"
+            color="error"
+            type="reset"
+            sx={{ width: 1 }}
+            onClick={handleReset}
+          >
+            Clear
+          </Button>
         </Grid>
       </Grid>
     </Grid>

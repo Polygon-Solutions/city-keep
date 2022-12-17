@@ -148,25 +148,29 @@ const ReportForm = () => {
           item
           container
           justifyContent="space-between"
-          columnGap={4}
+          columnSpacing={4}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            type="submit"
-            sx={{ width: '45%' }}
-          >
-            Submit
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            type="reset"
-            sx={{ width: '45%' }}
-            onClick={handleReset}
-          >
-            Clear
-          </Button>
+          <Grid item xs={6}>
+            <Button
+              variant="contained"
+              color="secondary"
+              type="submit"
+              sx={{ width: 1 }}
+            >
+              Submit
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="contained"
+              color="error"
+              type="reset"
+              sx={{ width: 1 }}
+              onClick={handleReset}
+            >
+              Clear
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

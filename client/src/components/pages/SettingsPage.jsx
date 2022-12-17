@@ -4,12 +4,12 @@ import AccountContext from '../../context/account/AccountContext';
 
 import Page from '../layout/Page';
 import PageHeading from '../layout/PageHeading';
+import SettingsButton from '../layout/SettingsButton';
 
 import {
   Typography,
   Box,
   TextField,
-  Button,
   Divider,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -38,7 +38,7 @@ const SettingsPage = () => {
   };
 
   return (
-    <Page pt={2}>
+    <Page pt={1}>
       <PageHeading>
         <Typography variant="h1">Settings</Typography>
       </PageHeading>
@@ -90,47 +90,19 @@ const SettingsPage = () => {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
-          <Button
-            variant="outlined"
+          <SettingsButton
             color="secondary"
-            size="small"
-            sx={{
-              display: 'block',
-              width: 0.5,
-              borderWidth: 3,
-              ml: 2,
-              mt: 2,
-              mb: 4,
-              '&:hover': {
-                borderWidth: 3,
-              },
-            }}
+            text="Change Password"
             type="submit"
-          >
-            Change Password
-          </Button>
+          />
         </Box>
         <Typography variant="h4">Logout</Typography>
-        <Button
+        <SettingsButton
           color="error"
-          variant="outlined"
-          size="small"
-          sx={{
-            display: 'block',
-            width: 0.5,
-            borderWidth: 3,
-            ml: 2,
-            mt: 2,
-            mb: 4,
-            '&:hover': {
-              borderWidth: 3,
-            },
-          }}
+          text="Logout"
           type="button"
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
+          handleClick={handleLogout}
+        />
       </Box>
     </Page>
   );

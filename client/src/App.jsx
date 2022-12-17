@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 
 import AccountContext from './context/account/AccountContext';
-import DisplayContext from './context/display/DisplayContext';
 
 //Components
 import Navbar from './components/layout/Navbar';
@@ -27,8 +26,6 @@ const App = () => {
   const { isAuthenticated, loadUser } =
     useContext(AccountContext);
 
-  const { windowHeight } = useContext(DisplayContext);
-
   useEffect(() => {
     const load = async () => {
       try {
@@ -45,8 +42,8 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Paper
         sx={{
-          maxWidth: windowHeight * 0.75,
-          minHeight: windowHeight,
+          maxWidth: 'calc(100vh * 0.75)',
+          minHeight: '100vh',
           position: 'relative',
           margin: '0 auto',
         }}

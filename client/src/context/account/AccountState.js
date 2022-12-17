@@ -73,8 +73,9 @@ const AccountState = ({ children }) => {
           const res = await databasePromise;
           const databaseData = await res.json();
 
-          console.log(cognitoData);
-          console.log(databaseData);
+          cognitoData &&
+            databaseData &&
+            console.log('User loaded.');
 
           const { user } = databaseData;
 

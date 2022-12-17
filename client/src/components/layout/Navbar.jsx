@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
 
-import DisplayContext from '../../context/display/DisplayContext';
-
 import ReportFormPopover from './ReportFormPopover';
 
 import { styled } from '@mui/material/styles';
@@ -30,15 +28,13 @@ const StyledFab = styled(Fab)({
 const DashboardOverlay = () => {
   const [formOpen, setFormOpen] = useState(false);
 
-  const { windowHeight } = useContext(DisplayContext);
-
   return (
     <>
       <AppBar
         sx={{
           top: 'auto',
           bottom: 0,
-          maxWidth: windowHeight * 0.75,
+          maxWidth: 'calc(100vh * 0.75)',
           left: 'auto',
           right: 'auto',
         }}

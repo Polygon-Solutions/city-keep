@@ -54,8 +54,6 @@ const VerifyUser = () => {
           required
           fullWidth
           label="Verification Code"
-          id="verification-code"
-          name="verification-code"
           autoFocus
           value={verificationCode}
           onChange={(event) => handleChange(event)}

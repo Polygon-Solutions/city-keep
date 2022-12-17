@@ -51,9 +51,7 @@ const SignUp = () => {
             <TextField
               required
               fullWidth
-              id="firstName"
               label="First Name"
-              name="firstName"
               autoFocus
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
@@ -63,9 +61,7 @@ const SignUp = () => {
             <TextField
               required
               fullWidth
-              id="lastName"
               label="Last Name"
-              name="lastName"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
@@ -74,9 +70,7 @@ const SignUp = () => {
             <TextField
               required
               fullWidth
-              id="email"
               label="Email Address"
-              name="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -86,9 +80,7 @@ const SignUp = () => {
             <TextField
               required
               fullWidth
-              id="password"
               label="Password"
-              name="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

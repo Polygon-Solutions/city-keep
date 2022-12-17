@@ -33,9 +33,8 @@ const ReportFormPopover = ({ open, setOpen }) => {
       PaperProps={{
         sx: {
           width: 'calc(100% - 32px)',
-          maxWidth: windowHeight * 0.75 - 32,
-          height:
-            windowHeight - (56 + 28 + distanceFromButton + 16),
+          maxWidth: 'calc(100vh * 0.75 - 32px)',
+          height: `calc(100vh - 56px - 28px - ${distanceFromButton}px - 16px)`,
           borderRadius: '6px',
           border: `3px solid ${theme.palette.primary.main}`,
           boxSizing: 'border-box',

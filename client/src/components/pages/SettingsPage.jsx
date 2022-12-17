@@ -4,23 +4,16 @@ import AccountContext from '../../context/account/AccountContext';
 
 import Page from '../layout/Page';
 import PageHeading from '../layout/PageHeading';
+import SettingsButton from '../layout/SettingsButton';
+import SettingsTextField from '../layout/SettingsTextField';
 
-import {
-  Typography,
-  Box,
-  TextField,
-  Button,
-  Divider,
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Typography, Box, Divider } from '@mui/material';
 
 const SettingsPage = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
   const { changePassword, logout } = useContext(AccountContext);
-
-  const theme = useTheme();
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
@@ -38,7 +31,7 @@ const SettingsPage = () => {
   };
 
   return (
-    <Page pt={2}>
+    <Page pt={1}>
       <PageHeading>
         <Typography variant="h1">Settings</Typography>
       </PageHeading>
@@ -51,86 +44,34 @@ const SettingsPage = () => {
         <Typography variant="h3">Account Management</Typography>
         <Typography variant="h4">Change Password</Typography>
         <Box component="form" onSubmit={handleChangePassword}>
-          <TextField
-            size="small"
-            variant="standard"
-            color="secondary"
-            sx={{ display: 'block', width: 0.8, ml: 2 }}
-            InputProps={{
-              sx: {
-                width: 1,
-                '&:hover:not(.Mui-disabled)::before': {
-                  borderColor: theme.palette.secondary.main,
-                },
-              },
-            }}
-            required
+          <SettingsTextField
             label="Current Password"
+            color="secondary"
+            mt={1}
             type="password"
             value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
+            setValue={setCurrentPassword}
           />
-          <TextField
-            fullWidth
-            size="small"
-            variant="standard"
-            color="secondary"
-            sx={{ display: 'block', width: 0.8, ml: 2, my: 2 }}
-            InputProps={{
-              sx: {
-                width: 1,
-                '&:hover:not(.Mui-disabled)::before': {
-                  borderColor: theme.palette.secondary.main,
-                },
-              },
-            }}
-            required
+          <SettingsTextField
             label="New Password"
+            color="secondary"
             type="password"
             value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            setValue={setNewPassword}
           />
-          <Button
-            variant="outlined"
+          <SettingsButton
             color="secondary"
-            size="small"
-            sx={{
-              display: 'block',
-              width: 0.5,
-              borderWidth: 3,
-              ml: 2,
-              mt: 2,
-              mb: 4,
-              '&:hover': {
-                borderWidth: 3,
-              },
-            }}
+            text="Change Password"
             type="submit"
-          >
-            Change Password
-          </Button>
+          />
         </Box>
         <Typography variant="h4">Logout</Typography>
-        <Button
+        <SettingsButton
           color="error"
-          variant="outlined"
-          size="small"
-          sx={{
-            display: 'block',
-            width: 0.5,
-            borderWidth: 3,
-            ml: 2,
-            mt: 2,
-            mb: 4,
-            '&:hover': {
-              borderWidth: 3,
-            },
-          }}
+          text="Logout"
           type="button"
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
+          handleClick={handleLogout}
+        />
       </Box>
     </Page>
   );

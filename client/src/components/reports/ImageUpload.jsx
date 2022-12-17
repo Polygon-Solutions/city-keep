@@ -10,7 +10,7 @@ const ImageUpload = () => {
       <ButtonBase
         sx={[
           {
-            height: 100,
+            height: 80,
             width: '80%',
             mx: 'auto',
             my: 2,

@@ -39,7 +39,8 @@ const preTheme = createTheme({
       fontSize: '30px',
       fontWeight: 300,
       color: '#37474f',
-      padding: '15px',
+      padding: 0,
+      marginBottom: '16px',
     },
     h3: {
       fontFamily: 'Clarity City',

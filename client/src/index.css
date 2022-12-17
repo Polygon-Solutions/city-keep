@@ -1,5 +1,13 @@
 @import '../node_modules/@clr/city/css/index.css';
 
+html {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
 body {
   margin: 0;
   background-color: #8b8b8b;

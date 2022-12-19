@@ -157,7 +157,7 @@ const AccountState = ({ children }) => {
     });
   };
 
-  const verifyUser = async (verificationCode) => {
+  const verifyUser = (verificationCode) => {
     return new Promise((resolve, reject) => {
       state.cognitoUser.confirmRegistration(
         verificationCode,
@@ -174,8 +174,8 @@ const AccountState = ({ children }) => {
   };
 
   const signIn = async (username, password) => {
-    try {
-      await new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+      try {
         const user = new CognitoUser({
           Username: username,
           Pool,
@@ -186,19 +186,21 @@ const AccountState = ({ children }) => {
           Password: password,
         });
 
-        user.authenticateUser(authDetails, {
-          onSuccess: () => {
-            resolve();
-          },
-          onFailure: (err) => {
-            reject(err);
-          },
+        await new Promise((resolve, reject) => {
+          user.authenticateUser(authDetails, {
+            onSuccess: () => {
+              resolve();
+            },
+            onFailure: (err) => {
+              reject(err);
+            },
+          });
         });
-      });
-      await loadUser();
-    } catch (err) {
-      console.log(err.message);
-    }
+        await loadUser();
+      } catch (err) {
+        reject(err);
+      }
+    });
   };
 
   const changePassword = (currentPassword, newPassword) => {

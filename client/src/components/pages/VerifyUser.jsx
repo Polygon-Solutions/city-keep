@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AccountContext from '../../context/account/AccountContext';
+import AlertsContext from '../../context/alerts/AlertsContext';
 
 import {
   TextField,
@@ -15,12 +16,12 @@ const VerifyUser = () => {
   const [verificationCode, setVerificationCode] = useState('');
 
   const { verifyUser } = useContext(AccountContext);
+  const { setAlert } = useContext(AlertsContext);
 
   const handleChange = (event) => {
-    const regex = /^[0-9\b]+$/;
     if (
       event.target.value === '' ||
-      regex.test(event.target.value)
+      /^[0-9\b]+$/.test(event.target.value)
     ) {
       setVerificationCode(event.target.value);
     }
@@ -34,7 +35,7 @@ const VerifyUser = () => {
       await verifyUser(verificationCode);
       navigate('/');
     } catch (err) {
-      console.log(err);
+      setAlert(err.message, 'error');
     }
   };
 

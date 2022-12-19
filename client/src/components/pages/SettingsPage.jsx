@@ -20,6 +20,15 @@ const SettingsPage = () => {
   const handleChangePassword = async (event) => {
     event.preventDefault();
 
+    if (currentPassword === '') {
+      setAlert('Please enter your current password.', 'warning');
+      return;
+    }
+    if (newPassword === '') {
+      setAlert('Please enter a new password.', 'warning');
+      return;
+    }
+
     try {
       await changePassword(currentPassword, newPassword);
       setAlert('Password changed successfully.', 'success');

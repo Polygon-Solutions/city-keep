@@ -47,7 +47,7 @@ const Alerts = () => {
               onClose={(event, reason) =>
                 handleClose(event, reason, alert.id)
               }
-              sx={{ width: 1 }}
+              sx={{ width: 1, alignItems: 'center' }}
             >
               {alert.msg}
             </Alert>

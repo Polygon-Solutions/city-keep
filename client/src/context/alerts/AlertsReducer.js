@@ -13,4 +13,4 @@ const AlertsReducer = (state, action) => {
   }
 };
 
-export default ReportsReducer;
+export default AlertsReducer;

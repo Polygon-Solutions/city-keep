@@ -3,6 +3,9 @@ import React, { useState, useContext } from 'react';
 import AccountContext from '../../context/account/AccountContext';
 import AlertsContext from '../../context/alerts/AlertsContext';
 
+import useEmailChecker from '../hooks/useEmailChecker';
+import usePasswordChecker from '../hooks/usePasswordChecker';
+
 import WorkInProgress from '../dev/WorkInProgress';
 
 import {
@@ -15,22 +18,15 @@ import {
   Container,
 } from '@mui/material';
 
-const passwordChecker = (password) =>
-  !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-    password
-  );
-
-const emailChecker = (email) =>
-  !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-    email
-  );
-
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const { signIn } = useContext(AccountContext);
   const { setAlert } = useContext(AlertsContext);
+
+  const emailChecker = useEmailChecker;
+  const passwordChecker = usePasswordChecker;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,7 +44,7 @@ const SignIn = () => {
     }
     if (passwordChecker(password)) {
       setAlert(
-        'Please enter a password with 8 or more characters, an uppercase and lowercase letter, a number, and a special character.',
+        'Please enter a password with 8 or more characters, containing an uppercase and a lowercase letter, a number, and a special character.',
         'warning'
       );
       return;

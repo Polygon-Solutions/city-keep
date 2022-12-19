@@ -16,7 +16,7 @@ const AlertsState = ({ children }) => {
 
   const setAlert = (msg, type) => {
     const id = uuidv4();
-    if (state.length > 2) {
+    if (state.length > 1) {
       dispatch({ type: REMOVE_ALERT, payload: state[0].id });
     }
     dispatch({

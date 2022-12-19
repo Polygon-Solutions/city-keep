@@ -2,6 +2,10 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AccountContext from '../../context/account/AccountContext';
+import AlertsContext from '../../context/alerts/AlertsContext';
+
+import useEmailChecker from '../hooks/useEmailChecker';
+import usePasswordChecker from '../hooks/usePasswordChecker';
 
 import {
   Button,
@@ -19,16 +23,46 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
 
   const { signUp, signIn } = useContext(AccountContext);
+  const { setAlert } = useContext(AlertsContext);
 
+  const emailChecker = useEmailChecker;
+  const passwordChecker = usePasswordChecker;
   const navigate = useNavigate();
 
   const handleRegister = async (event) => {
     event.preventDefault();
+    if (firstName === '') {
+      setAlert('Please enter a first name.', 'warning');
+      return;
+    }
+    if (lastName === '') {
+      setAlert('Please enter a last name.', 'warning');
+      return;
+    }
+    if (email === '') {
+      setAlert('Please enter an email.', 'warning');
+      return;
+    }
+    if (emailChecker(email)) {
+      setAlert('Please enter a valid email.', 'warning');
+      return;
+    }
+    if (password === '') {
+      setAlert('Please enter a password.', 'warning');
+      return;
+    }
+    if (passwordChecker(password)) {
+      setAlert(
+        'Please enter a password with 8 or more characters, containing an uppercase and a lowercase letter, a number, and a special character.',
+        'warning'
+      );
+      return;
+    }
     try {
       await signUp(firstName, lastName, email, password);
       navigate('/verify');
     } catch (err) {
-      console.log(err);
+      setAlert(err.message, 'error');
     }
   };
 
@@ -49,7 +83,6 @@ const SignUp = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               fullWidth
               label="First Name"
               autoFocus
@@ -59,7 +92,6 @@ const SignUp = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               fullWidth
               label="Last Name"
               value={lastName}
@@ -68,17 +100,14 @@ const SignUp = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              required
               fullWidth
               label="Email Address"
-              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              required
               fullWidth
               label="Password"
               type="password"

@@ -60,6 +60,10 @@ const SignUp = () => {
     }
     try {
       await signUp(firstName, lastName, email, password);
+      setAlert(
+        'Signed up successfully, please enter the verification code sent to your email.',
+        'success'
+      );
       navigate('/verify');
     } catch (err) {
       setAlert(err.message, 'error');

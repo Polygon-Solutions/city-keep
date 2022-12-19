@@ -33,6 +33,10 @@ const VerifyUser = () => {
     event.preventDefault();
     try {
       await verifyUser(verificationCode);
+      setAlert(
+        'Entered verification code successfully, please log in.',
+        'success'
+      );
       navigate('/');
     } catch (err) {
       setAlert(err.message, 'error');

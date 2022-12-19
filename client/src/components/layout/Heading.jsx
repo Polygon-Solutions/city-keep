@@ -12,7 +12,7 @@ const ButtonAppBar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ minHeight: '64px', px: '24px' }}>
           <Link href="/">
             <Typography variant="title">CityKeep</Typography>
           </Link>

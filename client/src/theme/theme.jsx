@@ -123,6 +123,16 @@ const theme = createTheme(preTheme, {
         },
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          '&[type="password"]': {
+            fontFamily:
+              '"Roboto", "Helvetica", "Arial", sans-serif',
+          },
+        },
+      },
+    },
   },
 });
 

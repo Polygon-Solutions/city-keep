@@ -17,6 +17,7 @@ import SettingsPage from './components/pages/SettingsPage';
 import LandingPage from './components/pages/LandingPage';
 import ForgotPassword from './components/pages/ForgotPassword';
 import VerifyUser from './components/pages/VerifyUser';
+import Alerts from './components/layout/Alerts';
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.jsx';
@@ -78,6 +79,7 @@ const App = () => {
               />
             </Route>
           </Routes>
+          <Alerts />
           {isAuthenticated && <Navbar />}
         </Router>
       </Paper>

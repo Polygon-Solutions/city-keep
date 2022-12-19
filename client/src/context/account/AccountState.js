@@ -73,9 +73,9 @@ const AccountState = ({ children }) => {
           const res = await databasePromise;
           const databaseData = await res.json();
 
-          cognitoData &&
-            databaseData &&
-            console.log('User loaded.');
+          // cognitoData &&
+          //   databaseData &&
+          //   console.log('User loaded.');
 
           const { user } = databaseData;
 
@@ -99,7 +99,7 @@ const AccountState = ({ children }) => {
             );
           }
         } else {
-          throw new Error('No user in storage.');
+          // throw new Error('No user in storage.');
         }
       } catch (err) {
         reject(err);
@@ -128,7 +128,8 @@ const AccountState = ({ children }) => {
           }
         );
 
-        const res = await fetch('/api/users', {
+        // const res = await fetch('/api/users', {
+        await fetch('/api/users', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -140,10 +141,10 @@ const AccountState = ({ children }) => {
             email,
           }),
         });
-        const databaseData = await res.json();
+        // const databaseData = await res.json();
 
-        console.log(cognitoData);
-        console.log(databaseData);
+        // console.log(cognitoData);
+        // console.log(databaseData);
 
         dispatch({
           type: LOAD_COGNITO_USER,
@@ -157,7 +158,7 @@ const AccountState = ({ children }) => {
     });
   };
 
-  const verifyUser = async (verificationCode) => {
+  const verifyUser = (verificationCode) => {
     return new Promise((resolve, reject) => {
       state.cognitoUser.confirmRegistration(
         verificationCode,
@@ -174,8 +175,8 @@ const AccountState = ({ children }) => {
   };
 
   const signIn = async (username, password) => {
-    try {
-      await new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+      try {
         const user = new CognitoUser({
           Username: username,
           Pool,
@@ -186,19 +187,21 @@ const AccountState = ({ children }) => {
           Password: password,
         });
 
-        user.authenticateUser(authDetails, {
-          onSuccess: () => {
-            resolve();
-          },
-          onFailure: (err) => {
-            reject(err);
-          },
+        await new Promise((resolve, reject) => {
+          user.authenticateUser(authDetails, {
+            onSuccess: () => {
+              resolve();
+            },
+            onFailure: (err) => {
+              reject(err);
+            },
+          });
         });
-      });
-      await loadUser();
-    } catch (err) {
-      console.log(err.message);
-    }
+        await loadUser();
+      } catch (err) {
+        reject(err);
+      }
+    });
   };
 
   const changePassword = (currentPassword, newPassword) => {

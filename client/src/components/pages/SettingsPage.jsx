@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 
 import AccountContext from '../../context/account/AccountContext';
+import AlertsContext from '../../context/alerts/AlertsContext';
 
 import Page from '../layout/Page';
 import PageHeading from '../layout/PageHeading';
@@ -14,15 +15,27 @@ const SettingsPage = () => {
   const [newPassword, setNewPassword] = useState('');
 
   const { changePassword, logout } = useContext(AccountContext);
+  const { setAlert } = useContext(AlertsContext);
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
+
+    if (currentPassword === '') {
+      setAlert('Please enter your current password.', 'warning');
+      return;
+    }
+    if (newPassword === '') {
+      setAlert('Please enter a new password.', 'warning');
+      return;
+    }
+
     try {
       await changePassword(currentPassword, newPassword);
+      setAlert('Password changed successfully.', 'success');
       setCurrentPassword('');
       setNewPassword('');
     } catch (err) {
-      console.log(err);
+      setAlert(err.message, 'error');
     }
   };
 

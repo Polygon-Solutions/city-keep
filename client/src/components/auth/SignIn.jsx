@@ -1,6 +1,12 @@
 import React, { useState, useContext } from 'react';
 
 import AccountContext from '../../context/account/AccountContext';
+import AlertsContext from '../../context/alerts/AlertsContext';
+
+import useEmailChecker from '../hooks/useEmailChecker';
+import usePasswordChecker from '../hooks/usePasswordChecker';
+
+import WorkInProgress from '../dev/WorkInProgress';
 
 import {
   Link,
@@ -11,18 +17,43 @@ import {
   Box,
   Container,
 } from '@mui/material';
-import WorkInProgress from '../dev/WorkInProgress';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const { signIn } = useContext(AccountContext);
+  const { setAlert } = useContext(AlertsContext);
 
-  const handleSubmit = (event) => {
+  const emailChecker = useEmailChecker;
+  const passwordChecker = usePasswordChecker;
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    signIn(email, password);
+    if (email === '') {
+      setAlert('Please enter an email.', 'warning');
+      return;
+    }
+    if (emailChecker(email)) {
+      setAlert('Please enter a valid email.', 'warning');
+      return;
+    }
+    if (password === '') {
+      setAlert('Please enter a password.', 'warning');
+      return;
+    }
+    if (passwordChecker(password)) {
+      setAlert(
+        'Please enter a password with 8 or more characters, containing an uppercase and a lowercase letter, a number, and a special character.',
+        'warning'
+      );
+      return;
+    }
+    try {
+      await signIn(email, password);
+    } catch (err) {
+      setAlert(err.message, 'error');
+    }
   };
 
   return (
@@ -36,16 +67,13 @@ const SignIn = () => {
           margin="normal"
           fullWidth
           autoFocus
-          required
           label="Email Address"
-          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           margin="normal"
           fullWidth
-          required
           label="Password"
           type="password"
           value={password}

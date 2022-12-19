@@ -31,7 +31,6 @@ const SettingsTextField = ({
           },
         },
       }}
-      required
       label={label}
       type={type}
       value={value}

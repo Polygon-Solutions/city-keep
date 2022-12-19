@@ -14,21 +14,19 @@ const AlertsState = ({ children }) => {
     initialState
   );
 
-  const setAlert = (msg, type, timeout = 5000) => {
+  const setAlert = (msg, type) => {
     const id = uuidv4();
     dispatch({
       type: SET_ALERT,
       payload: { msg, type, id },
     });
+  };
 
-    setTimeout(
-      () =>
-        dispatch({
-          type: REMOVE_ALERT,
-          payload: id,
-        }),
-      timeout
-    );
+  const removeAlert = (id) => {
+    dispatch({
+      type: REMOVE_ALERT,
+      payload: { id },
+    });
   };
 
   return (
@@ -36,6 +34,7 @@ const AlertsState = ({ children }) => {
       value={{
         alerts: state,
         setAlert,
+        removeAlert,
       }}
     >
       {children}

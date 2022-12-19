@@ -1,29 +1,20 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import AccountContext from '../../context/account/AccountContext';
+import AlertsContext from '../../context/alerts/AlertsContext';
 
 import { Alert, Grid, Snackbar } from '@mui/material';
 
 const Alerts = () => {
-  const [alerts, setAlerts] = useState([]);
-
   const { isAuthenticated } = useContext(AccountContext);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAlerts([
-        { msg: 'Alert 1', type: 'error', id: 1 },
-        { msg: 'Alert 2', type: 'success', id: 2 },
-      ]);
-    }, 1000);
-  }, []);
+  const { alerts, removeAlert } = useContext(AlertsContext);
 
   const handleClose = (event, reason, id) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    setAlerts((prev) => prev.filter((alert) => alert.id !== id));
+    removeAlert(id);
   };
 
   return (

@@ -27,147 +27,113 @@ const AccountState = ({ children }) => {
     initialState
   );
 
-  const loadUser = () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const cognitoUser = Pool.getCurrentUser();
-        if (cognitoUser) {
-          const cognitoPromise = new Promise(
-            (resolve, reject) => {
-              cognitoUser.getSession((err, sessionData) => {
-                if (!err) {
-                  cognitoUser.getUserAttributes(
-                    (err, attributes) => {
-                      if (!err) {
-                        const results = {};
+  const loadUser = async () => {
+    const cognitoUser = Pool.getCurrentUser();
+    if (!cognitoUser) {
+      throw new Error('No user in storage.');
+    }
 
-                        for (let attribute of attributes) {
-                          const { Name, Value } = attribute;
-                          results[Name] = Value;
-                        }
-
-                        resolve({
-                          sessionData,
-                          attributes: results,
-                        });
-                      } else {
-                        reject(err);
-                      }
-                    }
-                  );
-                } else {
-                  reject(err);
-                }
-              });
-            }
-          );
-
-          const databasePromise = fetch('/api/users', {
-            method: 'GET',
-            headers: {
-              'User-Id': cognitoUser.username,
-            },
-          });
-
-          const cognitoData = await cognitoPromise;
-          const res = await databasePromise;
-          const databaseData = await res.json();
-
-          // cognitoData &&
-          //   databaseData &&
-          //   console.log('User loaded.');
-
-          const { user } = databaseData;
-
-          if (cognitoData.attributes.email === user.email) {
-            dispatch({
-              type: LOAD_USER,
-              payload: {
-                user: {
-                  id: user.id,
-                  firstName: user.first_name,
-                  lastName: user.last_name,
-                  email: user.email,
-                },
-                cognitoUser,
-              },
-            });
-            resolve();
+    const [_, attributes, databaseData] = await Promise.all([
+      new Promise((resolve, reject) => {
+        cognitoUser.getSession((err, session) => {
+          if (err) {
+            reject(err);
           } else {
-            throw new Error(
-              'Inconsistent data between Cognito and database'
-            );
+            resolve(session);
           }
+        });
+      }),
+      new Promise((resolve, reject) => {
+        cognitoUser.getUserAttributes((err, attributes) => {
+          if (err) {
+            reject(err);
+          } else {
+            const results = {};
+
+            for (let attribute of attributes) {
+              const { Name, Value } = attribute;
+              results[Name] = Value;
+            }
+
+            resolve(results);
+          }
+        });
+      }),
+      fetch('/api/users', {
+        method: 'GET',
+        headers: {
+          'User-Id': cognitoUser.username,
+        },
+      }).then((res) => res.json()),
+    ]);
+
+    const { user } = databaseData;
+
+    if (attributes.email !== user.email) {
+      throw new Error(
+        'Inconsistent data between Cognito and database'
+      );
+    }
+
+    dispatch({
+      type: LOAD_USER,
+      payload: {
+        user: {
+          id: user.id,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          email: user.email,
+        },
+        cognitoUser,
+      },
+    });
+  };
+
+  const signUp = async (
+    firstName,
+    lastName,
+    email,
+    password
+  ) => {
+    const cognitoData = await new Promise((resolve, reject) => {
+      Pool.signUp(email, password, [], null, (err, data) => {
+        if (err) {
+          reject(err);
         } else {
-          // throw new Error('No user in storage.');
+          resolve(data);
         }
-      } catch (err) {
-        reject(err);
-      }
+      });
+    });
+
+    await fetch('/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: cognitoData.userSub,
+        firstName,
+        lastName,
+        email,
+      }),
+    });
+
+    dispatch({
+      type: LOAD_COGNITO_USER,
+      payload: { cognitoUser: cognitoData.user },
     });
   };
 
-  const signUp = (firstName, lastName, email, password) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const cognitoData = await new Promise(
-          (resolve, reject) => {
-            Pool.signUp(
-              email,
-              password,
-              [],
-              null,
-              (err, data) => {
-                if (!err) {
-                  resolve(data);
-                } else {
-                  reject(err);
-                }
-              }
-            );
-          }
-        );
-
-        // const res = await fetch('/api/users', {
-        await fetch('/api/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: cognitoData.userSub,
-            firstName,
-            lastName,
-            email,
-          }),
-        });
-        // const databaseData = await res.json();
-
-        // console.log(cognitoData);
-        // console.log(databaseData);
-
-        dispatch({
-          type: LOAD_COGNITO_USER,
-          payload: { cognitoUser: cognitoData.user },
-        });
-
-        resolve();
-      } catch (err) {
-        reject(err);
-      }
-    });
-  };
-
-  const verifyUser = (verificationCode) => {
-    return new Promise((resolve, reject) => {
+  const verifyUser = async (verificationCode) => {
+    await new Promise((resolve, reject) => {
       state.cognitoUser.confirmRegistration(
         verificationCode,
         true,
         (err, result) => {
-          if (!err) {
-            resolve(result);
-          } else {
+          if (err) {
             reject(err);
+          } else {
+            resolve(result);
           }
         }
       );
@@ -175,54 +141,41 @@ const AccountState = ({ children }) => {
   };
 
   const signIn = async (username, password) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const user = new CognitoUser({
-          Username: username,
-          Pool,
-        });
-
-        const authDetails = new AuthenticationDetails({
-          Username: username,
-          Password: password,
-        });
-
-        await new Promise((resolve, reject) => {
-          user.authenticateUser(authDetails, {
-            onSuccess: () => {
-              resolve();
-            },
-            onFailure: (err) => {
-              reject(err);
-            },
-          });
-        });
-        await loadUser();
-      } catch (err) {
-        reject(err);
-      }
+    const user = new CognitoUser({
+      Username: username,
+      Pool,
+    });
+    const authDetails = new AuthenticationDetails({
+      Username: username,
+      Password: password,
+    });
+    await new Promise((resolve, reject) => {
+      user.authenticateUser(authDetails, {
+        onSuccess: async () => {
+          await loadUser();
+          resolve();
+        },
+        onFailure: (err) => {
+          reject(err);
+        },
+      });
     });
   };
 
-  const changePassword = (currentPassword, newPassword) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        await loadUser();
-        state.cognitoUser.changePassword(
-          currentPassword,
-          newPassword,
-          (err, result) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve();
-            }
-          }
-        );
-      } catch (err) {
-        reject(err);
+  const changePassword = async (
+    currentPassword,
+    newPassword
+  ) => {
+    await loadUser();
+    await state.cognitoUser.changePassword(
+      currentPassword,
+      newPassword,
+      (err, result) => {
+        if (err) {
+          throw err;
+        }
       }
-    });
+    );
   };
 
   const logout = () => {

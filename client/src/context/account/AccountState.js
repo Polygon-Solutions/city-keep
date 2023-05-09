@@ -27,84 +27,71 @@ const AccountState = ({ children }) => {
     initialState
   );
 
-  const loadUser = () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const cognitoUser = Pool.getCurrentUser();
-        if (cognitoUser) {
-          const cognitoPromise = new Promise(
-            (resolve, reject) => {
-              cognitoUser.getSession((err, sessionData) => {
-                if (!err) {
-                  cognitoUser.getUserAttributes(
-                    (err, attributes) => {
-                      if (!err) {
-                        const results = {};
-
-                        for (let attribute of attributes) {
-                          const { Name, Value } = attribute;
-                          results[Name] = Value;
-                        }
-
-                        resolve({
-                          sessionData,
-                          attributes: results,
-                        });
-                      } else {
-                        reject(err);
-                      }
-                    }
-                  );
-                } else {
-                  reject(err);
-                }
-              });
-            }
-          );
-
-          const databasePromise = fetch('/api/users', {
-            method: 'GET',
-            headers: {
-              'User-Id': cognitoUser.username,
-            },
-          });
-
-          const cognitoData = await cognitoPromise;
-          const res = await databasePromise;
-          const databaseData = await res.json();
-
-          // cognitoData &&
-          //   databaseData &&
-          //   console.log('User loaded.');
-
-          const { user } = databaseData;
-
-          if (cognitoData.attributes.email === user.email) {
-            dispatch({
-              type: LOAD_USER,
-              payload: {
-                user: {
-                  id: user.id,
-                  firstName: user.first_name,
-                  lastName: user.last_name,
-                  email: user.email,
-                },
-                cognitoUser,
-              },
-            });
-            resolve();
-          } else {
-            throw new Error(
-              'Inconsistent data between Cognito and database'
-            );
-          }
-        } else {
-          // throw new Error('No user in storage.');
-        }
-      } catch (err) {
-        reject(err);
+  const loadUser = async () => {
+    try {
+      const cognitoUser = Pool.getCurrentUser();
+      if (!cognitoUser) {
+        throw new Error('No user in storage.');
       }
-    });
+
+      const [_, attributes, databaseData] = await Promise.all([
+        new Promise((resolve, reject) => {
+          cognitoUser.getSession((err, session) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(session);
+            }
+          });
+        }),
+        new Promise((resolve, reject) => {
+          cognitoUser.getUserAttributes((err, attributes) => {
+            if (err) {
+              reject(err);
+            } else {
+              const results = {};
+
+              for (let attribute of attributes) {
+                const { Name, Value } = attribute;
+                results[Name] = Value;
+              }
+
+              resolve(results);
+            }
+          });
+        }),
+        fetch('/api/users', {
+          method: 'GET',
+          headers: {
+            'User-Id': cognitoUser.username,
+          },
+        }).then((res) => res.json()),
+      ]);
+
+      const { user } = databaseData;
+
+      if (attributes.email !== user.email) {
+        throw new Error(
+          'Inconsistent data between Cognito and database'
+        );
+      }
+
+      dispatch({
+        type: LOAD_USER,
+        payload: {
+          user: {
+            id: user.id,
+            firstName: user.first_name,
+            lastName: user.last_name,
+            email: user.email,
+          },
+          cognitoUser,
+        },
+      });
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   };
 
   const signUp = (firstName, lastName, email, password) => {

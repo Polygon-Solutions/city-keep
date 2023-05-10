@@ -1,17 +1,8 @@
 import React, { useContext } from 'react';
-
 import ReportsContext from '../../context/reports/ReportsContext';
+import ReportAccordion from './ReportAccordion';
 
-import ReportDetail from './ReportDetail';
-
-import {
-  Accordion,
-  AccordionSummary,
-  Typography,
-  AccordionDetails,
-  Grid,
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Typography } from '@mui/material';
 
 const months = [
   'Jan',
@@ -28,74 +19,52 @@ const months = [
   'Dec',
 ];
 
+const formatDate = (date) => {
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+};
+
 const Reports = () => {
   const { reports } = useContext(ReportsContext);
 
+  if (reports.length === 0) {
+    return (
+      <Typography sx={{ my: 2, textAlign: 'center' }}>
+        You haven't made any reports.
+      </Typography>
+    );
+  }
+
   return (
     <>
-      {reports.length !== 0 ? (
-        reports.map((report) => {
-          const date = new Date(report.reportTime);
-          const dateText =
-            date.getDate() +
-            ' ' +
-            months[date.getMonth()] +
-            ' ' +
-            date.getFullYear();
-
-          const name = report.firstName + ' ' + report.lastName;
+      {reports.map(
+        ({
+          id,
+          reportTime,
+          title,
+          category,
+          description,
+          address,
+          firstName,
+          lastName,
+        }) => {
+          const name = `${firstName} ${lastName}`;
+          const date = new Date(reportTime);
+          const dateText = formatDate(date);
           return (
-            <Accordion key={report.id} sx={{ my: 1 }}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ px: 3 }}
-              >
-                <Grid
-                  container
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <Typography sx={{ fontWeight: 600 }}>
-                    {report.title}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontStyle: 'italic',
-                      color: '#404040',
-                      fontSize: '14px',
-                    }}
-                  >
-                    {dateText}
-                  </Typography>
-                </Grid>
-              </AccordionSummary>
-              <AccordionDetails
-                sx={{ backgroundColor: '#ededed', px: 3 }}
-              >
-                <ReportDetail
-                  label={'Category'}
-                  detail={report.category}
-                />
-                <ReportDetail
-                  label={'Description'}
-                  detail={report.description}
-                />
-                <ReportDetail
-                  label={'Address'}
-                  detail={report.address}
-                />
-                <ReportDetail
-                  label={'Submitted by'}
-                  detail={name}
-                />
-              </AccordionDetails>
-            </Accordion>
+            <ReportAccordion
+              key={id}
+              title={title}
+              dateText={dateText}
+              category={category}
+              description={description}
+              address={address}
+              name={name}
+            />
           );
-        })
-      ) : (
-        <Typography sx={{ my: 2, textAlign: 'center' }}>
-          You haven't made any reports.
-        </Typography>
+        }
       )}
     </>
   );

@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import AccountContext from './context/account/AccountContext';
+import AlertsContext from './context/alerts/AlertsContext';
 
 //Components
 import Navbar from './components/layout/Navbar';
@@ -26,15 +27,17 @@ import { Paper } from '@mui/material';
 const App = () => {
   const { isAuthenticated, loadUser } =
     useContext(AccountContext);
+  const { setAlert } = useContext(AlertsContext);
+
+  const load = async () => {
+    try {
+      await loadUser();
+    } catch (err) {
+      setAlert(err.message, 'error');
+    }
+  };
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        await loadUser();
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

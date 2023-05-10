@@ -30,9 +30,10 @@ const AccountState = ({ children }) => {
   const loadUser = async () => {
     const cognitoUser = Pool.getCurrentUser();
     if (!cognitoUser) {
-      throw new Error('No user in storage.');
+      return;
     }
 
+    // eslint-disable-next-line no-unused-vars
     const [_, attributes, databaseData] = await Promise.all([
       new Promise((resolve, reject) => {
         cognitoUser.getSession((err, session) => {

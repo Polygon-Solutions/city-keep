@@ -15,8 +15,8 @@ import NoAuthOutlet from './components/routing/NoAuthOutlet';
 import ReportsPage from './components/pages/ReportsPage';
 import SettingsPage from './components/pages/SettingsPage';
 import LandingPage from './components/pages/LandingPage';
-import ForgotPassword from './components/pages/ForgotPassword';
-import VerifyUser from './components/pages/VerifyUser';
+import ForgotPassword from './components/auth/ForgotPassword';
+import VerifyUser from './components/auth/VerifyUser';
 import Alerts from './components/layout/Alerts';
 
 import { ThemeProvider } from '@mui/material/styles';

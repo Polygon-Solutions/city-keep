@@ -42,7 +42,7 @@ const ReportForm = () => {
     event.preventDefault();
 
     try {
-      await submitReport(
+      const report = await submitReport(
         user.id,
         formData.title,
         formData.category,
@@ -51,6 +51,11 @@ const ReportForm = () => {
       );
 
       clearForm();
+
+      setAlert(
+        `Report "${report.title}" submitted successfully. Please refresh the reports page.`,
+        'success'
+      );
     } catch (err) {
       setAlert(err.message, 'error');
     }

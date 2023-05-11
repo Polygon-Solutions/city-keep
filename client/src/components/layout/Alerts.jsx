@@ -23,7 +23,8 @@ const Alerts = () => {
         px: 1,
         pb: 1,
         position: 'fixed',
-        bottom: isAuthenticated && 90,
+        bottom: isAuthenticated ? 90 : 0,
+        zIndex: 1500,
       }}
     >
       {alerts.map((alert) => (

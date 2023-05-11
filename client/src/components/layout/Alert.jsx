@@ -19,7 +19,7 @@ const Alert = ({ alert }) => {
     removeAlert(id);
   };
   return (
-    <Grid item key={alert.id}>
+    <Grid item>
       <Snackbar
         open
         sx={{ position: 'static' }}

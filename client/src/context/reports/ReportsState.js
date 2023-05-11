@@ -38,7 +38,10 @@ const ReportsState = ({ children }) => {
         address,
       }),
     }).then((res) => res.json());
-    // console.log(report);
+
+    //console.log(report);
+
+    return report;
   };
 
   const loadReports = useCallback(async () => {

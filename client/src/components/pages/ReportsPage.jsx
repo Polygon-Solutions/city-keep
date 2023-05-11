@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ReportsContext from '../../context/reports/ReportsContext';
 import AccountContext from '../../context/account/AccountContext';
+import AlertsContext from '../../context/alerts/AlertsContext';
 
 import Reports from '../reports/Reports';
 import Page from '../layout/Page';
@@ -21,12 +22,17 @@ const ReportsPage = () => {
   const { loadReports, loadUserReports } =
     useContext(ReportsContext);
   const { user } = useContext(AccountContext);
+  const { setAlert } = useContext(AlertsContext);
 
-  const handleReports = () => {
-    if (!filterUser) {
-      loadReports();
-    } else {
-      loadUserReports(user.id);
+  const handleReports = async () => {
+    try {
+      if (!filterUser) {
+        await loadReports();
+      } else {
+        await loadUserReports(user.id);
+      }
+    } catch (err) {
+      setAlert(err.message, 'error');
     }
   };
 

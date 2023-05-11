@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useCallback, useReducer } from 'react';
 
 import ReportsContext from './ReportsContext';
 import ReportsReducer from './ReportsReducer';
@@ -24,7 +24,7 @@ const ReportsState = ({ children }) => {
   ) => {
     const reportTime = new Date();
 
-    const res = await fetch('/api/reports', {
+    const { report } = await fetch('/api/reports', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,40 +37,38 @@ const ReportsState = ({ children }) => {
         report_time: reportTime,
         address,
       }),
+    }).then((res) => res.json());
+
+    //console.log(report);
+
+    return report;
+  };
+
+  const loadReports = useCallback(async () => {
+    const { reports } = await fetch('/api/reports', {
+      method: 'GET',
+    }).then((res) => res.json());
+
+    // console.log(reports);
+
+    dispatch({
+      type: LOAD_REPORTS,
+      payload: { reports },
     });
-    const newReportData = await res.json();
-    console.log(newReportData.report);
-  };
+  }, []);
 
-  const loadReports = async () => {
-    try {
-      const res = await fetch('/api/reports', {
-        method: 'GET',
-      });
-      const { reports } = await res.json();
-      dispatch({
-        type: LOAD_REPORTS,
-        payload: { reports },
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const loadUserReports = useCallback(async (userId) => {
+    const { reports } = await fetch(`/api/reports/${userId}`, {
+      method: 'GET',
+    }).then((res) => res.json());
 
-  const loadUserReports = async (userId) => {
-    try {
-      const res = await fetch(`/api/reports/${userId}`, {
-        method: 'GET',
-      });
-      const { reports } = await res.json();
-      dispatch({
-        type: LOAD_REPORTS,
-        payload: { reports },
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    // console.log(reports);
+
+    dispatch({
+      type: LOAD_REPORTS,
+      payload: { reports },
+    });
+  }, []);
 
   return (
     <ReportsContext.Provider

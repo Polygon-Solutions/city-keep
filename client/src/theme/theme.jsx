@@ -112,17 +112,6 @@ const theme = createTheme(preTheme, {
         },
       },
     },
-    MuiSwitch: {
-      defaultProps: {
-        color: 'construction',
-      },
-      styleOverrides: {
-        track: {
-          backgroundColor: preTheme.palette.construction.dark,
-          opacity: 0.6,
-        },
-      },
-    },
     MuiInputBase: {
       styleOverrides: {
         input: {

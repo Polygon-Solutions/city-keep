@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import AccountContext from './context/account/AccountContext';
+import AlertsContext from './context/alerts/AlertsContext';
 
 //Components
 import Navbar from './components/layout/Navbar';
@@ -15,8 +16,8 @@ import NoAuthOutlet from './components/routing/NoAuthOutlet';
 import ReportsPage from './components/pages/ReportsPage';
 import SettingsPage from './components/pages/SettingsPage';
 import LandingPage from './components/pages/LandingPage';
-import ForgotPassword from './components/pages/ForgotPassword';
-import VerifyUser from './components/pages/VerifyUser';
+import ForgotPassword from './components/auth/ForgotPassword';
+import VerifyUser from './components/auth/VerifyUser';
 import Alerts from './components/layout/Alerts';
 
 import { ThemeProvider } from '@mui/material/styles';
@@ -26,15 +27,17 @@ import { Paper } from '@mui/material';
 const App = () => {
   const { isAuthenticated, loadUser } =
     useContext(AccountContext);
+  const { setAlert } = useContext(AlertsContext);
+
+  const load = async () => {
+    try {
+      await loadUser();
+    } catch (err) {
+      setAlert(err.message, 'error');
+    }
+  };
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        await loadUser();
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -72,9 +75,9 @@ const App = () => {
                 <AuthOutlet isAuthenticated={isAuthenticated} />
               }
             >
-              <Route path="reports" element={<ReportsPage />} />
+              <Route path="/reports" element={<ReportsPage />} />
               <Route
-                path="settings"
+                path="/settings"
                 element={<SettingsPage />}
               />
             </Route>

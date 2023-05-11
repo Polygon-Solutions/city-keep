@@ -27,7 +27,7 @@ const Alerts = () => {
       }}
     >
       {alerts.map((alert) => (
-        <Alert alert={alert} />
+        <Alert alert={alert} key={alert.id} />
       ))}
     </Grid>
   );

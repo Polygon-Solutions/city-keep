@@ -75,9 +75,9 @@ const App = () => {
                 <AuthOutlet isAuthenticated={isAuthenticated} />
               }
             >
-              <Route path="reports" element={<ReportsPage />} />
+              <Route path="/reports" element={<ReportsPage />} />
               <Route
-                path="settings"
+                path="/settings"
                 element={<SettingsPage />}
               />
             </Route>

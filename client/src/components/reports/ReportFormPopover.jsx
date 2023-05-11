@@ -4,12 +4,15 @@ import DisplayContext from '../../context/display/DisplayContext';
 
 import { Popover, Zoom } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import ReportForm from '../reports/ReportForm';
+import ReportForm from './ReportForm';
 
-const ReportFormPopover = ({ open, setOpen }) => {
+const ReportFormPopover = ({
+  open,
+  setOpen,
+  distanceFromButton,
+}) => {
   const { windowHeight, windowWidth } =
     useContext(DisplayContext);
-  const distanceFromButton = 16;
 
   const theme = useTheme();
 
@@ -33,8 +36,8 @@ const ReportFormPopover = ({ open, setOpen }) => {
       PaperProps={{
         sx: {
           width: 'calc(100% - 32px)',
-          maxWidth: 'calc(100vh * 0.75 - 32px)',
-          height: `calc(100vh - 56px - 28px - ${distanceFromButton}px - 16px)`,
+          maxWidth: 'calc(100svh * 0.75 - 32px)',
+          height: `calc(100svh - 56px - 28px - ${distanceFromButton}px - 16px)`,
           borderRadius: '6px',
           border: `3px solid ${theme.palette.primary.main}`,
           boxSizing: 'border-box',

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import ReportsContext from '../../context/reports/ReportsContext';
-import ReportAccordion from './ReportAccordion';
+import Report from './Report';
 
 import { Typography } from '@mui/material';
 
@@ -54,7 +54,7 @@ const Reports = () => {
           const date = new Date(reportTime);
           const dateText = formatDate(date);
           return (
-            <ReportAccordion
+            <Report
               key={id}
               title={title}
               dateText={dateText}

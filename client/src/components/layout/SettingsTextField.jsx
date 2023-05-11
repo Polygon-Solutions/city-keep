@@ -4,7 +4,7 @@ import { TextField } from '@mui/material';
 
 const SettingsTextField = ({
   label,
-  color,
+  color = 'secondary',
   mt,
   type,
   value,

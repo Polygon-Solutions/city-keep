@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const ReportAccordion = ({
+const Report = ({
   title,
   dateText,
   category,
@@ -59,4 +59,4 @@ const ReportAccordion = ({
   );
 };
 
-export default ReportAccordion;
+export default Report;

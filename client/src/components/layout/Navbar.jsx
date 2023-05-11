@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import ReportFormPopover from './ReportFormPopover';
+import ReportFormPopover from '../reports/ReportFormPopover';
 
 import { styled } from '@mui/material/styles';
 import {
@@ -55,7 +55,11 @@ const DashboardOverlay = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <ReportFormPopover open={formOpen} setOpen={setFormOpen} />
+      <ReportFormPopover
+        open={formOpen}
+        setOpen={setFormOpen}
+        distanceFromButton={16}
+      />
     </>
   );
 };

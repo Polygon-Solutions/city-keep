@@ -3,19 +3,13 @@ import React, { useContext } from 'react';
 import AccountContext from '../../context/account/AccountContext';
 import AlertsContext from '../../context/alerts/AlertsContext';
 
-import { Alert, Grid, Snackbar } from '@mui/material';
+import Alert from './Alert';
+
+import { Grid } from '@mui/material';
 
 const Alerts = () => {
   const { isAuthenticated } = useContext(AccountContext);
-  const { alerts, removeAlert } = useContext(AlertsContext);
-
-  const handleClose = (event, reason, id) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    removeAlert(id);
-  };
+  const { alerts } = useContext(AlertsContext);
 
   return (
     <Grid
@@ -29,30 +23,11 @@ const Alerts = () => {
         px: 1,
         pb: 1,
         position: 'fixed',
-        bottom: isAuthenticated ? 90 : 0,
+        bottom: isAuthenticated && 90,
       }}
     >
       {alerts.map((alert) => (
-        <Grid item key={alert.id}>
-          <Snackbar
-            open
-            sx={{ position: 'static' }}
-            autoHideDuration={5000}
-            onClose={(event, reason) =>
-              handleClose(event, reason, alert.id)
-            }
-          >
-            <Alert
-              severity={alert.type}
-              onClose={(event, reason) =>
-                handleClose(event, reason, alert.id)
-              }
-              sx={{ width: 1, alignItems: 'center' }}
-            >
-              {alert.msg}
-            </Alert>
-          </Snackbar>
-        </Grid>
+        <Alert alert={alert} />
       ))}
     </Grid>
   );

@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import DisplayContext from '../../context/display/DisplayContext';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 import { Popover, Zoom } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -11,8 +11,7 @@ const ReportFormPopover = ({
   setOpen,
   distanceFromButton,
 }) => {
-  const { windowHeight, windowWidth } =
-    useContext(DisplayContext);
+  const { height, width } = useWindowDimensions();
 
   const theme = useTheme();
 
@@ -24,8 +23,8 @@ const ReportFormPopover = ({
     <Popover
       anchorReference="anchorPosition"
       anchorPosition={{
-        left: windowWidth / 2,
-        top: windowHeight - (56 + 28 + distanceFromButton),
+        left: width / 2,
+        top: height - (56 + 28 + distanceFromButton),
       }}
       transformOrigin={{
         vertical: 'bottom',

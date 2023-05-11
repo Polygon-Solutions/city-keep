@@ -1,6 +1,8 @@
 const Router = require('express-promise-router');
 const db = require('../database');
 
+const handleErrors = require('../utils/handle_errors');
+
 const router = new Router();
 
 module.exports = router;
@@ -11,26 +13,17 @@ module.exports = router;
 router.post('/', async (req, res) => {
   try {
     const { body } = req;
-    const { rows } = await db.query(
+    const {
+      rows: [user],
+    } = await db.query(
       'INSERT INTO users (id, last_name, first_name, email) VALUES ($1, $2, $3, $4) RETURNING *',
       [body.userId, body.lastName, body.firstName, body.email]
     );
     res.status(201).json({
-      user: rows[0],
+      user,
     });
   } catch (err) {
-    console.error(
-      '\n',
-      'Error: ',
-      err.message,
-      '\n',
-      'Detail:',
-      err.detail,
-      '\n',
-      'Table: ',
-      err.table
-    );
-    res.status(500).send('Server Error');
+    handleErrors(res, err);
   }
 });
 
@@ -39,25 +32,15 @@ router.post('/', async (req, res) => {
 // @access  Private
 router.get('/', async (req, res) => {
   try {
-    const { rows } = await db.query(
-      'SELECT * FROM users WHERE id = $1',
-      [req.header('User-Id')]
-    );
+    const {
+      rows: [user],
+    } = await db.query('SELECT * FROM users WHERE id = $1', [
+      req.header('User-Id'),
+    ]);
     res.status(200).json({
-      user: rows[0],
+      user,
     });
   } catch (err) {
-    console.error(
-      '\n',
-      'Error: ',
-      err.message,
-      '\n',
-      'Detail:',
-      err.detail,
-      '\n',
-      'Table: ',
-      err.table
-    );
-    res.status(500).send('Server Error');
+    handleErrors(res, err);
   }
 });

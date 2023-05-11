@@ -24,7 +24,7 @@ const ReportsState = ({ children }) => {
   ) => {
     const reportTime = new Date();
 
-    const newReport = await fetch('/api/reports', {
+    const { report } = await fetch('/api/reports', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,13 +38,16 @@ const ReportsState = ({ children }) => {
         address,
       }),
     }).then((res) => res.json());
-    console.log(newReport.report);
+    // console.log(report);
   };
 
   const loadReports = useCallback(async () => {
     const { reports } = await fetch('/api/reports', {
       method: 'GET',
     }).then((res) => res.json());
+
+    // console.log(reports);
+
     dispatch({
       type: LOAD_REPORTS,
       payload: { reports },
@@ -55,6 +58,9 @@ const ReportsState = ({ children }) => {
     const { reports } = await fetch(`/api/reports/${userId}`, {
       method: 'GET',
     }).then((res) => res.json());
+
+    // console.log(reports);
+
     dispatch({
       type: LOAD_REPORTS,
       payload: { reports },

@@ -34,7 +34,7 @@ const AccountState = ({ children }) => {
     }
 
     // eslint-disable-next-line no-unused-vars
-    const [_, attributes, databaseData] = await Promise.all([
+    const [_, attributes, { user }] = await Promise.all([
       new Promise((resolve, reject) => {
         cognitoUser.getSession((err, session) => {
           if (err) {
@@ -68,7 +68,7 @@ const AccountState = ({ children }) => {
       }).then((res) => res.json()),
     ]);
 
-    const { user } = databaseData;
+    // console.log(user);
 
     if (attributes.email !== user.email) {
       throw new Error(

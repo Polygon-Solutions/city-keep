@@ -35,7 +35,7 @@ const ForgotPassword = () => {
     // AWS Cognito Forgot Password
   };
 
-  //JSX
+  // Render
   return (
     <Container component="main" maxWidth="xs">
       <Typography variant="h6" sx={{ mt: 3 }}>

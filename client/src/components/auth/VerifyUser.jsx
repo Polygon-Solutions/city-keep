@@ -77,7 +77,7 @@ const VerifyUser = () => {
     }
   };
 
-  //JSX
+  // Render
   return (
     <Container component="main" maxWidth="xs">
       <Typography variant="h6" sx={{ mt: 3 }}>

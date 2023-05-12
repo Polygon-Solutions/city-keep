@@ -11,6 +11,10 @@ import { Tooltip, ClickAwayListener } from '@mui/material';
       component when the child component is clicked
     - Includes a clickAwayListener to close the tooltip 
       when the user clicks outside of it
+ * @param {String} message - message to display in the tooltip
+ * @param {String} placement - placement of the tooltip
+ * @param {Number} offset - tooltip offset from the target
+ * @param {Object} children - child component to wrap
  * @listens ForgotPassword,SignIn,ImageUpload (12-05-2023)
  */
 const WorkInProgress = ({
@@ -22,7 +26,7 @@ const WorkInProgress = ({
   // State
   const [open, setOpen] = useState(false);
 
-  // JSX
+  // Render
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <Tooltip

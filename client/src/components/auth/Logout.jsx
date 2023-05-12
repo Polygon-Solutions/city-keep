@@ -31,7 +31,7 @@ const Logout = () => {
     logout();
   };
 
-  //JSX
+  // Render
   return (
     <>
       <Typography variant="h4">Logout</Typography>

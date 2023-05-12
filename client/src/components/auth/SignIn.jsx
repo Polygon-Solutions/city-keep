@@ -81,7 +81,7 @@ const SignIn = () => {
     }
   };
 
-  //JSX
+  // Render
   return (
     <Container component="main" maxWidth="xs">
       <Box

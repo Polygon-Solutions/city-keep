@@ -60,7 +60,7 @@ const ChangePassword = () => {
     }
   };
 
-  //JSX
+  // Render
   return (
     <>
       <Typography variant="h4">Change Password</Typography>

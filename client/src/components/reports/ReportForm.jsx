@@ -20,23 +20,14 @@ import {
 } from '@mui/material';
 
 const ReportForm = () => {
-  const [formData, setFormData] = useState({
-    title: '',
-    category: '',
-    description: '',
-    address: '',
-  });
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const [address, setAddress] = useState('');
 
   const { submitReport } = useContext(ReportsContext);
   const { user } = useContext(AccountContext);
   const { setAlert } = useContext(AlertsContext);
-
-  const handleDataChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,10 +35,10 @@ const ReportForm = () => {
     try {
       const report = await submitReport(
         user.id,
-        formData.title,
-        formData.category,
-        formData.description,
-        formData.address
+        title,
+        category,
+        description,
+        address
       );
 
       clearForm();
@@ -62,12 +53,10 @@ const ReportForm = () => {
   };
 
   const clearForm = () => {
-    setFormData({
-      title: '',
-      category: '',
-      description: '',
-      address: '',
-    });
+    setTitle('');
+    setCategory('');
+    setDescription('');
+    setAddress('');
   };
 
   return (
@@ -87,8 +76,8 @@ const ReportForm = () => {
           sx={{ my: 1 }}
           label="Title"
           name="title"
-          value={formData.title}
-          onChange={(e) => handleDataChange(e)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <FormControl
           required
@@ -100,8 +89,8 @@ const ReportForm = () => {
             MenuProps={{ sx: { maxHeight: '200px' } }}
             label="Category"
             name="category"
-            value={formData.category}
-            onChange={(e) => handleDataChange(e)}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
           >
             <MenuItem value={''}>
               <em>None</em>
@@ -119,15 +108,15 @@ const ReportForm = () => {
           sx={{ my: 1 }}
           label="Description"
           name="description"
-          value={formData.description}
-          onChange={(e) => handleDataChange(e)}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <ReportFormField
           sx={{ my: 1 }}
           label="Address"
           name="address"
-          value={formData.address}
-          onChange={(e) => handleDataChange(e)}
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
         />
         <ImageUpload />
       </Grid>

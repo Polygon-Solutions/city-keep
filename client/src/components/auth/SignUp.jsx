@@ -16,19 +16,47 @@ import {
   Typography,
 } from '@mui/material';
 
+/**
+ * *
+ * SignUp Component
+ * @description
+    - Renders a form for signing up with a first and last 
+      name, an email address, and a password.
+    - Renders a button that triggers the signUp function
+    - Renders a button that triggers the signIn function 
+      with the demo credentials
+ * @listens NoAuthOutlet (but imported into App.jsx)
+ * @fires AccountContext.signUp
+ * @fires AccountContext.signIn
+ */
 const SignUp = () => {
+  // State
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // Context
   const { signUp, signIn } = useContext(AccountContext);
   const { setAlert } = useContext(AlertsContext);
 
+  // Hooks
   const emailChecker = useEmailChecker;
   const passwordChecker = usePasswordChecker;
   const navigate = useNavigate();
 
+  /** 
+   * *
+   * Handle Register
+   * @description 
+      - Checks if first name, last name, email, and 
+        password fields are not empty
+      - Checks if email and password are valid
+      - If valid, awaits signUp function
+      - If not valid, displays warning messages
+      - If error from backend, displays error message
+   * @listens Box (form) submission
+   */
   const handleRegister = async (event) => {
     event.preventDefault();
     if (firstName === '') {
@@ -70,6 +98,14 @@ const SignUp = () => {
     }
   };
 
+  /** 
+   * *
+   * Handle Demo
+   * @description 
+      - Signs in with demo account using the credentials 
+        provided by .env
+   * @listens Button click
+   */
   const handleDemo = () => {
     signIn(
       process.env.REACT_APP_DEMO_USERNAME,
@@ -77,6 +113,7 @@ const SignUp = () => {
     );
   };
 
+  //JSX
   return (
     <Container component="main" maxWidth="xs">
       <Box

@@ -18,17 +18,42 @@ import {
   Container,
 } from '@mui/material';
 
+/**
+ * *
+ * SignIn Component
+ * @description
+    - Renders a form for signing in with an email address
+      and a password.
+    - Renders a button that triggers the signIn function
+    - Renders a link to the forgot password page
+ * @listens NoAuthOutlet (but imported into App.jsx)
+ * @fires AccountContext.signIn
+ */
 const SignIn = () => {
+  // State
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // Context
   const { signIn } = useContext(AccountContext);
   const { setAlert } = useContext(AlertsContext);
 
+  // Hooks
   const emailChecker = useEmailChecker;
   const passwordChecker = usePasswordChecker;
 
-  const handleSubmit = async (event) => {
+  /** 
+   * *
+   * Handle Sign In
+   * @description 
+      - Checks if email and password are valid
+      - If valid, attempts to sign user in
+      - If not valid, displays warning messages
+      - If error from backend, displays error message
+   * @listens Box (form) submission
+   * @fires AccountContext.signIn
+   */
+  const handleSignIn = async (event) => {
     event.preventDefault();
     if (email === '') {
       setAlert('Please enter an email.', 'warning');
@@ -56,11 +81,12 @@ const SignIn = () => {
     }
   };
 
+  //JSX
   return (
     <Container component="main" maxWidth="xs">
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={handleSignIn}
         sx={{ mt: 1 }}
       >
         <TextField

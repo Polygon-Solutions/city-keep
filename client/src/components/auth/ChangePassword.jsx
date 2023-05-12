@@ -8,13 +8,36 @@ import SettingsTextField from '../layout/SettingsTextField';
 
 import { Typography, Box } from '@mui/material';
 
+/**
+ * *
+ * ChangePassword Component
+ * @description
+    - Renders two text fields that allow the user to enter their current and new password.
+    - Renders a button that triggers the changePassword function
+ * @listens SettingsPage
+ * @fires AccountContext.changePassword
+ */
 const ChangePassword = () => {
+  // State
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
+  // Context
   const { changePassword } = useContext(AccountContext);
   const { setAlert } = useContext(AlertsContext);
 
+  /** 
+   * *
+   * Handle Password Change
+   * @description 
+      - Checks password fields are not empty
+      - Checks if passwords are valid
+      - If valid, awaits changePassword function
+      - If not valid, displays warning messages
+      - If error from backend, displays error message
+   * @listens Box (form) submission
+   * @fires AccountContext.changePassword
+   */
   const handleChangePassword = async (event) => {
     event.preventDefault();
 
@@ -37,21 +60,20 @@ const ChangePassword = () => {
     }
   };
 
+  //JSX
   return (
     <>
       <Typography variant="h4">Change Password</Typography>
       <Box component="form" onSubmit={handleChangePassword}>
         <SettingsTextField
-          label="Current Password"
-          color="secondary"
           mt={1}
+          label="Current Password"
           type="password"
           value={currentPassword}
           setValue={setCurrentPassword}
         />
         <SettingsTextField
           label="New Password"
-          color="secondary"
           type="password"
           value={newPassword}
           setValue={setNewPassword}

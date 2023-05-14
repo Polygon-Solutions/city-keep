@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 
 import AlertsContext from '../../context/alerts/AlertsContext';
 
@@ -8,16 +9,34 @@ import {
   Snackbar,
 } from '@mui/material';
 
+/**
+ * *
+ * Alert Component
+ * @description
+    - Renders an MUI Alert component within a snackbar
+ * @param {object} props.alert
+ * @listens Alerts
+ * @fires AlertsContext.removeAlert
+ */
 const Alert = ({ alert }) => {
+  // Context
   const { removeAlert } = useContext(AlertsContext);
 
+  /** 
+   * *
+   * Handle Close (alert clickaway)
+   * @description 
+      - Removes alert if the user clicks outside
+   * @listens Snackbar
+   */
   const handleClose = (event, reason, id) => {
     if (reason === 'clickaway') {
       return;
     }
-
     removeAlert(id);
   };
+
+  // JSX
   return (
     <Grid item>
       <Snackbar
@@ -40,6 +59,11 @@ const Alert = ({ alert }) => {
       </Snackbar>
     </Grid>
   );
+};
+
+// PropTypes
+Alert.propTypes = {
+  alert: PropTypes.object.isRequired,
 };
 
 export default Alert;

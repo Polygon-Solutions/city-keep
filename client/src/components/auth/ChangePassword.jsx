@@ -80,7 +80,7 @@ const ChangePassword = () => {
         />
         <SettingsButton
           color="secondary"
-          text="Change Password"
+          label="Change Password"
           type="submit"
         />
       </Box>

@@ -37,7 +37,7 @@ const Logout = () => {
       <Typography variant="h4">Logout</Typography>
       <SettingsButton
         color="error"
-        text="Logout"
+        label="Logout"
         type="button"
         handleClick={handleLogout}
       />

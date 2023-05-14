@@ -16,6 +16,7 @@ import {
   Settings as SettingsIcon,
 } from '@mui/icons-material';
 
+// Custom floating action button
 const StyledFab = styled(Fab)({
   position: 'absolute',
   zIndex: 1,
@@ -25,9 +26,22 @@ const StyledFab = styled(Fab)({
   margin: '0 auto',
 });
 
-const DashboardOverlay = () => {
+/**
+ * *
+ * Navbar Component
+ * @description
+    - Renders an app bar with a button for Reports and 
+      Settings and a floating action button for adding a 
+      new report
+    - Renders the ReportFormPopover component when formOpen 
+      is set to true
+ * @listens Router (but imported into App.jsx)
+ */
+const Navbar = () => {
+  // State
   const [formOpen, setFormOpen] = useState(false);
 
+  // Render
   return (
     <>
       <AppBar
@@ -64,4 +78,4 @@ const DashboardOverlay = () => {
   );
 };
 
-export default DashboardOverlay;
+export default Navbar;

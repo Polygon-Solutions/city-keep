@@ -1,39 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 
+import TabPanel from '../layout/TabPanel';
 import SignIn from '../auth/SignIn';
 import SignUp from '../auth/SignUp';
 
-import { Grid, Tabs, Tab, Box } from '@mui/material';
+import { Grid, Tabs, Tab } from '@mui/material';
 
-const TabPanel = (props) => {
-  const { children, value, ...other } = props;
-
-  return (
-    <div role="tabpanel" {...other}>
-      <Box sx={{ p: 3 }}>{children[value]}</Box>
-    </div>
-  );
-};
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  value: PropTypes.number.isRequired,
-};
-
+/**
+ * *
+ * LandingPage Component
+ * @description
+    - Renders an MUI tabbed panel view with one tab for 
+      SignIn and one tab for SignUp
+    - Uses custom TabPanel component to render the tabs 
+      using the array of children components
+ * @listens NoAuthOutlet (but imported into App.jsx)
+ */
 const LandingPage = () => {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+  // State
+  const [value, setValue] = useState(0);
+  // Render
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <Tabs
           value={value}
-          onChange={handleChange}
+          onChange={(event, newValue) => setValue(newValue)}
           variant="fullWidth"
         >
           <Tab label="Sign In"></Tab>

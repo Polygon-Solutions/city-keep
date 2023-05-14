@@ -35,8 +35,8 @@ const ReportFormPopover = ({
       PaperProps={{
         sx: {
           width: 'calc(100% - 32px)',
-          maxWidth: 'calc(100svh * 0.75 - 32px)',
-          height: `calc(100svh - 56px - 28px - ${distanceFromButton}px - 16px)`,
+          maxWidth: 'calc(100vh * 0.75 - 32px)', // temporary until there exists a desktop version of this app, this maxWidth value is used in many other components
+          height: `calc(100svh - 56px - 28px - ${distanceFromButton}px - 16px)`, // intentional feature, meant to remain after development of desktop version
           borderRadius: '6px',
           border: `3px solid ${theme.palette.primary.main}`,
           boxSizing: 'border-box',

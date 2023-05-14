@@ -11,16 +11,16 @@ import { Tooltip, ClickAwayListener } from '@mui/material';
       component when the child component is clicked
     - Includes a clickAwayListener to close the tooltip 
       when the user clicks outside of it
- * @param {String} message - message to display in the tooltip
- * @param {String} placement - placement of the tooltip
- * @param {Number} offset - tooltip offset from the target
- * @param {Object} children - child component to wrap
+ * @param {String} props.message - message to display in the tooltip
+ * @param {String} props.placement - placement of the tooltip
+ * @param {Number} props.distance - tooltip distance from the target
+ * @param {Object} props.children - child component(s) to wrap
  * @listens ForgotPassword,SignIn,ImageUpload (12-05-2023)
  */
 const WorkInProgress = ({
   message = 'Work in progress...',
   placement,
-  offset,
+  distance,
   children,
 }) => {
   // State
@@ -37,12 +37,12 @@ const WorkInProgress = ({
           disablePortal: true,
           modifiers: [
             {
-              name: 'offset',
+              name: 'distance',
               options: {
-                offset,
+                offset: [0, distance || 0],
               },
             },
-          ],
+          ], // Popper.js modifiers [skid, dist]
         }}
         onClose={() => setOpen(false)}
         onClick={() => setOpen(true)}
@@ -57,11 +57,12 @@ const WorkInProgress = ({
   );
 };
 
+// PropTypes
 WorkInProgress.propTypes = {
   message: PropTypes.string,
   placement: PropTypes.string,
-  offset: PropTypes.number,
-  children: PropTypes.node,
+  distance: PropTypes.number,
+  children: PropTypes.node.isRequired,
 };
 
 export default WorkInProgress;

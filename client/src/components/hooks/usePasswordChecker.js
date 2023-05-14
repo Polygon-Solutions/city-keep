@@ -5,7 +5,8 @@
     - Checks if input satisfies password rules set by 
       Cognito using regular expression
  * TODO: Fix regex to be consistent with Cognito
- * @listens SignIn,SignUp (12-05-2023)
+ * @listens SignIn
+ * @listens SignUp
  * @param {string} password
  * @returns {boolean}
  */

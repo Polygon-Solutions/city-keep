@@ -13,7 +13,8 @@ import { Grid, Button } from '@mui/material';
  * @param {String} props.label - the button label
  * @param {String} props.type - the native type attribute
  * @param {Function} props.handleClick - the click handler
- * @listens ChangePassword,Logout
+ * @listens ChangePassword
+ * @listens Logout
  */
 const SettingsButton = ({ color, label, type, handleClick }) => {
   // Render

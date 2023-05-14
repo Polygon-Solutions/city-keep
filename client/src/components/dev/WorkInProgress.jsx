@@ -14,8 +14,10 @@ import { Tooltip, ClickAwayListener } from '@mui/material';
  * @param {String} props.message - message to display in the tooltip
  * @param {String} props.placement - placement of the tooltip
  * @param {Number} props.distance - tooltip distance from the target
- * @param {Object} props.children - child component(s) to wrap
- * @listens ForgotPassword,SignIn,ImageUpload (12-05-2023)
+ * @param {React.ReactNode} props.children - child component(s) to wrap
+ * @listens ForgotPassword
+ * @listens SignIn
+ * @listens ImageUpload
  */
 const WorkInProgress = ({
   message = 'Work in progress...',

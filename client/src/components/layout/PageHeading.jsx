@@ -7,8 +7,9 @@ import { AppBar } from '@mui/material';
  * PageHeading Component
  * @description
     - Renders an app bar with the heading 1 text
- * @param {Object} props.children - child component(s) to wrap
- * @listens ReportsPage,SettingsPage
+ * @param {React.ReactNode} props.children - child component(s) to wrap
+ * @listens ReportsPage
+ * @listens SettingsPage
  */
 const PageHeading = ({ children }) => {
   return (

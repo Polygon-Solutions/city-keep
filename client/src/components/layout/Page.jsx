@@ -10,8 +10,9 @@ import { Box } from '@mui/material';
     - Renders a Box component for positioning the page
     - Uses pt to specify the top padding (if authenticated)
  * @param {Number} props.pt - Custom top padding (=80+pt*8 pixels)
- * @param {Object} props.children - child component(s) to wrap
- * @listens ReportsPage,SettingsPage
+ * @param {React.ReactNode} props.children - child component(s) to wrap
+ * @listens ReportsPage
+ * @listens SettingsPage
  */
 const Page = ({ pt = 0, children }) => {
   // Render

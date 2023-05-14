@@ -41,7 +41,7 @@ const VerifyUser = () => {
       - If it is a number, set the verification code state 
         variable to the input
       - If it is not a number, the text won't change
-  * @listens: TextField input
+  * @listens TextField input
   */
   const handleInput = (event) => {
     if (
@@ -61,7 +61,7 @@ const VerifyUser = () => {
         navigate to the home page (sign in)
       - If error from backend, displays error message
   * TODO: If verification code is not 6 figures, displays a warning message
-  * @listens: Box (form) submission
+  * @listens Box (form) submission
   */
   const handleVerify = async (event) => {
     event.preventDefault();

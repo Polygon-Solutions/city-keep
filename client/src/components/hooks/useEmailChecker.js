@@ -4,7 +4,8 @@
  * @description 
     - Checks if input is a valid email address using 
       regular expression
- * @listens SignIn,SignUp (12-05-2023)
+ * @listens SignIn
+ * @listens SignUp
  * @param {string} email
  * @returns {boolean}
  */

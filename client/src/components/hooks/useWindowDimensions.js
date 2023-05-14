@@ -20,7 +20,7 @@ function useWindowDimensions(debounceTime = 20) {
 
   /** 
    * *
-   * Windows Dimensions useEffect hook
+   * Windows Dimensions useEffect Hook
    * @description 
       - Declares a timeoutId variable that will have a 
         timeout assigned and cleared repeatedly by 

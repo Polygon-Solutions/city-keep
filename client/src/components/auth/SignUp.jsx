@@ -128,7 +128,9 @@ const SignUp = () => {
               label="First Name"
               autoFocus
               value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={(event) =>
+                setFirstName(event.target.value)
+              }
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -136,7 +138,9 @@ const SignUp = () => {
               fullWidth
               label="Last Name"
               value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={(event) =>
+                setLastName(event.target.value)
+              }
             />
           </Grid>
           <Grid item xs={12}>
@@ -144,7 +148,7 @@ const SignUp = () => {
               fullWidth
               label="Email Address"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -153,7 +157,9 @@ const SignUp = () => {
               label="Password"
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(event) =>
+                setPassword(event.target.value)
+              }
             />
           </Grid>
         </Grid>

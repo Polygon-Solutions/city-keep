@@ -95,7 +95,7 @@ const SignIn = () => {
           autoFocus
           label="Email Address"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(event) => setEmail(event.target.value)}
         />
         <TextField
           margin="normal"
@@ -103,7 +103,7 @@ const SignIn = () => {
           label="Password"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
         />
         <WorkInProgress placement="right">
           <FormControlLabel

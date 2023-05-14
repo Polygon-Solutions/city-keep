@@ -77,7 +77,7 @@ const ReportForm = () => {
           label="Title"
           name="title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(event) => setTitle(event.target.value)}
         />
         <FormControl
           required
@@ -90,7 +90,7 @@ const ReportForm = () => {
             label="Category"
             name="category"
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(event) => setCategory(event.target.value)}
           >
             <MenuItem value={''}>
               <em>None</em>
@@ -109,14 +109,16 @@ const ReportForm = () => {
           label="Description"
           name="description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(event) =>
+            setDescription(event.target.value)
+          }
         />
         <ReportFormField
           sx={{ my: 1 }}
           label="Address"
           name="address"
           value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          onChange={(event) => setAddress(event.target.value)}
         />
         <ImageUpload />
       </Grid>

@@ -50,7 +50,7 @@ const SettingsTextField = ({
       label={label}
       type={type}
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(event) => setValue(event.target.value)}
     />
   );
 };

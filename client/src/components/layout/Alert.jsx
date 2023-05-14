@@ -26,7 +26,8 @@ const Alert = ({ alert }) => {
    * *
    * Handle Close (alert clickaway)
    * @description 
-      - Removes alert if the user clicks outside
+      - Removes alert if the user clicks the X
+      - Disables the Snackbar clickaway listener
    * @listens Snackbar
    */
   const handleClose = (event, reason, id) => {

@@ -39,7 +39,7 @@ const WorkInProgress = ({
           disablePortal: true,
           modifiers: [
             {
-              name: 'distance',
+              name: 'offset',
               options: {
                 offset: [0, distance || 0],
               },

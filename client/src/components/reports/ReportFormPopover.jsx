@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useWindowDimensions from '../hooks/useWindowDimensions';
+import useWindowDimensions from '../../utils/useWindowDimensions';
 
 import { Popover, Zoom } from '@mui/material';
 import { useTheme } from '@mui/material/styles';

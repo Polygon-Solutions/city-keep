@@ -1,6 +1,6 @@
 /** 
  * *
- * Email Checker
+ * Validate Email Function
  * @description 
     - Checks if input is a valid email address using 
       regular expression
@@ -9,8 +9,10 @@
  * @param {string} email
  * @returns {boolean}
  */
-export default function useEmailChecker(email) {
+const validateEmail = (email) => {
   return !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
     email
   );
-}
+};
+
+export default validateEmail;

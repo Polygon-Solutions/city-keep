@@ -7,7 +7,7 @@ import AlertsContext from '../../context/alerts/AlertsContext';
 import ReportFormField from './ReportFormField';
 
 import ImageUpload from './ImageUpload';
-import { categoryOptions } from './categoryOptions';
+import { categoryOptions } from '../../utils/categoryOptions';
 
 import {
   Grid,

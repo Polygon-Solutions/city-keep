@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import AccountContext from '../../context/account/AccountContext';
 import AlertsContext from '../../context/alerts/AlertsContext';
 
-import useEmailChecker from '../hooks/useEmailChecker';
-import usePasswordChecker from '../hooks/usePasswordChecker';
+import validateEmail from '../../utils/validateEmail';
+import validatePassword from '../../utils/validatePassword';
 
 import {
   Button,
@@ -41,8 +41,6 @@ const SignUp = () => {
   const { setAlert } = useContext(AlertsContext);
 
   // Hooks
-  const emailChecker = useEmailChecker;
-  const passwordChecker = usePasswordChecker;
   const navigate = useNavigate();
 
   /** 
@@ -71,7 +69,7 @@ const SignUp = () => {
       setAlert('Please enter an email.', 'warning');
       return;
     }
-    if (emailChecker(email)) {
+    if (validateEmail(email)) {
       setAlert('Please enter a valid email.', 'warning');
       return;
     }
@@ -79,7 +77,7 @@ const SignUp = () => {
       setAlert('Please enter a password.', 'warning');
       return;
     }
-    if (passwordChecker(password)) {
+    if (validatePassword(password)) {
       setAlert(
         'Please enter a password with 8 or more characters, containing an uppercase and a lowercase letter, a number, and a special character.',
         'warning'

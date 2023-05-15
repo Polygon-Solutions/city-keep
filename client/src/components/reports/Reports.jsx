@@ -4,28 +4,6 @@ import Report from './Report';
 
 import { Typography } from '@mui/material';
 
-const months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
-
-const formatDate = (date) => {
-  const day = date.getDate();
-  const month = months[date.getMonth()];
-  const year = date.getFullYear();
-  return `${day} ${month} ${year}`;
-};
-
 const Reports = () => {
   const { reports } = useContext(ReportsContext);
 
@@ -39,33 +17,9 @@ const Reports = () => {
 
   return (
     <>
-      {reports.map(
-        ({
-          id,
-          reportTime,
-          title,
-          category,
-          description,
-          address,
-          firstName,
-          lastName,
-        }) => {
-          const name = `${firstName} ${lastName}`;
-          const date = new Date(reportTime);
-          const dateText = formatDate(date);
-          return (
-            <Report
-              key={id}
-              title={title}
-              dateText={dateText}
-              category={category}
-              description={description}
-              address={address}
-              name={name}
-            />
-          );
-        }
-      )}
+      {reports.map((report) => {
+        return <Report key={report.id} report={report} />;
+      })}
     </>
   );
 };

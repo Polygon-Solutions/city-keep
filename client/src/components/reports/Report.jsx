@@ -1,5 +1,7 @@
 import React from 'react';
 
+import formatDate from '../../utils/formatDate';
+
 import ReportDetail from './ReportDetail';
 
 import {
@@ -12,13 +14,19 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const Report = ({
-  title,
-  dateText,
-  category,
-  description,
-  address,
-  name,
+  report: {
+    reportTime,
+    title,
+    category,
+    description,
+    address,
+    firstName,
+    lastName,
+  },
 }) => {
+  const name = `${firstName} ${lastName}`;
+  const date = new Date(reportTime);
+  const dateText = formatDate(date);
   return (
     <Accordion sx={{ my: 1 }}>
       <AccordionSummary

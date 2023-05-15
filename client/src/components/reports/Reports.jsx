@@ -4,9 +4,19 @@ import Report from './Report';
 
 import { Typography } from '@mui/material';
 
+/**
+ * *
+ * Reports Component
+ * @description
+    - Maps the reports array to render Report components
+    - Renders a no reports message if there are no reports
+ * @listens ReportsPage
+ */
 const Reports = () => {
+  //Context
   const { reports } = useContext(ReportsContext);
 
+  // Render - no reports
   if (reports.length === 0) {
     return (
       <Typography sx={{ my: 2, textAlign: 'center' }}>
@@ -15,6 +25,7 @@ const Reports = () => {
     );
   }
 
+  // Render - reports
   return (
     <>
       {reports.map((report) => {

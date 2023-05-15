@@ -19,17 +19,42 @@ import {
   Button,
 } from '@mui/material';
 
+/**
+ * *
+ * ReportForm Component
+ * @description
+    - Renders a form for submitting a reports with text 
+      fields for title, description, and address, a select 
+      menu for category, and an image upload field
+    - Renders a button to submit the report and another to 
+      clear the form
+ * @listens ReportFormPopover
+ * @fires ReportsContext.submitReport
+ */
 const ReportForm = () => {
+  // State
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
 
+  // Context
   const { submitReport } = useContext(ReportsContext);
   const { user } = useContext(AccountContext);
   const { setAlert } = useContext(AlertsContext);
 
-  const handleSubmit = async (event) => {
+  /** 
+   * *
+   * Handle Submit Report
+   * @description 
+      - Attempts to submit the report to the database
+      - Displays a success alert if successful
+      - Displays an error alert if unsuccessful
+   * @listens Grid (form) submission
+   * @fires ReportsContext.submitReport
+   * @fires handleClearForm
+   */
+  const handleSubmitReport = async (event) => {
     event.preventDefault();
 
     try {
@@ -41,7 +66,7 @@ const ReportForm = () => {
         address
       );
 
-      clearForm();
+      handleClearForm();
 
       setAlert(
         `Report "${report.title}" submitted successfully. Please refresh the reports page.`,
@@ -52,13 +77,22 @@ const ReportForm = () => {
     }
   };
 
-  const clearForm = () => {
+  /** 
+   * *
+   * Handle Clear Form
+   * @description 
+      - Clears the report form
+   * @listens handleSubmitReport
+   * @listens Button:reset
+   */
+  const handleClearForm = () => {
     setTitle('');
     setCategory('');
     setDescription('');
     setAddress('');
   };
 
+  // Render
   return (
     <Grid
       container
@@ -68,7 +102,7 @@ const ReportForm = () => {
       rowSpacing={3}
       sx={{ px: 3, pt: 3 }}
       as="form"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmitReport}
     >
       <Grid item>
         <Typography variant="h2">Submit a Report</Typography>
@@ -95,11 +129,14 @@ const ReportForm = () => {
             <MenuItem value={''}>
               <em>None</em>
             </MenuItem>
-            {categoryOptions.map((option) => (
-              <MenuItem key={option.id} value={option.id}>
-                {option.label}
-              </MenuItem>
-            ))}
+            {
+              // Maps the static categoryOptions array to MenuItem components
+              categoryOptions.map((option) => (
+                <MenuItem key={option.id} value={option.id}>
+                  {option.label}
+                </MenuItem>
+              ))
+            }
           </Select>
         </FormControl>
         <ReportFormField
@@ -145,7 +182,7 @@ const ReportForm = () => {
             color="error"
             type="reset"
             sx={{ width: 1 }}
-            onClick={clearForm}
+            onClick={handleClearForm}
           >
             Clear
           </Button>

@@ -14,7 +14,7 @@ import {
  * Alert Component
  * @description
     - Renders an MUI Alert component within a snackbar
- * @param {object} props.alert
+ * @param {Object} props.alert
  * @listens Alerts
  * @fires AlertsContext.removeAlert
  */
@@ -37,7 +37,7 @@ const Alert = ({ alert }) => {
     removeAlert(id);
   };
 
-  // JSX
+  // Render
   return (
     <Grid item>
       <Snackbar

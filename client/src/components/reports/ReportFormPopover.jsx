@@ -18,9 +18,9 @@ import ReportForm from './ReportForm';
     - The position of the popover is set using the 
       useWindowDimensions() hook
     - Is controlled by the `open` prop
- * @prop {boolean} props.open
- * @prop {Function} props.handleFormOpen
- * @prop {number} props.distanceFromButton
+ * @prop {boolean} open - popover open state
+ * @prop {Function} handleFormOpen - popover open handler
+ * @prop {number} distanceFromButton - offset from the add a report (+) button
  * @listens Navbar
  * @fires setOpen
  */

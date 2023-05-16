@@ -21,7 +21,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
     - Renders the report as an MUI Accordion, which 
       displays the title and date in the accordion summary,
       and the report details in the accordion details.
- * @param {object} props.report
+ * @prop {Object} props.report - the report object
  * @listens Reports
  */
 const Report = ({

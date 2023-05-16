@@ -9,8 +9,8 @@ import { Box } from '@mui/material';
  * @description
     - Displays one of its children components according to 
       the value prop
- * @param {Number} props.value
- * @param {React.ReactNode} props.children
+ * @prop {number} value - The selected tab index
+ * @prop {React.ReactNode} children
  * @listens LandingPage
  */
 const TabPanel = ({ value, children, other }) => {

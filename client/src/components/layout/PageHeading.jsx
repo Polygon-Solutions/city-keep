@@ -7,7 +7,7 @@ import { AppBar } from '@mui/material';
  * PageHeading Component
  * @description
     - Renders an app bar with the heading 1 text
- * @param {React.ReactNode} props.children - child component(s) to wrap
+ * @prop {React.ReactNode} children
  * @listens ReportsPage
  * @listens SettingsPage
  */

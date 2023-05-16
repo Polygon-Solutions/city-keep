@@ -11,10 +11,10 @@ import { Tooltip, ClickAwayListener } from '@mui/material';
       component when the child component is clicked
     - Includes a clickAwayListener to close the tooltip 
       when the user clicks outside of it
- * @param {String} props.message - message to display in the tooltip
- * @param {String} props.placement - placement of the tooltip
- * @param {Number} props.distance - tooltip distance from the target
- * @param {React.ReactNode} props.children - child component(s) to wrap
+ * @prop {string} message - message to display in the tooltip
+ * @prop {string} placement - placement of the tooltip
+ * @prop {number} distance - tooltip distance from the target
+ * @prop {React.ReactNode} children
  * @listens ForgotPassword
  * @listens SignIn
  * @listens ImageUpload

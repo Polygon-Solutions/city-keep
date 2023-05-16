@@ -11,8 +11,8 @@ import { Typography, Grid } from '@mui/material';
       attribute
     - Uses flexbox to display the label and detail 
       consistently inline
- * @param {String} props.label
- * @param {String} props.detail
+ * @prop {string} label - the report attribute label
+ * @prop {string} detail - the report attribute detail
  * @listens Report
  */
 const ReportDetail = ({ label, detail }) => {

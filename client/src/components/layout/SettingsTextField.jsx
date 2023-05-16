@@ -9,13 +9,13 @@ import { TextField } from '@mui/material';
  * @description
     - A styled MUI TextField component that is customized 
       for the Settings page.
- * @param {String} props.label - the button label
- * @param {String} props.color - the button color
- * @param {Number} props.mt - the TextField margin top
- * @param {String} props.type - the native type attribute
- * @param {String} props.name - the native name attribute
- * @param {String} props.value - the text field string value
- * @param {Function} props.handleValueChange - the value handler
+ * @prop {string} label - the button label
+ * @prop {string} color - the button color
+ * @prop {number} mt - the TextField margin top
+ * @prop {string} type - the native type attribute
+ * @prop {string} name - the native name attribute
+ * @prop {string} value - the text field string value
+ * @prop {Function} handleValueChange - the value handler
  * @listens ChangePassword
  */
 const SettingsTextField = ({

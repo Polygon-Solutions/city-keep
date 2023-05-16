@@ -9,10 +9,10 @@ import { Grid, Button } from '@mui/material';
  * @description
     - A styled MUI Button component that is customized for 
       the Settings page.
- * @param {String} props.color - the button color
- * @param {String} props.label - the button label
- * @param {String} props.type - the native type attribute
- * @param {Function} props.handleClick - the click handler
+ * @prop {string} color - the button color
+ * @prop {string} label - the button label
+ * @prop {string} type - the native type attribute
+ * @prop {Function} handleClick - the click handler
  * @listens ChangePassword
  * @listens Logout
  */

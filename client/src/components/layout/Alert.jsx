@@ -14,7 +14,7 @@ import {
  * Alert Component
  * @description
     - Renders an MUI Alert component within a snackbar
- * @param {Object} props.alert
+ * @prop {Object} alert - the alert object
  * @listens Alerts
  * @fires AlertsContext.removeAlert
  */

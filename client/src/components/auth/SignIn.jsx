@@ -38,6 +38,7 @@ const SignIn = () => {
 
   const { email, password } = formData;
 
+  // State Handler
   const handleFormChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({

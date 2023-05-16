@@ -40,6 +40,7 @@ const SignUp = () => {
 
   const { firstName, lastName, email, password } = formData;
 
+  // State Handler
   const handleFormChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({

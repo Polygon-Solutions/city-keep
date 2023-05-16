@@ -28,6 +28,7 @@ const WorkInProgress = ({
   // State
   const [open, setOpen] = useState(false);
 
+  // State Handler
   const handleOpen = (bool) => {
     setOpen(bool);
   };

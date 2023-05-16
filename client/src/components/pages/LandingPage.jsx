@@ -19,6 +19,8 @@ import { Grid, Tabs, Tab } from '@mui/material';
 const LandingPage = () => {
   // State
   const [tab, setTab] = useState(0);
+
+  // State Handler
   const handleTabChange = (event, newValue) => setTab(newValue);
 
   // Render

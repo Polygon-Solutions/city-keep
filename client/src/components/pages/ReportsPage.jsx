@@ -33,6 +33,7 @@ const ReportsPage = () => {
   // State
   const [filterUser, setFilterUser] = useState(false);
 
+  // State Handler
   const handleFilterUser = (event) =>
     setFilterUser(event.target.checked);
 

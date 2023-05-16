@@ -26,6 +26,7 @@ const ChangePassword = () => {
 
   const { currentPassword, newPassword } = formData;
 
+  // State Handler
   const handleFormChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({

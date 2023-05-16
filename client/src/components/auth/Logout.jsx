@@ -24,6 +24,7 @@ const Logout = () => {
    * Handle Logout
    * @description 
       - Runs the logout function
+   * TODO: Add confirmation dialog
    * @listens SettingsButton
    * @fires AccountContext.logout
    */

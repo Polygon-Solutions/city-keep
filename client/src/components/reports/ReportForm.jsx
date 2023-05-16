@@ -42,6 +42,7 @@ const ReportForm = () => {
 
   const { title, category, description, address } = formData;
 
+  // State Handler
   const handleFormChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({

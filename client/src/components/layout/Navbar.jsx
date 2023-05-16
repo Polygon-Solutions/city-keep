@@ -41,6 +41,7 @@ const Navbar = () => {
   // State
   const [formOpen, setFormOpen] = useState(false);
 
+  // State Handler
   const handleFormOpen = (bool) => {
     setFormOpen(bool);
   };

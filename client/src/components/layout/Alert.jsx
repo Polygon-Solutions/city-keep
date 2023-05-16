@@ -30,11 +30,11 @@ const Alert = ({ alert }) => {
       - Disables the Snackbar clickaway listener
    * @listens Snackbar
    */
-  const handleClose = (event, reason, id) => {
+  const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-    removeAlert(id);
+    removeAlert(alert.id);
   };
 
   // Render
@@ -44,15 +44,11 @@ const Alert = ({ alert }) => {
         open
         sx={{ position: 'static' }}
         autoHideDuration={5000}
-        onClose={(event, reason) =>
-          handleClose(event, reason, alert.id)
-        }
+        onClose={handleClose}
       >
         <MuiAlert
           severity={alert.type}
-          onClose={(event, reason) =>
-            handleClose(event, reason, alert.id)
-          }
+          onClose={handleClose}
           sx={{ width: 1, alignItems: 'center' }}
         >
           {alert.msg}

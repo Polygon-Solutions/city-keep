@@ -33,10 +33,31 @@ import {
  */
 const ReportForm = () => {
   // State
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [description, setDescription] = useState('');
-  const [address, setAddress] = useState('');
+  const [formData, setFormData] = useState({
+    title: '',
+    category: '',
+    description: '',
+    address: '',
+  });
+
+  const { title, category, description, address } = formData;
+
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleClearForm = () => {
+    setFormData({
+      title: '',
+      category: '',
+      description: '',
+      address: '',
+    });
+  };
 
   // Context
   const { submitReport } = useContext(ReportsContext);
@@ -77,21 +98,6 @@ const ReportForm = () => {
     }
   };
 
-  /** 
-   * *
-   * Handle Clear Form
-   * @description 
-      - Clears the report form
-   * @listens handleSubmitReport
-   * @listens Button:reset
-   */
-  const handleClearForm = () => {
-    setTitle('');
-    setCategory('');
-    setDescription('');
-    setAddress('');
-  };
-
   // Render
   return (
     <Grid
@@ -111,7 +117,7 @@ const ReportForm = () => {
           label="Title"
           name="title"
           value={title}
-          onChange={(event) => setTitle(event.target.value)}
+          onChange={handleFormChange}
         />
         <FormControl
           required
@@ -124,7 +130,7 @@ const ReportForm = () => {
             label="Category"
             name="category"
             value={category}
-            onChange={(event) => setCategory(event.target.value)}
+            onChange={handleFormChange}
           >
             <MenuItem value={''}>
               <em>None</em>
@@ -146,16 +152,14 @@ const ReportForm = () => {
           label="Description"
           name="description"
           value={description}
-          onChange={(event) =>
-            setDescription(event.target.value)
-          }
+          onChange={handleFormChange}
         />
         <ReportFormField
           sx={{ my: 1 }}
           label="Address"
           name="address"
           value={address}
-          onChange={(event) => setAddress(event.target.value)}
+          onChange={handleFormChange}
         />
         <ImageUpload />
       </Grid>

@@ -96,7 +96,7 @@ const VerifyUser = () => {
           label="Verification Code"
           autoFocus
           value={verificationCode}
-          onChange={(event) => handleInput(event)}
+          onChange={handleInput}
         />
         <Button
           type="submit"

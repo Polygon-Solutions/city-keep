@@ -13,8 +13,9 @@ import { TextField } from '@mui/material';
  * @param {String} props.color - the button color
  * @param {Number} props.mt - the TextField margin top
  * @param {String} props.type - the native type attribute
+ * @param {String} props.name - the native name attribute
  * @param {String} props.value - the text field string value
- * @param {Function} props.setValue - the value handler
+ * @param {Function} props.handleValueChange - the value handler
  * @listens ChangePassword
  */
 const SettingsTextField = ({
@@ -22,8 +23,9 @@ const SettingsTextField = ({
   color = 'secondary',
   mt = 2,
   type,
+  name,
   value,
-  setValue,
+  handleValueChange,
 }) => {
   // Render
   return (
@@ -49,8 +51,9 @@ const SettingsTextField = ({
       }}
       label={label}
       type={type}
+      name={name}
       value={value}
-      onChange={(event) => setValue(event.target.value)}
+      onChange={handleValueChange}
     />
   );
 };

@@ -19,14 +19,14 @@ import ReportForm from './ReportForm';
       useWindowDimensions() hook
     - Is controlled by the `open` prop
  * @prop {boolean} props.open
- * @prop {Function} props.setOpen
+ * @prop {Function} props.handleFormOpen
  * @prop {number} props.distanceFromButton
  * @listens Navbar
  * @fires setOpen
  */
 const ReportFormPopover = ({
   open,
-  setOpen,
+  handleFormOpen,
   distanceFromButton,
 }) => {
   // Hooks
@@ -34,18 +34,6 @@ const ReportFormPopover = ({
 
   // Theme
   const theme = useTheme();
-
-  /** 
-   * *
-   * Handle Close Popover
-   * @description 
-      - Sets the `open` state to false, which closes the 
-        popover
-   * @listens Popover
-   */
-  const handleClosePopover = () => {
-    setOpen(false);
-  };
 
   // Render
   return (
@@ -75,7 +63,7 @@ const ReportFormPopover = ({
       }}
       keepMounted
       open={open}
-      onClose={handleClosePopover}
+      onClose={handleFormOpen(false)}
     >
       <ReportForm />
     </Popover>

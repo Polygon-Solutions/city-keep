@@ -41,6 +41,10 @@ const Navbar = () => {
   // State
   const [formOpen, setFormOpen] = useState(false);
 
+  const handleFormOpen = (bool) => {
+    setFormOpen(bool);
+  };
+
   // Render
   return (
     <>
@@ -59,7 +63,7 @@ const Navbar = () => {
           </IconButton>
           <StyledFab
             color="secondary"
-            onClick={() => setFormOpen(true)}
+            onClick={handleFormOpen(true)}
           >
             <AddIcon />
           </StyledFab>
@@ -71,7 +75,7 @@ const Navbar = () => {
       </AppBar>
       <ReportFormPopover
         open={formOpen}
-        setOpen={setFormOpen}
+        handleFormOpen={handleFormOpen}
         distanceFromButton={16}
       />
     </>

@@ -33,6 +33,9 @@ const ReportsPage = () => {
   // State
   const [filterUser, setFilterUser] = useState(false);
 
+  const handleFilterUser = (event) =>
+    setFilterUser(event.target.checked);
+
   // Context
   const { loadReports, loadUserReports } =
     useContext(ReportsContext);
@@ -96,9 +99,7 @@ const ReportsPage = () => {
           control={
             <Checkbox
               checked={filterUser}
-              onChange={(event) =>
-                setFilterUser(event.target.checked)
-              }
+              onChange={handleFilterUser}
               value="filter-reports"
             />
           }

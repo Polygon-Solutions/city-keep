@@ -31,10 +31,22 @@ import {
  */
 const SignUp = () => {
   // State
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
+
+  const { firstName, lastName, email, password } = formData;
+
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   // Context
   const { signUp, signIn } = useContext(AccountContext);
@@ -50,10 +62,13 @@ const SignUp = () => {
       - Checks if first name, last name, email, and 
         password fields are not empty
       - Checks if email and password are valid
-      - If valid, awaits signUp function
+      - If valid, awaits signUp function then navigates to 
+        /verifyuser
       - If not valid, displays warning messages
       - If error from backend, displays error message
    * @listens Box (form) submission
+   * @fires navigate()
+   * @fires AccountContext.signUp
    */
   const handleRegister = async (event) => {
     event.preventDefault();
@@ -103,6 +118,7 @@ const SignUp = () => {
       - Signs in with demo account using the credentials 
         provided by .env
    * @listens Button click
+   * @fires AccountContext.signIn
    */
   const handleDemo = () => {
     signIn(
@@ -125,28 +141,27 @@ const SignUp = () => {
               fullWidth
               label="First Name"
               autoFocus
+              name="firstName"
               value={firstName}
-              onChange={(event) =>
-                setFirstName(event.target.value)
-              }
+              onChange={handleFormChange}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Last Name"
+              name="lastName"
               value={lastName}
-              onChange={(event) =>
-                setLastName(event.target.value)
-              }
+              onChange={handleFormChange}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
               label="Email Address"
+              name="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={handleFormChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -154,10 +169,9 @@ const SignUp = () => {
               fullWidth
               label="Password"
               type="password"
+              name="password"
               value={password}
-              onChange={(event) =>
-                setPassword(event.target.value)
-              }
+              onChange={handleFormChange}
             />
           </Grid>
         </Grid>

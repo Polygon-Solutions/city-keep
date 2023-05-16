@@ -18,20 +18,22 @@ import { Grid, Tabs, Tab } from '@mui/material';
  */
 const LandingPage = () => {
   // State
-  const [value, setValue] = useState(0);
+  const [tab, setTab] = useState(0);
+  const handleTabChange = (event, newValue) => setTab(newValue);
+
   // Render
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <Tabs
-          value={value}
-          onChange={(event, newValue) => setValue(newValue)}
+          value={tab}
+          onChange={handleTabChange}
           variant="fullWidth"
         >
           <Tab label="Sign In"></Tab>
           <Tab label="Sign Up"></Tab>
         </Tabs>
-        <TabPanel value={value}>
+        <TabPanel value={tab}>
           <SignIn />
           <SignUp />
         </TabPanel>

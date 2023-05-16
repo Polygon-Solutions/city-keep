@@ -19,8 +19,20 @@ import { Typography, Box } from '@mui/material';
  */
 const ChangePassword = () => {
   // State
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [formData, setFormData] = useState({
+    currentPassword: '',
+    newPassword: '',
+  });
+
+  const { currentPassword, newPassword } = formData;
+
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   // Context
   const { changePassword } = useContext(AccountContext);
@@ -53,8 +65,10 @@ const ChangePassword = () => {
     try {
       await changePassword(currentPassword, newPassword);
       setAlert('Password changed successfully.', 'success');
-      setCurrentPassword('');
-      setNewPassword('');
+      setFormData({
+        currentPassword: '',
+        newPassword: '',
+      });
     } catch (err) {
       setAlert(err.message, 'error');
     }
@@ -69,14 +83,16 @@ const ChangePassword = () => {
           mt={1}
           label="Current Password"
           type="password"
+          name="currentPassword"
           value={currentPassword}
-          setValue={setCurrentPassword}
+          handleValueChange={handleFormChange}
         />
         <SettingsTextField
           label="New Password"
           type="password"
+          name="newPassword"
           value={newPassword}
-          setValue={setNewPassword}
+          handleValueChange={handleFormChange}
         />
         <SettingsButton
           color="secondary"

@@ -31,8 +31,20 @@ import {
  */
 const SignIn = () => {
   // State
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = formData;
+
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   // Context
   const { signIn } = useContext(AccountContext);
@@ -90,16 +102,18 @@ const SignIn = () => {
           fullWidth
           autoFocus
           label="Email Address"
+          name="email"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={handleFormChange}
         />
         <TextField
           margin="normal"
           fullWidth
           label="Password"
           type="password"
+          name="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={handleFormChange}
         />
         <WorkInProgress placement="right">
           <FormControlLabel

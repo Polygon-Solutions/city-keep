@@ -26,7 +26,7 @@ import ReportForm from './ReportForm';
  */
 const ReportFormPopover = ({
   open,
-  handleFormOpen,
+  handleFormClose,
   distanceFromButton,
 }) => {
   // Hooks
@@ -63,7 +63,7 @@ const ReportFormPopover = ({
       }}
       keepMounted
       open={open}
-      onClose={handleFormOpen(false)}
+      onClose={handleFormClose}
     >
       <ReportForm />
     </Popover>
@@ -73,7 +73,7 @@ const ReportFormPopover = ({
 // PropTypes
 ReportFormPopover.propTypes = {
   open: PropTypes.bool.isRequired,
-  setOpen: PropTypes.func.isRequired,
+  handleFormClose: PropTypes.func.isRequired,
   distanceFromButton: PropTypes.number.isRequired,
 };
 

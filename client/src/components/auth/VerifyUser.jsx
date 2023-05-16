@@ -80,7 +80,7 @@ const VerifyUser = () => {
   // Render
   return (
     <Container component="main" maxWidth="xs">
-      <Typography variant="h6" sx={{ mt: 3 }}>
+      <Typography variant="h4" sx={{ mt: 3 }}>
         Verify Account
       </Typography>
       <Box

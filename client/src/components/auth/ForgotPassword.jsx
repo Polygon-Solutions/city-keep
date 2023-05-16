@@ -38,7 +38,7 @@ const ForgotPassword = () => {
   // Render
   return (
     <Container component="main" maxWidth="xs">
-      <Typography variant="h6" sx={{ mt: 3 }}>
+      <Typography variant="h4" sx={{ mt: 3 }}>
         Forgot Password
       </Typography>
       <Box

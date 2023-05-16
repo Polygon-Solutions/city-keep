@@ -27,15 +27,12 @@ const WorkInProgress = ({
 }) => {
   // State
   const [open, setOpen] = useState(false);
-
-  // State Handler
-  const handleOpen = (bool) => {
-    setOpen(bool);
-  };
+  const handleTooltipOpen = () => setOpen(true);
+  const handleTooltipClose = () => setOpen(false);
 
   // Render
   return (
-    <ClickAwayListener onClickAway={handleOpen(false)}>
+    <ClickAwayListener onClickAway={handleTooltipClose}>
       <Tooltip
         title={message}
         placement={placement}
@@ -51,8 +48,8 @@ const WorkInProgress = ({
             },
           ], // Popper.js modifiers [skid, dist]
         }}
-        onClose={handleOpen(false)}
-        onClick={handleOpen(true)}
+        onClose={handleTooltipClose}
+        onClick={handleTooltipOpen}
         open={open}
         disableFocusListener
         disableHoverListener

@@ -41,10 +41,9 @@ const Navbar = () => {
   // State
   const [formOpen, setFormOpen] = useState(false);
 
-  // State Handler
-  const handleFormOpen = (bool) => {
-    setFormOpen(bool);
-  };
+  // State Handlers
+  const handleFormOpen = () => setFormOpen(true);
+  const handleFormClose = () => setFormOpen(false);
 
   // Render
   return (
@@ -62,10 +61,7 @@ const Navbar = () => {
           <IconButton href="/reports" color="inherit">
             <MenuIcon />
           </IconButton>
-          <StyledFab
-            color="secondary"
-            onClick={handleFormOpen(true)}
-          >
+          <StyledFab color="secondary" onClick={handleFormOpen}>
             <AddIcon />
           </StyledFab>
           <Box sx={{ flexGrow: 1 }} />
@@ -76,7 +72,7 @@ const Navbar = () => {
       </AppBar>
       <ReportFormPopover
         open={formOpen}
-        handleFormOpen={handleFormOpen}
+        handleFormClose={handleFormClose}
         distanceFromButton={16}
       />
     </>

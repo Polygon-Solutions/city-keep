@@ -65,7 +65,7 @@ SettingsTextField.propTypes = {
   mt: PropTypes.number,
   type: PropTypes.string,
   value: PropTypes.string.isRequired,
-  setValue: PropTypes.func.isRequired,
+  handleValueChange: PropTypes.func.isRequired,
 };
 
 export default SettingsTextField;

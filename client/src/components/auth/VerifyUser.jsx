@@ -28,7 +28,7 @@ const VerifyUser = () => {
 
   // Context
   const { verifyUser } = useContext(AccountContext);
-  const { setAlert } = useContext(AlertsContext);
+  const { addAlert } = useContext(AlertsContext);
 
   // Hooks
   const navigate = useNavigate();
@@ -67,13 +67,13 @@ const VerifyUser = () => {
     event.preventDefault();
     try {
       await verifyUser(verificationCode);
-      setAlert(
+      addAlert(
         'Entered verification code successfully, please log in.',
         'success'
       );
       navigate('/');
     } catch (err) {
-      setAlert(err.message, 'error');
+      addAlert(err.message, 'error');
     }
   };
 

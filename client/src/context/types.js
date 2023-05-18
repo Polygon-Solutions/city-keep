@@ -7,5 +7,5 @@ export const UNLOAD_USER = 'UNLOAD_USER';
 export const LOAD_REPORTS = 'LOAD_REPORTS';
 
 // Alert Types
-export const SET_ALERT = 'SET_ALERT';
+export const ADD_ALERT = 'ADD_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';

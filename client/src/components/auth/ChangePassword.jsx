@@ -37,7 +37,7 @@ const ChangePassword = () => {
 
   // Context
   const { changePassword } = useContext(AccountContext);
-  const { setAlert } = useContext(AlertsContext);
+  const { addAlert } = useContext(AlertsContext);
 
   /** 
    * *
@@ -55,23 +55,23 @@ const ChangePassword = () => {
     event.preventDefault();
 
     if (currentPassword === '') {
-      setAlert('Please enter your current password.', 'warning');
+      addAlert('Please enter your current password.', 'warning');
       return;
     }
     if (newPassword === '') {
-      setAlert('Please enter a new password.', 'warning');
+      addAlert('Please enter a new password.', 'warning');
       return;
     }
 
     try {
       await changePassword(currentPassword, newPassword);
-      setAlert('Password changed successfully.', 'success');
+      addAlert('Password changed successfully.', 'success');
       setFormData({
         currentPassword: '',
         newPassword: '',
       });
     } catch (err) {
-      setAlert(err.message, 'error');
+      addAlert(err.message, 'error');
     }
   };
 

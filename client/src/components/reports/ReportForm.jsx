@@ -63,7 +63,7 @@ const ReportForm = () => {
   // Context
   const { submitReport } = useContext(ReportsContext);
   const { user } = useContext(AccountContext);
-  const { setAlert } = useContext(AlertsContext);
+  const { addAlert } = useContext(AlertsContext);
 
   /** 
    * *
@@ -90,12 +90,12 @@ const ReportForm = () => {
 
       handleClearForm();
 
-      setAlert(
+      addAlert(
         `Report "${report.title}" submitted successfully. Please refresh the reports page.`,
         'success'
       );
     } catch (err) {
-      setAlert(err.message, 'error');
+      addAlert(err.message, 'error');
     }
   };
 

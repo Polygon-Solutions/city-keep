@@ -49,7 +49,7 @@ const SignIn = () => {
 
   // Context
   const { signIn } = useContext(AccountContext);
-  const { setAlert } = useContext(AlertsContext);
+  const { addAlert } = useContext(AlertsContext);
 
   /** 
    * *
@@ -65,19 +65,19 @@ const SignIn = () => {
   const handleSignIn = async (event) => {
     event.preventDefault();
     if (email === '') {
-      setAlert('Please enter an email.', 'warning');
+      addAlert('Please enter an email.', 'warning');
       return;
     }
     if (validateEmail(email)) {
-      setAlert('Please enter a valid email.', 'warning');
+      addAlert('Please enter a valid email.', 'warning');
       return;
     }
     if (password === '') {
-      setAlert('Please enter a password.', 'warning');
+      addAlert('Please enter a password.', 'warning');
       return;
     }
     if (validatePassword(password)) {
-      setAlert(
+      addAlert(
         'Please enter a password with 8 or more characters, containing an uppercase and a lowercase letter, a number, and a special character.',
         'warning'
       );
@@ -86,7 +86,7 @@ const SignIn = () => {
     try {
       await signIn(email, password);
     } catch (err) {
-      setAlert(err.message, 'error');
+      addAlert(err.message, 'error');
     }
   };
 

@@ -41,7 +41,7 @@ const ReportsPage = () => {
   const { loadReports, loadUserReports } =
     useContext(ReportsContext);
   const { user } = useContext(AccountContext);
-  const { setAlert } = useContext(AlertsContext);
+  const { addAlert } = useContext(AlertsContext);
 
   /** 
    * *
@@ -63,7 +63,7 @@ const ReportsPage = () => {
         await loadUserReports(user.id);
       }
     } catch (err) {
-      setAlert(err.message, 'error');
+      addAlert(err.message, 'error');
     }
   };
 

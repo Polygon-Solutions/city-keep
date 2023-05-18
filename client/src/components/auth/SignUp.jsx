@@ -51,7 +51,7 @@ const SignUp = () => {
 
   // Context
   const { signUp, signIn } = useContext(AccountContext);
-  const { setAlert } = useContext(AlertsContext);
+  const { addAlert } = useContext(AlertsContext);
 
   // Hooks
   const navigate = useNavigate();
@@ -74,27 +74,27 @@ const SignUp = () => {
   const handleRegister = async (event) => {
     event.preventDefault();
     if (firstName === '') {
-      setAlert('Please enter a first name.', 'warning');
+      addAlert('Please enter a first name.', 'warning');
       return;
     }
     if (lastName === '') {
-      setAlert('Please enter a last name.', 'warning');
+      addAlert('Please enter a last name.', 'warning');
       return;
     }
     if (email === '') {
-      setAlert('Please enter an email.', 'warning');
+      addAlert('Please enter an email.', 'warning');
       return;
     }
     if (validateEmail(email)) {
-      setAlert('Please enter a valid email.', 'warning');
+      addAlert('Please enter a valid email.', 'warning');
       return;
     }
     if (password === '') {
-      setAlert('Please enter a password.', 'warning');
+      addAlert('Please enter a password.', 'warning');
       return;
     }
     if (validatePassword(password)) {
-      setAlert(
+      addAlert(
         'Please enter a password with 8 or more characters, containing an uppercase and a lowercase letter, a number, and a special character.',
         'warning'
       );
@@ -102,13 +102,13 @@ const SignUp = () => {
     }
     try {
       await signUp(firstName, lastName, email, password);
-      setAlert(
+      addAlert(
         'Signed up successfully, please enter the verification code sent to your email.',
         'success'
       );
       navigate('/verify');
     } catch (err) {
-      setAlert(err.message, 'error');
+      addAlert(err.message, 'error');
     }
   };
 

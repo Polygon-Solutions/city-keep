@@ -12,7 +12,7 @@ import { LOAD_REPORTS } from '../types';
     - Exposes state object and functions through the 
       ReportsContext which pertain to the reports that are 
       submitted and displayed
-    - State: reports
+    - State: [] (array of reports)
     - Functions: submitReport, loadReports, loadUserReports
  * @listens index.jsx
  */
@@ -77,7 +77,7 @@ const ReportsState = ({ children }) => {
    * Load Reports
    * @description 
       - Uses useCallback hook to cache the function 
-        declaration
+        declaration while the component is mounted
       - Awaits fetch(/api/reports)-GET to retrieve the 50 
         most recent reports in the database
       - Dispatches the reports array to the reducer to 
@@ -104,7 +104,7 @@ const ReportsState = ({ children }) => {
    * Load Reports
    * @description 
       - Uses useCallback hook to cache the function 
-        declaration
+        declaration while the component is mounted
       - Awaits fetch(/api/reports/[userId])-GET to retrieve 
         the 50 most recent reports in the database that 
         belong to the specified user

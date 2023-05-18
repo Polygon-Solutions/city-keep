@@ -27,13 +27,13 @@ import { Paper } from '@mui/material';
 const App = () => {
   const { isAuthenticated, loadUser } =
     useContext(AccountContext);
-  const { setAlert } = useContext(AlertsContext);
+  const { addAlert } = useContext(AlertsContext);
 
   const load = async () => {
     try {
       await loadUser();
     } catch (err) {
-      setAlert(err.message, 'error');
+      addAlert(err.message, 'error');
     }
   };
 

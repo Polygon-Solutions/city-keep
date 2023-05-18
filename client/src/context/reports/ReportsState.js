@@ -18,9 +18,7 @@ import { LOAD_REPORTS } from '../types';
  */
 const ReportsState = ({ children }) => {
   // State
-  const initialState = {
-    reports: [],
-  };
+  const initialState = [];
 
   const [state, dispatch] = useReducer(
     ReportsReducer,
@@ -133,7 +131,7 @@ const ReportsState = ({ children }) => {
   return (
     <ReportsContext.Provider
       value={{
-        reports: state.reports,
+        reports: state,
         submitReport,
         loadReports,
         loadUserReports,

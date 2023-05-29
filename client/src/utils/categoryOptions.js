@@ -1,3 +1,12 @@
+/** 
+ * *
+ * Category Options
+ * @description 
+    - Used to display the category options and pair them to
+      an id for database queries.
+ * @listens ReportForm.jsx
+ */
+
 export const categoryOptions = [
   { id: 1, label: 'Drainage/Flooding' },
   { id: 2, label: 'Graffiti/Vandalism' },

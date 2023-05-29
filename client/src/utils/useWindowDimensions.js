@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 /** 
  * *
- * Windows Dimensions
+ * Window Dimensions Hook
  * @description 
     - Stores window dimensions for use in components
     - Updates window dimensions on each window resize

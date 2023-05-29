@@ -1,3 +1,14 @@
+/** 
+ * *
+ * Format Date
+ * @description 
+    - Converts a Date object to a custom string for display 
+      in the AccordionSummary component of the report 
+      entries.
+ * TODO: Test the format with browser in other languages
+ * @listens Reports.jsx
+ */
+
 const months = [
   'Jan',
   'Feb',

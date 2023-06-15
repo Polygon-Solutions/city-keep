@@ -24,6 +24,17 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.jsx';
 import { Paper } from '@mui/material';
 
+/** 
+ * *
+ * App Component
+ * @description 
+    - Handles routing of the pages and redirection
+    - Handles auto-login if there remains a user in session (Cognito)
+    - Provides the Material UI Theme Context
+    - Handles display of Navbar/Heading (depending on authentication status)
+ * @listens index.jsx
+ */
+
 const App = () => {
   const { isAuthenticated, loadUser } =
     useContext(AccountContext);

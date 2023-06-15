@@ -49,7 +49,7 @@ const preTheme = createTheme({
   },
   typography: {
     h1: {
-      fontFamily: 'Clarity City',
+      fontFamily: 'Clarity City', // imported into index.css
       fontSize: '40px',
       fontWeight: 400,
       color: '#474d5a',

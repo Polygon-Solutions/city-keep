@@ -1,3 +1,14 @@
+/** 
+ * *
+ * node-postgres (pg) Pool Configuration
+ * @description 
+    - Constructs a node-postgres Pool object
+    - Configuration variables set by environment
+    - https://node-postgres.com/apis/pool#new-pool
+ * @listens ../routes/reports.js (db)
+ * @listens ../routes/users.js (db)
+ */
+
 const { Pool } = require('pg');
 require('dotenv').config();
 

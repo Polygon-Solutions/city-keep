@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const mountRoutes = require('./routes');
+const mountRoutes = require('./api');
 
 /** 
  * *

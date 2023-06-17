@@ -101,7 +101,7 @@ const ReportsState = ({ children }) => {
 
   /** 
    * *
-   * Load Reports
+   * Load User Reports
    * @description 
       - Uses useCallback hook to cache the function 
         declaration while the component is mounted

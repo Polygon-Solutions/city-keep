@@ -3,6 +3,16 @@ const express = require('express');
 const cors = require('cors');
 const mountRoutes = require('./routes');
 
+/** 
+ * *
+ * CityKeep Server
+ * @description 
+    - This file sets up the server (Express app) and mounts the 
+      API routes.
+    - This is the grunt workhorse of the crush. (??? Docify AI said it not me)
+ * @listens server.js
+ */
+
 const app = express();
 
 app.use(cors());

@@ -1,6 +1,6 @@
 # CityKeep - Civic Issue Reporter
 
-Author: Malaki Vandas
+Author: Malaki Vandas  
 Link: [www.citykeep.app](https://www.citykeep.app)
 
 CityKeep is a web application designed to facilitate the reporting of non-emergency civic issues within your community. Whether it's a pothole, a missing sign, or any other public infrastructure concern, this app provides an easy and efficient way to bring attention to such issues.
@@ -9,7 +9,7 @@ Built using ReactJS, MaterialUI, Express, and PostgreSQL, CityKeep offers a user
 
 ## Key Features
 
-- **User Authentication**: Users can create an account, log in, and manage their profile information. This ensures that reports are associated with the correct user and allows for a personalized experience.
+- **User Authentication**: Users can create an account, log in, change their password, and manage their profile information. This ensures that reports are associated with the correct user and allows for a personalized experience.
 
 - **Report Submission**: Users can submit detailed reports on civic issues they encounter. The app prompts users to provide relevant information such as the location, description, and category of the issue. This data helps authorities and community members take appropriate action.
 

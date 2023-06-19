@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 
 import AlertsContext from '../../context/alerts/AlertsContext';
 
@@ -8,31 +9,46 @@ import {
   Snackbar,
 } from '@mui/material';
 
+/**
+ * *
+ * Alert Component
+ * @description
+    - Renders an MUI Alert component within a snackbar
+ * @prop {Object} alert - the alert object
+ * @listens Alerts
+ * @fires AlertsContext.removeAlert
+ */
 const Alert = ({ alert }) => {
+  // Context
   const { removeAlert } = useContext(AlertsContext);
 
-  const handleClose = (event, reason, id) => {
+  /** 
+   * *
+   * Handle Close (alert clickaway)
+   * @description 
+      - Removes alert if the user clicks the X
+      - Disables the Snackbar clickaway listener
+   * @listens Snackbar
+   */
+  const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
-    removeAlert(id);
+    removeAlert(alert.id);
   };
+
+  // Render
   return (
     <Grid item>
       <Snackbar
         open
         sx={{ position: 'static' }}
         autoHideDuration={5000}
-        onClose={(event, reason) =>
-          handleClose(event, reason, alert.id)
-        }
+        onClose={handleClose}
       >
         <MuiAlert
           severity={alert.type}
-          onClose={(event, reason) =>
-            handleClose(event, reason, alert.id)
-          }
+          onClose={handleClose}
           sx={{ width: 1, alignItems: 'center' }}
         >
           {alert.msg}
@@ -40,6 +56,11 @@ const Alert = ({ alert }) => {
       </Snackbar>
     </Grid>
   );
+};
+
+// PropTypes
+Alert.propTypes = {
+  alert: PropTypes.object.isRequired,
 };
 
 export default Alert;

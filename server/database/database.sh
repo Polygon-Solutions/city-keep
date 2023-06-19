@@ -1,5 +1,16 @@
 #! /bin/bash
 
+################################
+# Database bash script
+# @description
+#  - Runs psql statements that are used to produce a mock database
+#  - Executes sql scripts to create and populate the databases
+# @example ./database.sh -c -p
+# @TODO: Write comments for environment setup (if no Docker)
+# @fires ./create_database.sql
+# @fires ./populate_database.sql
+################################
+
 # Prerequisites
 psql -V
 service postgresql status

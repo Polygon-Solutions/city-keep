@@ -1,27 +1,40 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { Tooltip, ClickAwayListener } from '@mui/material';
 
+/**
+ * *
+ * WorkInProgress Component
+ * @description
+    - Wraps child component that renders a Tooltip 
+      component when the child component is clicked
+    - Includes a clickAwayListener to close the tooltip 
+      when the user clicks outside of it
+ * @prop {string} message - message to display in the tooltip
+ * @prop {string} placement - placement of the tooltip
+ * @prop {number} distance - tooltip distance from the target
+ * @prop {React.ReactNode} children
+ * @listens ForgotPassword
+ * @listens SignIn
+ * @listens ImageUpload
+ */
 const WorkInProgress = ({
-  message,
+  message = 'Work in progress...',
   placement,
-  offset,
+  distance,
   children,
 }) => {
+  // State
   const [open, setOpen] = useState(false);
+  const handleTooltipOpen = () => setOpen(true);
+  const handleTooltipClose = () => setOpen(false);
 
-  const handleTooltipClose = () => {
-    setOpen(false);
-  };
-
-  const handleTooltipOpen = () => {
-    setOpen(true);
-  };
-
+  // Render
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
       <Tooltip
-        title={message || 'Work in progress...'}
+        title={message}
         placement={placement}
         arrow
         PopperProps={{
@@ -30,10 +43,10 @@ const WorkInProgress = ({
             {
               name: 'offset',
               options: {
-                offset,
+                offset: [0, distance || 0],
               },
             },
-          ],
+          ], // Popper.js modifiers [skid, dist]
         }}
         onClose={handleTooltipClose}
         onClick={handleTooltipOpen}
@@ -46,6 +59,14 @@ const WorkInProgress = ({
       </Tooltip>
     </ClickAwayListener>
   );
+};
+
+// PropTypes
+WorkInProgress.propTypes = {
+  message: PropTypes.string,
+  placement: PropTypes.string,
+  distance: PropTypes.number,
+  children: PropTypes.node.isRequired,
 };
 
 export default WorkInProgress;

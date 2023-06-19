@@ -4,31 +4,19 @@ import Report from './Report';
 
 import { Typography } from '@mui/material';
 
-const months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
-
-const formatDate = (date) => {
-  const day = date.getDate();
-  const month = months[date.getMonth()];
-  const year = date.getFullYear();
-  return `${day} ${month} ${year}`;
-};
-
+/**
+ * *
+ * Reports Component
+ * @description
+    - Maps the reports array to render Report components
+    - Renders a no reports message if there are no reports
+ * @listens ReportsPage
+ */
 const Reports = () => {
+  //Context
   const { reports } = useContext(ReportsContext);
 
+  // Render - no reports
   if (reports.length === 0) {
     return (
       <Typography sx={{ my: 2, textAlign: 'center' }}>
@@ -37,35 +25,12 @@ const Reports = () => {
     );
   }
 
+  // Render - reports
   return (
     <>
-      {reports.map(
-        ({
-          id,
-          reportTime,
-          title,
-          category,
-          description,
-          address,
-          firstName,
-          lastName,
-        }) => {
-          const name = `${firstName} ${lastName}`;
-          const date = new Date(reportTime);
-          const dateText = formatDate(date);
-          return (
-            <Report
-              key={id}
-              title={title}
-              dateText={dateText}
-              category={category}
-              description={description}
-              address={address}
-              name={name}
-            />
-          );
-        }
-      )}
+      {reports.map((report) => {
+        return <Report key={report.id} report={report} />;
+      })}
     </>
   );
 };

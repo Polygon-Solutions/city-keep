@@ -1,3 +1,11 @@
+/** 
+ * *
+ * Create Database PostgreSQL Script
+ * @description 
+    - Creates mock database for development and testing purposes
+ * @listens database.sh
+ */
+
 CREATE TABLE users (
   id VARCHAR(128) PRIMARY KEY NOT NULL,
   last_name VARCHAR(50) NOT NULL,

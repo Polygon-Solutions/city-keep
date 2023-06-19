@@ -2,6 +2,26 @@ import { createTheme } from '@mui/material/styles';
 
 import LinkBehavior from './LinkBehaviour';
 
+/** 
+ * *
+ * Theme File
+ * @description 
+    - Used to configure custom default theme properties
+    - Configures a pre-theme object and then a theme 
+      object, which is exported to the ThemeProvider 
+      ContextAPI component.
+ */
+
+/** 
+ * *
+ * Pre-Theme
+ * @description 
+    - Used to configure theme variables that are used by other theme variables.
+    - For example, using custom color properties in style overrides
+    - Refer to: https://mui.com/material-ui/customization/theming/
+ * @example color: preTheme.palette.error.main,
+ * @listens createTheme() theme
+ */
 const preTheme = createTheme({
   palette: {
     primary: {
@@ -29,7 +49,7 @@ const preTheme = createTheme({
   },
   typography: {
     h1: {
-      fontFamily: 'Clarity City',
+      fontFamily: 'Clarity City', // imported into index.css
       fontSize: '40px',
       fontWeight: 400,
       color: '#474d5a',
@@ -90,6 +110,17 @@ const preTheme = createTheme({
   },
 });
 
+/** 
+ * *
+ * Theme
+ * @description 
+    - Uses preTheme to configure the theme variables based 
+      on previously configured theme variables.
+    - NOTE: Currently, the theme variables from the 
+      preTheme are not being used (29-05-2023)
+ * @param {Object} preTheme
+ * @listens ThemeProvider (but imported into App.jsx)
+ */
 const theme = createTheme(preTheme, {
   components: {
     MuiLink: {
@@ -118,7 +149,7 @@ const theme = createTheme(preTheme, {
           '&[type="password"]': {
             fontFamily:
               '"Roboto", "Helvetica", "Arial", sans-serif',
-          },
+          }, // Smaller password dots
         },
       },
     },

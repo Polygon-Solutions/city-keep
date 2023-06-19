@@ -8,57 +8,96 @@ import SettingsTextField from '../layout/SettingsTextField';
 
 import { Typography, Box } from '@mui/material';
 
+/**
+ * *
+ * ChangePassword Component
+ * @description
+    - Renders two text fields that allow the user to enter their current and new password.
+    - Renders a button that triggers the changePassword function
+ * @listens SettingsPage
+ * @fires AccountContext.changePassword
+ */
 const ChangePassword = () => {
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  // State
+  const [formData, setFormData] = useState({
+    currentPassword: '',
+    newPassword: '',
+  });
 
+  const { currentPassword, newPassword } = formData;
+
+  // State Handler
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  // Context
   const { changePassword } = useContext(AccountContext);
-  const { setAlert } = useContext(AlertsContext);
+  const { addAlert } = useContext(AlertsContext);
 
+  /** 
+   * *
+   * Handle Password Change
+   * @description 
+      - Checks password fields are not empty
+      - Checks if passwords are valid
+      - If valid, awaits changePassword function
+      - If not valid, displays warning messages
+      - If error from backend, displays error message
+   * @listens Box (form) submission
+   * @fires AccountContext.changePassword
+   */
   const handleChangePassword = async (event) => {
     event.preventDefault();
 
     if (currentPassword === '') {
-      setAlert('Please enter your current password.', 'warning');
+      addAlert('Please enter your current password.', 'warning');
       return;
     }
     if (newPassword === '') {
-      setAlert('Please enter a new password.', 'warning');
+      addAlert('Please enter a new password.', 'warning');
       return;
     }
 
     try {
       await changePassword(currentPassword, newPassword);
-      setAlert('Password changed successfully.', 'success');
-      setCurrentPassword('');
-      setNewPassword('');
+      addAlert('Password changed successfully.', 'success');
+      setFormData({
+        currentPassword: '',
+        newPassword: '',
+      });
     } catch (err) {
-      setAlert(err.message, 'error');
+      addAlert(err.message, 'error');
     }
   };
 
+  // Render
   return (
     <>
       <Typography variant="h4">Change Password</Typography>
       <Box component="form" onSubmit={handleChangePassword}>
         <SettingsTextField
-          label="Current Password"
-          color="secondary"
           mt={1}
+          label="Current Password"
           type="password"
+          name="currentPassword"
           value={currentPassword}
-          setValue={setCurrentPassword}
+          handleValueChange={handleFormChange}
         />
         <SettingsTextField
           label="New Password"
-          color="secondary"
           type="password"
+          name="newPassword"
           value={newPassword}
-          setValue={setNewPassword}
+          handleValueChange={handleFormChange}
         />
         <SettingsButton
           color="secondary"
-          text="Change Password"
+          label="Change Password"
           type="submit"
         />
       </Box>

@@ -15,7 +15,20 @@ import {
 } from 'amazon-cognito-identity-js';
 import Pool from '../../utils/UserPool';
 
+/**
+ * *
+ * AccountState
+ * @description
+    - Exposes state object and functions through the 
+      AccountContext which pertain to the user and 
+      authentication
+    - State: isAuthenticated, user, cognitoUser
+    - Functions: loadUser, signUp, verifyUser, signIn, 
+      changePassword, logout
+ * @listens index.jsx
+ */
 const AccountState = ({ children }) => {
+  // State
   const initialState = {
     isAuthenticated: false,
     user: null,
@@ -27,6 +40,33 @@ const AccountState = ({ children }) => {
     initialState
   );
 
+  /** 
+   * *
+   * Load User
+   * @description 
+      - Gets current user from storage (Pool.getCurrentUser)
+      - Awaits three promises (Promise.all):
+         1. cognitoUser.getSession for getting a session, 
+            either from the session object or from the local 
+            storage, or by using a refresh token
+         2. cognitoUser.getUserAttributes for getting a list 
+            of attributes once authenticated
+         3. fetch(/api/users)-GET for getting the user data 
+            from the database using the cognito id in the 
+            User-Id header
+      - Dispatches the data to the reducer to update the 
+        state.
+      - On failure, the error propagates to where the 
+        function is called
+   * @listens App.jsx
+   * @listens signIn()
+   * @listens changePassword()
+   * @fires Pool.getCurrentUser()
+   * @fires cognitoUser.getSession()
+   * @fires cognitoUser.getUserAttributes()
+   * @fires fetch('/api/users')-GET
+   * @fires dispatch:LOAD_USER
+   */
   const loadUser = async () => {
     const cognitoUser = Pool.getCurrentUser();
     if (!cognitoUser) {
@@ -68,7 +108,7 @@ const AccountState = ({ children }) => {
       }).then((res) => res.json()),
     ]);
 
-    // console.log(user);
+    // console.log(user); // For simple testing :P
 
     if (attributes.email !== user.email) {
       throw new Error(
@@ -90,6 +130,29 @@ const AccountState = ({ children }) => {
     });
   };
 
+  /** 
+   * *
+   * Sign Up
+   * @description 
+      - Awaits Pool.signUp to register the user with the 
+        user details
+      - Awaits fetch(/api/users)-POST to store the user 
+        data from Cognito to the database
+      - Dispatches the cognito data to the reducer to 
+        update the cognitoUser state
+      - On failure, the error propagates to where the 
+        function is called
+      - Note: the cognitoUser state object will then be 
+        used to verify the user (see verifyUser below)
+   * @param {string} firstName
+   * @param {string} lastName
+   * @param {string} email
+   * @param {string} password
+   * @listens SignUp.jsx
+   * @fires Pool.signUp()
+   * @fires fetch('/api/users')-POST
+   * @fires dispatch:LOAD_COGNITO_USER
+   */
   const signUp = async (
     firstName,
     lastName,
@@ -125,6 +188,20 @@ const AccountState = ({ children }) => {
     });
   };
 
+  /** 
+   * *
+   * Verify User
+   * @description 
+      - Awaits code verification (confirmRegistration) from 
+        the cognitoUser state object
+      - On failure, the error propagates to where the 
+        function is called
+      - Note: the user will then be redirected to the 
+        landing page to sign in
+   * @param {number} verificationCode
+   * @listens VerifyUser.jsx
+   * @fires state.cognitoUser.confirmRegistration()
+   */
   const verifyUser = async (verificationCode) => {
     await new Promise((resolve, reject) => {
       state.cognitoUser.confirmRegistration(
@@ -141,17 +218,38 @@ const AccountState = ({ children }) => {
     });
   };
 
-  const signIn = async (username, password) => {
-    const user = new CognitoUser({
-      Username: username,
+  /** 
+   * *
+   * Sign In
+   * @description 
+      - Creates a new CognitoUser object (cognitoUser)
+      - Creates a new AuthenticationDetails object 
+        (authDetails)
+      - Awaits cognitoUser.authenticateUser to authenticate 
+        the user
+      - On success, loads user (loadUser)
+      - On failure, the error propagates to where the 
+        function is called
+      - Note: when the user data is loaded, the AuthOutlet 
+        will cause the page to be redirected to /reports
+   * @param {string} email
+   * @param {string} password
+   * @listens SignIn.jsx
+   * @listens SignUp.jsx
+   * @fires cognitoUser.authenticateUser()
+   * @fires loadUser()
+   */
+  const signIn = async (email, password) => {
+    const cognitoUser = new CognitoUser({
+      Username: email,
       Pool,
     });
     const authDetails = new AuthenticationDetails({
-      Username: username,
+      Username: email,
       Password: password,
     });
     await new Promise((resolve, reject) => {
-      user.authenticateUser(authDetails, {
+      cognitoUser.authenticateUser(authDetails, {
         onSuccess: async () => {
           await loadUser();
           resolve();
@@ -163,6 +261,22 @@ const AccountState = ({ children }) => {
     });
   };
 
+  /** 
+   * *
+   * Change Password
+   * @description 
+      - Awaits loadUser() to validate the session and to 
+        store the cognitoUser object in the state
+      - Awaits changePassword() to update the password on 
+        Cognito
+      - On failure, the error propagates to where the 
+        function is called
+   * @param {string} currentPassword
+   * @param {string} newPassword
+   * @listens ChangePassword.jsx
+   * @fires loadUser()
+   * @fires state.cognitoUser.changePassword()
+   */
   const changePassword = async (
     currentPassword,
     newPassword
@@ -179,10 +293,23 @@ const AccountState = ({ children }) => {
     );
   };
 
+  /** 
+   * *
+   * Logout
+   * @description
+      - Gets current user from storage (Pool.getCurrentUser)
+      - Signs the user out with cognitoUser.signOut()
+      - Dispatches an action to the reducer to unload the 
+        user
+   * @listens Logout.jsx
+   * @fires Pool.getCurrentUser()
+   * @fires cognitoUser.signOut()
+   * @fires dispatch:UNLOAD_USER
+   */
   const logout = () => {
-    const user = Pool.getCurrentUser();
-    if (user) {
-      user.signOut();
+    const cognitoUser = Pool.getCurrentUser();
+    if (cognitoUser) {
+      cognitoUser.signOut();
       dispatch({
         type: UNLOAD_USER,
       });

@@ -8,7 +8,17 @@ import {
   Typography,
 } from '@mui/material';
 
-const ButtonAppBar = () => {
+/**
+ * *
+ * Heading Component
+ * @description
+    - Renders an app bar with the app title
+    - Displays no matter the Route path and only when user 
+      is not authenticated
+ * @listens Router (but imported into App.jsx)
+ */
+const Heading = () => {
+  // Render
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -22,4 +32,4 @@ const ButtonAppBar = () => {
   );
 };
 
-export default ButtonAppBar;
+export default Heading;

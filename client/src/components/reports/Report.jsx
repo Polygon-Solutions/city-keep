@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import formatDate from '../../utils/formatDate';
 
 import ReportDetail from './ReportDetail';
 
@@ -11,14 +14,33 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+/**
+ * *
+ * Report Component
+ * @description
+    - Renders the report as an MUI Accordion, which 
+      displays the title and date in the accordion summary,
+      and the report details in the accordion details.
+ * @prop {Object} props.report - the report object
+ * @listens Reports
+ */
 const Report = ({
-  title,
-  dateText,
-  category,
-  description,
-  address,
-  name,
+  report: {
+    reportTime,
+    title,
+    category,
+    description,
+    address,
+    firstName,
+    lastName,
+  },
 }) => {
+  // Formatting data for display
+  const name = `${firstName} ${lastName}`;
+  const date = new Date(reportTime);
+  const dateText = formatDate(date);
+
+  // Render
   return (
     <Accordion sx={{ my: 1 }}>
       <AccordionSummary
@@ -57,6 +79,10 @@ const Report = ({
       </AccordionDetails>
     </Accordion>
   );
+};
+
+Report.propTypes = {
+  report: PropTypes.object.isRequired,
 };
 
 export default Report;

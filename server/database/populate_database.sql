@@ -1,3 +1,11 @@
+/** 
+ * *
+ * Populate Database PostgreSQL Script
+ * @description 
+    - Populates mock database for development and testing purposes
+ * @listens database.sh
+ */
+
 INSERT INTO users (id, last_name, first_name, email) VALUES ('58f4ea2a-d62f-4d2b-9126-e6fed97323b9', 'Anonymous', 'Demo', 'demo@anonymous.com');
 
 INSERT INTO categories (id, label) VALUES (1, 'Drainage/Flooding');

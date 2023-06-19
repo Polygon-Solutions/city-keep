@@ -1,13 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Typography, Grid } from '@mui/material';
 
+/**
+ * *
+ * ReportDetail Component
+ * @description
+    - Renders a label and detail for a given report 
+      attribute
+    - Uses flexbox to display the label and detail 
+      consistently inline
+ * @prop {string} label - the report attribute label
+ * @prop {string} detail - the report attribute detail
+ * @listens Report
+ */
 const ReportDetail = ({ label, detail }) => {
+  // Render
   return (
     <Grid container columns={32} sx={{ my: 1 }}>
       <Grid item xs={32} sm={9}>
         <Typography sx={{ fontWeight: 600, fontSize: '14px' }}>
-          {label + ': '}
+          {`${label}: `}
         </Typography>
       </Grid>
       <Grid item xs={32} sm={23}>
@@ -17,6 +31,11 @@ const ReportDetail = ({ label, detail }) => {
       </Grid>
     </Grid>
   );
+};
+
+ReportDetail.propTypes = {
+  label: PropTypes.string.isRequired,
+  detail: PropTypes.string.isRequired,
 };
 
 export default ReportDetail;

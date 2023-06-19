@@ -1,4 +1,8 @@
+/* Fonts */
+
 @import '../node_modules/@clr/city/css/index.css';
+
+/* Elements */
 
 html {
   -ms-overflow-style: none; /* IE and Edge */
@@ -8,6 +12,7 @@ html {
 html::-webkit-scrollbar {
   display: none;
 }
+
 body {
   margin: 0;
   background-color: #8b8b8b;

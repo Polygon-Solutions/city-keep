@@ -7,7 +7,7 @@ import AlertsContext from '../../context/alerts/AlertsContext';
 import ReportFormField from './ReportFormField';
 
 import ImageUpload from './ImageUpload';
-import { categoryOptions } from './categoryOptions';
+import { categoryOptions } from '../../utils/categoryOptions';
 
 import {
   Grid,
@@ -19,7 +19,20 @@ import {
   Button,
 } from '@mui/material';
 
+/**
+ * *
+ * ReportForm Component
+ * @description
+    - Renders a form for submitting a reports with text 
+      fields for title, description, and address, a select 
+      menu for category, and an image upload field
+    - Renders a button to submit the report and another to 
+      clear the form
+ * @listens ReportFormPopover
+ * @fires ReportsContext.submitReport
+ */
 const ReportForm = () => {
+  // State
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -27,41 +40,18 @@ const ReportForm = () => {
     address: '',
   });
 
-  const { submitReport } = useContext(ReportsContext);
-  const { user } = useContext(AccountContext);
-  const { setAlert } = useContext(AlertsContext);
+  const { title, category, description, address } = formData;
 
-  const handleDataChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  // State Handlers
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const report = await submitReport(
-        user.id,
-        formData.title,
-        formData.category,
-        formData.description,
-        formData.address
-      );
-
-      clearForm();
-
-      setAlert(
-        `Report "${report.title}" submitted successfully. Please refresh the reports page.`,
-        'success'
-      );
-    } catch (err) {
-      setAlert(err.message, 'error');
-    }
-  };
-
-  const clearForm = () => {
+  const handleClearForm = () => {
     setFormData({
       title: '',
       category: '',
@@ -70,6 +60,46 @@ const ReportForm = () => {
     });
   };
 
+  // Context
+  const { submitReport } = useContext(ReportsContext);
+  const { user } = useContext(AccountContext);
+  const { addAlert } = useContext(AlertsContext);
+
+  /** 
+   * *
+   * Handle Submit Report
+   * @description 
+      - Attempts to submit the report to the database
+      - Displays a success alert if successful
+      - Displays an error alert if unsuccessful
+   * @listens Grid (form) submission
+   * @fires ReportsContext.submitReport
+   * @fires handleClearForm
+   */
+  const handleSubmitReport = async (event) => {
+    event.preventDefault();
+
+    try {
+      const report = await submitReport(
+        user.id,
+        title,
+        category,
+        description,
+        address
+      );
+
+      handleClearForm();
+
+      addAlert(
+        `Report "${report.title}" submitted successfully. Please refresh the reports page.`,
+        'success'
+      );
+    } catch (err) {
+      addAlert(err.message, 'error');
+    }
+  };
+
+  // Render
   return (
     <Grid
       container
@@ -79,7 +109,7 @@ const ReportForm = () => {
       rowSpacing={3}
       sx={{ px: 3, pt: 3 }}
       as="form"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmitReport}
     >
       <Grid item>
         <Typography variant="h2">Submit a Report</Typography>
@@ -87,8 +117,8 @@ const ReportForm = () => {
           sx={{ my: 1 }}
           label="Title"
           name="title"
-          value={formData.title}
-          onChange={(e) => handleDataChange(e)}
+          value={title}
+          onChange={handleFormChange}
         />
         <FormControl
           required
@@ -100,17 +130,20 @@ const ReportForm = () => {
             MenuProps={{ sx: { maxHeight: '200px' } }}
             label="Category"
             name="category"
-            value={formData.category}
-            onChange={(e) => handleDataChange(e)}
+            value={category}
+            onChange={handleFormChange}
           >
             <MenuItem value={''}>
               <em>None</em>
             </MenuItem>
-            {categoryOptions.map((option) => (
-              <MenuItem key={option.id} value={option.id}>
-                {option.label}
-              </MenuItem>
-            ))}
+            {
+              // Maps the static categoryOptions array to MenuItem components
+              categoryOptions.map((option) => (
+                <MenuItem key={option.id} value={option.id}>
+                  {option.label}
+                </MenuItem>
+              ))
+            }
           </Select>
         </FormControl>
         <ReportFormField
@@ -119,15 +152,15 @@ const ReportForm = () => {
           sx={{ my: 1 }}
           label="Description"
           name="description"
-          value={formData.description}
-          onChange={(e) => handleDataChange(e)}
+          value={description}
+          onChange={handleFormChange}
         />
         <ReportFormField
           sx={{ my: 1 }}
           label="Address"
           name="address"
-          value={formData.address}
-          onChange={(e) => handleDataChange(e)}
+          value={address}
+          onChange={handleFormChange}
         />
         <ImageUpload />
       </Grid>
@@ -154,7 +187,7 @@ const ReportForm = () => {
             color="error"
             type="reset"
             sx={{ width: 1 }}
-            onClick={clearForm}
+            onClick={handleClearForm}
           >
             Clear
           </Button>

@@ -10,21 +10,40 @@ import {
   Typography,
 } from '@mui/material';
 
+/**
+ * *
+ * ForgotPassword Component
+ * @description
+    - Renders a text field that allows the user to enter 
+      their email address
+    - Renders a button that triggers the forgotPassword 
+      function
+ * TODO: Remove work in progress tooltip after implementing forgot password functionality
+ * @listens NoAuthOutlet (but imported into App.jsx)
+ * @fires AccountContext.forgotPassword
+ */
 const ForgotPassword = () => {
-  const handleSubmit = (event) => {
+  /**
+   * *
+   * Handle Forgot Password
+   * TODO: Add forgotPassword function into AccountState file.
+   * @listens Box (form) submission
+   */
+  const handleForgotPassword = (event) => {
     event.preventDefault();
 
     // AWS Cognito Forgot Password
   };
 
+  // Render
   return (
     <Container component="main" maxWidth="xs">
-      <Typography variant="h6" sx={{ mt: 3 }}>
+      <Typography variant="h4" sx={{ mt: 3 }}>
         Forgot Password
       </Typography>
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={handleForgotPassword}
         noValidate
         sx={{ mt: 1 }}
       >

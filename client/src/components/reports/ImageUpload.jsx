@@ -4,7 +4,18 @@ import { ButtonBase, Grid, Typography } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';
 import WorkInProgress from '../dev/WorkInProgress';
 
+/**
+ * *
+ * ImageUpload Component
+ * @description
+    - Renders a large button to upload an image
+    - Renders a WorkInProgress tooltip since the image 
+      upload is not yet functional (15-05-2023)
+ * TODO: Add functionality to upload an image
+ * @listens ReportForm
+ */
 const ImageUpload = () => {
+  // Return
   return (
     <WorkInProgress placement="bottom">
       <ButtonBase

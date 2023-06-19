@@ -1,4 +1,4 @@
-# CityKeep - Civic Issue Reporter
+# CityKeep - Civic Issue Reporting App
 
 Author: Malaki Vandas  
 Link: [www.citykeep.app](https://www.citykeep.app)
